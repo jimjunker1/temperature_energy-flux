@@ -1,0 +1,43 @@
+---
+title: "Manuscript title here"
+author: "James R Junker"
+date: Dept. of Ecology, Montana State University, Bozeman, MT USA
+output:
+   word_document:
+     reference_docx: docx_template.docx
+   pdf_document:
+     keep_tex: true
+   html_document: default
+header-includes:
+- \usepackage{lineno}
+- \linenumbers
+linestretch: 1
+bibliography: refs.bib
+link-citations: no
+link-color: grey
+csl: ecology.csl
+---
+
+<!--- this is a note in Rmarkdown --->
+
+Abstract
+================================================================================
+
+Introduction
+================================================================================
+
+Methods
+================================================================================
+
+Results
+================================================================================
+
+Discussion
+================================================================================
+
+References
+================================================================================
+
+<div id="refs"></div>
+
+\clearpage

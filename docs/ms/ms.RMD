@@ -1,7 +1,8 @@
 ---
 title: "Manuscript title here"
-author: "James R Junker"
-date: Dept. of Ecology, Montana State University, Bozeman, MT USA
+author: 
+- name: James R Junker
+  affiliation: Dept. of Ecology, Montana State University, Bozeman, MT USA
 output:
    word_document:
      reference_docx: docx_template.docx
@@ -10,6 +11,7 @@ output:
    html_document: default
 header-includes:
 - \usepackage{lineno}
+- \usepackage{amsmath}
 - \linenumbers
 linestretch: 1
 bibliography: refs.bib
@@ -20,24 +22,61 @@ csl: ecology.csl
 
 <!--- this is a note in Rmarkdown --->
 
-Abstract
-================================================================================
+# Abstract
 
-Introduction
-================================================================================
+# Introduction
 
-Methods
-================================================================================
+Increasing global temperatures are altering the diversity, structure, and functioning of Earth's ecosystems [@Brose2012][@walther2002][@Woodward_Dybkjær_Ólafsson_eta2010]. The effects of this warming manifest through shifting species ranges [],  
 
-Results
-================================================================================
+The provision and maintenance of ecosystem functions are underpinned by the network of species interactions across which energy, materials, and information are exchanged [@deRuiter1995][@thompson2012]. Specifically, warming can directly alter , is tied to the magnitudes and relative distributions of energy fluxes among species and trophic levels [@may1972][@barnes2018]. 
 
-Discussion
-================================================================================
+Here, we measured the patterning and distribution of organic matter fluxes within invertebrate food webs across a natural stream temperature gradient (~5 - 28$^\circ$C). Previous research in these streams has shown a strong positive effect of temperature on primary production both among streams [@demars2011][@padfield2017] and within streams seasonally [@gorman2012][@hood2018]. The dynamics of basal resource supply has a strong control on consumer energy demand [@junker2020], as such, we predicted total annual OM fluxes to consumer to scale with among stream patterns in primary production and consumer energy demand, and therefore, increase with temperature across streams. Further, we predicted that food web OM fluxes will 'speed up' with increasing temperature through increases in the importance of relatively faster, higher turnover consumers. Within streams, the speeding up of ecosystems will lead to earlier food web fluxes in warmer compared to colder streams. 
 
-References
-================================================================================
+# Methods
 
-<div id="refs"></div>
+We studied six streams within the Hengill geothermal field of southwestern Iceland (64$^\circ$ 03'N  021$^\circ$ 18'W) that varied in mean annual temperature. Hengill is characterized by indirect geothermal heating of groundwater [@arnason_hengill_1969], leading to a natural variability in water temperatures (4.5–54.0 $^\circ$C), but similar solute chemistries [@friberg_relationships_2009]. These conditions create a "natural laboratory" for isolating the effects of temperature on ecosystem processes [@ogorman_climate_2014; @nelson_experimental_2017]. We selected streams to maximize the temperature range, while minimizing differences in the structural aspects of primary producers. In each stream, we measured temperature and water depth every 15 min from July 2010 through August 2012 (U20-001-01 water-level logger, Onset Computer Corp. Pocasset, MA, USA). Light availability in the watershed was measured every 15 min from atmospheric stations (HOBO pendant temperature/light UA-002-64, Onset Computer Corp. Pocasset, MA, USA).
 
-\clearpage
+## Invertebrate sampling
+
+We sampled macroinvertebrate communities approximately monthly from July 2011 to August 2012 in four streams and from October 2010 to October 2011 in two streams used in a previous study (*n* = 6 streams). The two streams were part of an experiment beginning October 2011, therefore overlapping years were not used to exclude the impact of experimental manipulation [see @nelson_experimental_2017; -@nelson_shifts_2017]. Inter-annual comparisons of primary and secondary production in previous studies showed minimal differences among years in unmanipulated streams, suggesting that combining data from different years would not significantly bias our results [@nelson_experimental_2017; @hood_increased_2018]. We collected fiver Surber samples (0.023 m^2^, 250 $\mu$m mesh) from randomly selected locations within each stream. Within the sampler, inorganic substrates were disturbed to ~10 cm depth and invertebrates and organic matter were removed from stones with a brush. Samples were then preserved with 5% formaldehyde until laboratory analysis. In the laboratory, we split samples into coarse (>1 mm) and fine (<1 mm but >250 $\mu$m) fractions using nested sieves and then removed invertebrates form each fraction under a dissecting microscope (10–15 x magnification). For particularly large samples, fine fractions were subsampled (1/2–1/16th) using a modified Folsom plankton splitter prior to removal of invertebrates. Subsamples were scaled to the rest of the sample assuming similar abundance and body size distributions. Macroinvertebrates were identified to the lowest practical taxonomic level (usually genus) with taxonomic keys [@peterson_black_1977; @merritt_introduction_2008; @andersen_chironomidae_2013]. Taxon-specific abundance and biomass were scaled to a per meter basis by dividing by the Surber sampler area. 
+
+## Secondary Production
+
+Daily secondary production of invertebrate taxa was calculated using the instantaneous growth rate method [IGR; @Benke_Huryn2017]. Growth rates were determined using taxon appropriate approaches described in [@junker_resource_nodate]. Briefly, growth rates of common taxa (e.g., Chironomidae spp., Radix balthica, etc.) were determined using *in situ* chambers [@huryn_method_1986]. Multiple individuals  (*n* = 5–15) within small size categories (~1 mm length range) were photographed next to a field micrometer, placed into the stream within pre-conditioned chambers for 7–15 days, after which they were again photographed. Individual lengths were measured from field pictures using image analysis software [@Schindelin_Arganda-Carreras_Frise_Kaynig_Longair_Pietzsch_Preibisch_Rueden_Saalfeld_Schmid_et al.2012], and body lengths were converted to mass (mg ash-free dry mass [AFDM]) using published length-mass regressions [@benke_length-mass_1999; @ogorman_impacts_2012; @hannesdottir_increased_2013]. Growth rates (*g*, d^-1^) were calculated by the changes in mean body size (*W*) over a given time interval (*t*) with the following equation:
+
+$$g = log_e ( W_{t+\Delta t} / W_t) / \Delta t$$
+
+Variability in growth rates was estimated by bootstrapping through repeated resampling of individual lengths with replacement (*n* = 500). For taxa which exhibit synchronous growth and development (e.g., Simuliidae spp., some Chironomidae spp., etc.), we examined temporal changes in length-frequency distributions and calculated growth rates and uncertainty using a bootstrap technique similar to that described in Benke and Huryn [-@benke_secondary_2017]. Individual Lengths were converted to mg AFDM using published length-mass regression cited above and size-frequency histograms were visually inspected for directional changes in body size through time. For each date, size-frequency distributions were resampled with replacement (*n* = 500) and growth rates estimated from equation 1. We prevented the calculation of negative growth rates by requiring $W_{t + \Delta t}$ > $W_t$. To estimate growth rates of taxa for which growth could not be estimated empirically, we developed stream-specific growth rate models by constructing multivariate linear regressions of empirical growth data against body size and temperature within each stream. To estimate uncertainty in production of each taxon, we used a bootstrapping technique that resampled measured growth rates, in addition to abundance and size distributions from individual samples. For each iteration (*n* = 1000), size-specific growth rates were multiplied by mean interval biomass for each size class and the number of days between sample dates to estimate size class-specific production. For each interval, size classes were summed for each taxon to calculate total population-level production. Intervals were summed to estimate annual secondary production.
+
+## Gut Content Analysis 
+
+Macroinvertebrate diets were quantified for dominant taxa in each stream. We focused on numerically abundant taxa and/or taxa with relatively high annual production. A minimum of five individuals were selected from samples, and, when possible included individuals of different size classes to account for ontogenetic shifts in diet. We included individuals from different seasons to capture concurrent ontogenetic and seasonal changes. For small-bodied taxa, we combined multiple individuals (*n* = 3–5) to ensure samples contained enough material for quantification. We used methods outlined in Rosi-Marshall [-@Rosi-Marshall_Wellard Kelly_Hall_Vallis2016] to remove gut tracts and prepare gut content slides. Briefly, we removed the foregut from each individual or collection of individuals and sonicated gut contents in water for 30 seconds. Gut content slurries were filtered onto gridded nitrocellulose membrane filters (Metricel GN-6, 25 mm, 0.45 $\mu$m pore size; Gelman Sciences, Ann Arbor, MI, USA), dried at 60 $^\circ$C for 15 min, placed on a microscope slide, cleared with Type B immersion old, and covered with a cover slip. We took 5–10 random photographs under 200–400x magnification, depending on the density of particles, using a digital camera mounted on a compound microscope. From these photographs we identified all particles within each field and measured the relative area of particles using image analysis software [@schindelin_fiji_2012]. We identified particles as diatoms, green and filamentous algae, cyanobacteria, amorphous detritus, vascular and non-vascular plants (bryophytes), and animal material. We calculated the proportion of each food category in the gut by dividing their summed area by the total area of all particles. Gut contents of many predators were empty or contained unidentifiable, macerated prey. For these taxa, we assumed 100% animal material.
+
+## Organic Matter Consumption Estimates
+
+Consumption fluxes (g m^-2^ t^-1^) were calculated using the trophic basis of production method (TBP; [@Benke_Wallace1980]. Taxon-specific secondary production estimates were combined with measured diet proportions, diet-specific assimilation efficiencies, AE[i], and assumed net production efficiencies, NPE, to estimate consumption of organic matter. For each food category, i, diet proportions were multiplied by the gross growth efficiency (GGE[i] = AE[i] * NPE) to calculate the relative production attributable to each food category. The relative production from each food type was then multiplied by the interval-level production and finally divided by GGE[i] to estimate consumption of organic matter from each food category by a consumer [@benke_trophic_1980]. Consumption was calculated for each taxon across sampling intervals (typically ~1 month). Total interval consumption was calculated by summing across all taxa, while annual consumption was calculated by summing across all taxa and inte(rvals. Variability in consumption estimates was estimated through bootstrapping, wherein bootstrapped vectors of secondary production for each taxon (see *Secondary production* methods above) were resampled and the consumption estimated using the TBP method. Variability in AE[i] was incoporated by resampling values from beta distributions fit to median and 2.5% and 97.5% percentiles for each diet item: diatoms = 0.30 (95% percentile interval (PI): 0.24-0.36), filamentous and green algae = 0.30 (95% PI: 0.24-0.36), cyanobacteria = 0.10 (95% PI: 0.08-0.12), amorphous detritus = 0.10 (95% PI: 0.08-0.12), vascular and non-vascular plants (bryophytes) = 0.1 (95% PI:: 0.08-0.12), and animal material = 0.7 (95% PI: 0.56-0.84)[@Welch1968][@Cross_Wallace_Rosemond2007][@Cross_Baxter_Donner_et al.2011][@Benke_Wallace1980][@Benke1997]. Variability in NPE was incorporated by resampling values from an assumed beta distribution with median NPE = 0.45 (95% PI = 0.4-0.5). Beta distributions were fit using the 'get.beta.par()' function within the *rriskDistributions* package [@Belgorodski_Greiner_Tolksdorf_Schueller2017].
+
+## Quantifying the distribution of food web fluxes
+
+### Evenness Among consumers
+
+To visualize and quantify how evenly OM fluxes were distributed among consumers within a stream, we constructed Lorenz curves [@Lorenz1905] on ordered relative consumption fluxes, such that in a community with $S$ species and the relative consumption of species *i*, $p_i$, is ordered $p_1 \leq p_2 \leq ... p_S$. The Lorenz curve plots how a value, in this case OM flux, accumulates with increasing cumulative proportion of species. In a community with perfectly equal distribution of OM consumption, the Lorenz curve is simply a straight diagonal line. Deviation from perfect equality was calculated as the Gini coefficient [@Gini1921], normalized for differences in $S$ among streams, $G^*$ [@Solomon1979][@Chao_Ricotta2019]:
+$$ G^* = (2 \sum_{i = 1}^S ip_i -2)/(S-1)$$
+### Distribution along species trait axes
+
+To explore how 
+
+
+### Through time
+
+To qu
+
+## Statistical Analyses
+
+# Results
+
+# Discussion
+
+\newpage
+
+# References

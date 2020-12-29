@@ -1,0 +1,99 @@
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##'
+##' @title
+
+read_production <- function() {
+
+  ####    full raw production, biomass, abundance import and clean    ####
+  prod_full_list = readRDS(file = "./data/derived-data/prod_full_fin.rds") %>%
+    #rename Tubificid update to Naidid to recognize taxon changes
+    purrr::map(~.x %>% purrr::map(~.x %>% dplyr::mutate(taxon_id = case_when(stringr::str_detect("Tubificid 1",taxon_id) ~ "Naidid 1",
+                                                                             stringr::str_detect("Tub. 2", taxon_id) ~ "Naidid 2", 
+                                                                             TRUE ~ taxon_id )))) %>%
+    rlist::list.subset(names(stream_order_list))
+  
+  spp_removals = list(hver = c('Homoptera', 'Lepidoptera', 'Limnophora.pupa', 'Midge.pupa', 
+                               'Slug', 'Snail.egg', 'Thrips'),
+                      st6 = c("Homoptera", "Limnophora.pupa", "Midge.pupa", "S..vittatum.pupa"), 
+                      st9 = c('Clinocera.pupa','Homoptera', 'Limnophora.pupa',
+                              'Limnophora.egg', 'Midge.pupa', 'S..vittatum.pupa', 'Slug',
+                              'Snail.egg','Thrips'),
+                      oh2 = c(),
+                      st7 = c(),
+                      st14 = c('Homoptera', 'S..vernum.pupa', 'S..vitattum.pupa', 'Spider..terr..','Thrips')) %>%
+    rlist::list.subset(names(stream_order_list))
+  
+  ## remove species with no 
+  
+  prod_full_list = purrr::map2(prod_full_list, spp_removals, function(prod, removals){
+    map(prod, ~.x %>% dplyr::filter(taxon_id %ni% removals))})
+    
+  ##  
+  int_spp_boots = prod_full_list %>% map(~rlist::list.subset(.,grepl("Pint", names(.))) %>% flatten_df)%>%
+    rlist::list.subset(names(stream_order_list))
+  
+  # stream community-level summaries 
+  # interval level community summary
+  int_comm_boots = map(prod_full_list, ~.x %>%
+                           map(~.x %>%
+                                 group_by(site_id, date_id, boot_id) %>% 
+                                 dplyr::select(-taxon_id) %>%
+                                 dplyr::summarise(across(where(is.numeric), list(sum = sum)))) %>%
+                           reduce(left_join) %>% 
+                           dplyr::rename(prod_mg_m_int = 'prod_mg_m_int_sum',
+                                  bio_mg_m = 'bio_mg_m_sum',
+                                  n_ind_m = 'n_ind_m_sum') %>%
+                           ungroup %>% group_by(boot_id) %>%
+                           dplyr::mutate(pb_int = prod_mg_m_int/bio_mg_m,
+                                  M_mg_ind = bio_mg_m/n_ind_m))%>%
+    rlist::list.subset(names(stream_order_list))
+  
+  # annual community summaries
+  ann_comm_boots = map(int_comm_boots, ~.x %>%
+                           group_by(site_id, boot_id) %>%
+                           dplyr::select(-pb_int, -M_mg_ind) %>%
+                           dplyr::summarise(across(matches('bio|ind'), list(mean = mean)),
+                                     across(contains('prod'), sum)) %>%
+                           dplyr::rename(prod_mg_m_y = 'prod_mg_m_int',
+                                  bio_mg_m = 'bio_mg_m_mean',
+                                  n_ind_m = 'n_ind_m_mean') %>%
+                           dplyr::mutate(pb_y = prod_mg_m_y/bio_mg_m,
+                                  M_mg_ind = bio_mg_m/n_ind_m))%>%
+    rlist::list.subset(names(stream_order_list))
+  
+  # stream species summaries 
+  int_spp_summary = map(prod_full_list, ~.x %>% 
+                          reduce(left_join) %>%
+                          dplyr::mutate(pb_int = prod_mg_m_int/bio_mg_m,
+                                        M_mg_ind = bio_mg_m/n_ind_m) %>%
+                          dplyr::mutate(across(matches("pb|M"), ~ ifelse(is.na(.x) | is.infinite(.x) | .x == 0, NA, .x))) %>%
+                              group_by(site_id, date_id, taxon_id) %>%
+                              dplyr::summarise(across(matches("bio|ind|prod|pb"), list(mean = ~mean(.x, na.rm = TRUE),
+                                                                                    quant2.5 = ~quantile(.x, 0.025, na.rm = TRUE),
+                                                                                    quant25 = ~quantile(.x, 0.25, na.rm = TRUE),
+                                                                                    quant50 = ~quantile(.x, 0.50, na.rm = TRUE),
+                                                                                    quant75 = ~quantile(.x, 0.75, na.rm = TRUE),
+                                                                                    quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE)))) %>%
+                          dplyr::mutate(across(everything(), ~ ifelse(is.na(.x) | .x == 0, NA, .x))))%>%
+    rlist::list.subset(names(stream_order_list))
+  
+  ann_spp_boots = map(prod_full_list, ~.x %>%
+                          map(~.x %>%
+                                group_by(site_id, taxon_id, boot_id) %>%
+                                dplyr::select(-date_id) %>%
+                                dplyr::summarise(across(matches('bio|ind'), list(mean = mean)),
+                                          across(contains('prod'), sum))) %>%
+                          reduce(left_join) %>% 
+                          dplyr::rename(prod_mg_m_y = "prod_mg_m_int",
+                                 bio_mg_m = 'bio_mg_m_mean',
+                                 n_ind_m = 'n_ind_m_mean') %>%
+                          ungroup %>% group_by(boot_id) %>%
+                          dplyr::mutate(pb_y = prod_mg_m_y/bio_mg_m,
+                                 M_mg_ind = bio_mg_m/n_ind_m))%>%
+    rlist::list.subset(names(stream_order_list))
+  
+  return(list(int_comm_boots = int_comm_boots, ann_comm_boots = ann_comm_boots, ann_spp_boots = ann_spp_boots, int_spp_boots = int_spp_boots, int_spp_summary = int_spp_summary))
+
+}

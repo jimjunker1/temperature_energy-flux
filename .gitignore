@@ -37,3 +37,18 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Environment files
+.env
+
+# Picture files
+*.jpg
+*.jpeg
+
+# Initial R script file. Carryover needed scripts to R/
+/scripts/
+*scripts/
+
+# Uncondensed diet files
+/gut_data/**/*.csv
+!/gut_data/**/*full.csv

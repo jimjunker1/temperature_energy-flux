@@ -11,16 +11,22 @@ the_plan <-
   
   seasonal_fluxes = summarise_seasonal_fluxes(production_boots[["int_spp_boots"]]),
   
+  seasonal_boot_split = split_seasonal_fluxes(seasonal_fluxes[["season_spp_boots_split"]]),
+  
    ### diet data
   gut_lists = read_clean_guts(),
   
-  # gut_df = create_gut_df(gut_lists),
+  # gut_df = create_gut_dists(gut_lists),
   
   # gut_summaries = summarise_guts(gut_df),
   
-  diet_matrices = create_diet_matrices(gut_lists, production_summaries[["production_spp_list"]]),
+  blank_diet_matrices = create_diet_matrices(gut_lists, production_summaries[["production_spp_list"]]),
   
-  # flux_estimates = estimate_flux(diet_matrices, seasonal_fluxes),
+  seasonal_diet_matrices = create_seasonal_matrices(blank_diet_matrices, gut_lists),
+  
+  filled_diet_matrices = fill_predator_diets(seasonal_diet_matrices),
+  
+  # flux_estimates = estimate_flux(filled_diet_matrices, seasonal_fluxes),
   
   # spp_rankings = rank_spp_traits(flux_estimates, production_summaries),
   

@@ -50,5 +50,5 @@ vignettes/*.pdf
 *scripts/
 
 # Uncondensed diet files
-/gut_data/**/*.csv
-!/gut_data/**/*full.csv
+/**/gut_data/**/*.csv
+!/**/gut_data/**/*full.csv

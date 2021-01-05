@@ -54,11 +54,11 @@ lcs_plot = function(curves){
 
 #====Example====
 #the input must be a list of observed abundance/frequency vectors corresponding to multiple assemblages
-com_1 = c(10, 2)
-com_2 = c(10, 10, 2, 1, 1)
-ps = list(com_1=com_1, com_2 = com_2)
-result_table = lcs_table(ps)
-lcs_plot(result_table)
+# com_1 = c(10, 2)
+# com_2 = c(10, 10, 2, 1, 1)
+# ps = list(com_1=com_1, com_2 = com_2)
+# result_table = lcs_table(ps)
+# lcs_plot(result_table)
 
 
 #' This code is modified from Chao and Ricotta 2019 (Ecology)

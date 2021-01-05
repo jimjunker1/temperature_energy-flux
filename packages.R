@@ -3,15 +3,46 @@
   if(!require("pacman")) install.packages("pacman")
   library(pacman)
   package.list <- c("conflicted", "dotenv", "drake","data.table","gtools",
-                    "RCurl","plyr","tidyverse","furrr", "fnmate", "rowr",
+                    "RCurl","plyr","tidyverse","furrr", "fnmate",
                     "dflow","rmarkdown","tictoc","chron","lubridate","httr","TTR", 
                     "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown",
                     "viridis", "broom","bbmle","ggthemes", "ggeffects",
                     "fluxweb","igraph","ggraph","magick","cowplot","rriskDistributions")
   p_load(char = package.list, install = TRUE, character.only = TRUE)
-  p_load_gh("jimjunker1/junkR")
+  # p_load_gh("jimjunker1/junkR")
+  devtools::install_github("jimjunker1/junkR")
+  library(junkR)
   p_load_gh("milesmcbain/dflow")
   rm("package.list" )
+  # len <<- function(data)
+  # {
+  #   result<<-ifelse(is.null(nrow(data)),length(data),nrow(data))
+  #   return(result)
+  # }
+  # vert<<-function(object)
+  # {
+  #   #result<-as.data.frame(cbind(as.matrix(object)))
+  #   if(is.list(object))
+  #     object<-cbind(object)
+  #   object<-data.frame(object)
+  # 
+  #   return(object)
+  # }
+  # cbind.fill<<-function(...,fill=NULL)
+  # {
+  #   inputs<-list(...)
+  #   inputs<-lapply(inputs,vert)
+  #   maxlength<-max(unlist(lapply(inputs,len)))
+  #   bufferedInputs<-lapply(inputs,buffer,length.out=maxlength,fill,preserveClass=FALSE)
+  #   return(Reduce(cbind.data.frame,bufferedInputs))
+  # }
+  # cbind.fill<<-function(...){
+  #   nm <- list(...)
+  #   nm<-lapply(nm, as.matrix)
+  #   n <- max(sapply(nm, nrow))
+  #   do.call(cbind, lapply(nm, function (x)
+  #     rbind(x, matrix(, n-nrow(x), ncol(x)))))
+  # }
   # ins_julian_path = getURL("https://raw.githubusercontent.com/jimjunker1/secprod_workflow/master/len_freq/ins_julian_function.txt",ssl.verifypeer = FALSE)
   # ins_julian <<- eval(parse(text = ins_julian_path))
   #  len_freq_path = getURL("https://raw.githubusercontent.com/jimjunker1/secprod_workflow/master/len_freq/len_freq_function.R",ssl.verifypeer = FALSE)

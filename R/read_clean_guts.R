@@ -6,6 +6,33 @@
 
 read_clean_guts <- function() {
 
+  #####    Create taxon rename lists   #####
+  
+  old_names <- list(c("Csylvestris"),
+                    c("Radix", "RadixBalthica"),
+                    c("Eukie","Eminor"),
+                    c("Ooblidens"),
+                    c("Tany"),
+                    c("Theinem"),
+                    c("Simuliumvittatum", "Svitt"),
+                    c("Oligo"), 
+                    c("Ofridgidus"),
+                    c("Rhecricotopus","Rheocricotpus"),
+                    c("Orthoclad", "Odentiformes"))
+  
+  new_names <- list("Cricotopus sylvestris",
+                    "Radix balthica",
+                    "Eukiefferiella",
+                    "Orthocladius oblidens",
+                    "Macropelopia",
+                    "Thienemanniella sp.",
+                    "Simulium vittatum",
+                    "Lumbricidae",
+                    "Orthocladius fridgidus",
+                    "Rheocricotopus",
+                    "Orthocladius")
+  
+  taxon_name_keyval = setNames(rep(new_names, lengths(old_names)), unlist(old_names))
   #####    Gut Content Data Import ####
   ##read in gut data
   hver_path = "./data/raw-data/gut_data/hver/"
@@ -18,14 +45,14 @@ read_clean_guts <- function() {
                            str_replace(.,pattern = "IMG_", "IMG") %>%
                            strsplit(., '[/_.][[:space:]]*') %>%
                            as.data.frame() %>%
-                           .[c(2,4,5,7),] %>%
-                           set_names(c("site","date","taxon","pic")))
+                           .[c(2,4:7),] %>%
+                           set_names(c("site","date","taxon","id", "pic")))
   hver_gut_columns = bind_rows(hver_gut_columns)
   hver_gut_columns = split(hver_gut_columns, seq(nrow(hver_gut_columns)))
   hver_gut_contents = map2(hver_gut_columns, hver_gut_files, ~.x %>%
-                            junkR::cbind.fill(.y))
+                            junkR::cbind_fill(.y))
   
-  names = c("site","date","taxon","pic","diet_item","area")
+  names = c("site","date","taxon","id", "pic", "diet_item","area")
   hver_gut_contents = lapply(hver_gut_contents, setNames, names)
   
   hver_gut_df = bind_rows(hver_gut_contents)
@@ -38,11 +65,12 @@ read_clean_guts <- function() {
            diet_item = str_replace(diet_item, ".*microcystis.*", "cyanobacteria"),
            diet_item = str_replace(diet_item, ".*chaeto.*","green_algae"),
            diet_item = recode(diet_item, amdet = "amorphous_detritus", dia = "diatom",
-                              dino = "dinoflaggelate", fila = "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon, pic), fill = list(area = 0)) %>%
-    group_by(site,date,taxon,diet_item) %>%
+                              dino = "dinoflaggelate", fila = "filamentous"),
+           taxon = recode(taxon, !!!taxon_name_keyval)) %>%
+    tidyr::complete(diet_item, nesting(site, date, taxon, id, pic), fill = list(area = 0.01)) %>%
+    group_by(site,date,taxon,id,diet_item) %>%
     dplyr::summarise(item_area = sum(area)) %>%
-    ungroup() %>% group_by(site, date, taxon) %>%
+    ungroup() %>% group_by(site, date,id, taxon) %>%
     dplyr::mutate(rel_area = item_area/sum(item_area), 
                   month_id = stringr::str_extract(date, "\\D{3,4}"))%>% droplevels
 
@@ -56,12 +84,12 @@ read_clean_guts <- function() {
                           str_replace(.,pattern = "IMG_", "IMG") %>%
                           strsplit(., '[/_.][[:space:]]*') %>%
                           as.data.frame() %>%
-                          .[c(2,4,5,7),] %>%
-                          set_names(c("site", "date","taxon","pic")))
+                          .[c(2,4:7),] %>%
+                          set_names(c("site", "date","taxon","id", "pic")))
   st6_gut_columns = bind_rows(st6_gut_columns)%>% droplevels
   st6_gut_columns = split(st6_gut_columns, seq(nrow(st6_gut_columns)))
   st6_gut_contents = map2(st6_gut_columns, st6_gut_files, ~.x %>%
-                            cbind.fill(.y))
+                            junkR::cbind_fill(.y))
   st6_gut_contents = lapply(st6_gut_contents, setNames, names)
   
   st6_gut_df = bind_rows(st6_gut_contents)
@@ -75,11 +103,12 @@ read_clean_guts <- function() {
            diet_item = str_replace(diet_item, ".*microcystis.*", "cyanobacteria"),
            diet_item = str_replace(diet_item, ".*animal.*","animal"),
            diet_item = recode(diet_item, amdet = "amorphous_detritus", dia = "diatom",
-                              dino = "dinoflaggelate", fila = "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon, pic), fill = list(area = 0)) %>%
-    group_by(site,date,taxon,diet_item) %>%
+                              dino = "dinoflaggelate", fila = "filamentous"),
+           taxon = recode(taxon, !!!taxon_name_keyval)) %>%
+    tidyr::complete(diet_item, nesting(site, date, taxon, id, pic), fill = list(area = 0.01)) %>%
+    group_by(site,date,taxon,id,diet_item) %>%
     dplyr::summarise(item_area = sum(area)) %>%
-    ungroup() %>% group_by(site, date, taxon) %>%
+    ungroup() %>% group_by(site, date,id, taxon) %>%
     dplyr::mutate(rel_area = item_area/sum(item_area), 
                   month_id = stringr::str_extract(date, "\\D{3,4}"))%>% droplevels
   #st9
@@ -92,12 +121,12 @@ read_clean_guts <- function() {
                           str_replace(.,pattern = "IMG_", "IMG") %>%
                           strsplit(., '[/_.][[:space:]]*') %>%
                           as.data.frame() %>%
-                          .[c(2,4,5,7),] %>%
-                          set_names(c("site","date","taxon","pic")))
+                          .[c(2,4:7),] %>%
+                          set_names(c("site","date","taxon","id", "pic")))
   st9_gut_columns = bind_rows(st9_gut_columns)%>% droplevels
   st9_gut_columns = split(st9_gut_columns, seq(nrow(st9_gut_columns)))
   st9_gut_contents = map2(st9_gut_columns, st9_gut_files, ~.x %>%
-                            cbind.fill(.y))
+                            junkR::cbind_fill(.y))
   
   st9_gut_contents = lapply(st9_gut_contents, setNames, names)
   
@@ -113,11 +142,12 @@ read_clean_guts <- function() {
            diet_item = str_replace(diet_item, ".*fila.*","filamentous"),
            diet_item = str_replace(diet_item, ".*animal.*","animal"),
            diet_item = recode(diet_item, amdet = "amorphous_detritus", dia = "diatom",
-                              dino = "dinoflaggelate", fila = "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon, pic), fill = list(area = 0)) %>%
-    group_by(site,date,taxon,diet_item) %>%
+                              dino = "dinoflaggelate", fila = "filamentous"),
+           taxon = recode(taxon, !!!taxon_name_keyval)) %>%
+    tidyr::complete(diet_item, nesting(site, date, taxon,id, pic), fill = list(area = 0.01)) %>%
+    group_by(site,date,taxon,id,diet_item) %>%
     dplyr::summarise(item_area = sum(area)) %>%
-    ungroup() %>% group_by(site, date, taxon) %>%
+    ungroup() %>% group_by(site, date,id, taxon) %>%
     dplyr::mutate(rel_area = item_area/sum(item_area), 
                   month_id = stringr::str_extract(date, "\\D{3,4}"))%>% droplevels
   
@@ -131,12 +161,12 @@ read_clean_guts <- function() {
                            str_replace(.,pattern = "IMG_", "IMG") %>%
                            strsplit(., '[/_.][[:space:]]*') %>%
                            as.data.frame() %>%
-                           .[c(2,4,5,7),] %>%
-                           set_names(c("site", "date","taxon","pic")))
+                           .[c(2,4:7),] %>%
+                           set_names(c("site", "date","taxon","id","pic")))
   st14_gut_columns = st14_gut_columns %>% bind_rows
   st14_gut_columns = split(st14_gut_columns, seq(nrow(st14_gut_columns)))
   st14_gut_contents = map2(st14_gut_columns, st14_gut_files, ~.x %>%
-                             cbind.fill(.y))
+                             junkR::cbind_fill(.y))
   st14_gut_contents = lapply(st14_gut_contents, setNames, names)
   st14_gut_df = bind_rows(st14_gut_contents)
   
@@ -152,31 +182,49 @@ read_clean_guts <- function() {
            diet_item = str_replace(diet_item, ".*dion.*","chaeto"),
            diet_item = str_replace(diet_item, ".*chaeto.*","green_algae"), 
            diet_item = recode(diet_item, amdet = "amorphous_detritus", dia = "diatom",
-                              dino = "dinoflaggelate", fila = "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon, pic), fill = list(area = 0)) %>%
-    group_by(site,date,taxon,diet_item) %>%
+                              dino = "dinoflaggelate", fila = "filamentous"),
+           taxon = recode(taxon, !!!taxon_name_keyval)) %>%
+    tidyr::complete(diet_item, nesting(site, date, taxon, id, pic), fill = list(area = 0.01)) %>%
+    group_by(site,date,taxon,id,diet_item) %>%
     dplyr::summarise(item_area = sum(area)) %>%
-    ungroup() %>% group_by(site, date, taxon) %>%
+    ungroup() %>% group_by(site, date,id, taxon) %>%
     dplyr::mutate(rel_area = item_area/sum(item_area), 
                   month_id = stringr::str_extract(date, "\\D{3,4}"))%>% droplevels
   #st7
-  st7_gut_summ <<- read.csv(file = "./data/raw-data/gut_data/st7/st7_gut_full.csv", T)
-  st7_gut_summ <<- st7_gut_summ %>% dplyr::mutate(diet_item = str_replace(diet_item, ".*dia.*","diatom"),
+  st7_gut_summ <<- read.csv(file = "./data/raw-data/gut_data/st7/st7_gut_full.csv", T) %>%
+    plyr::rbind.fill(data.frame(diet_item = "green_algae")) %>%
+  # st7_gut_summ <<- st7_gut_summ %>% 
+    dplyr::mutate(diet_item = str_replace(diet_item, ".*dia.*","diatom"),
                                            diet_item = str_replace(diet_item, ".*dino.*", "green_algae"),
                                            diet_item = str_replace(diet_item, ".*Bryo.*", "plant_material"),
                                            diet_item = str_replace(diet_item, ".*Ulva.*", "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(area = 0)) %>% ungroup %>%
-    group_by(site, date, taxon)
-    as_tibble
+    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(rel_area = 0.001)) %>%
+    dplyr::filter(!is.na(taxon)) %>%
+    dplyr::mutate(rel_area = ifelse(rel_area == 0, 0.001, rel_area),
+                  count = rel_area*1000) %>%
+    group_by(site, date, taxon) %>%
+    dplyr::mutate(item_count = sum(count), rel_area = count/item_count) %>%
+    select(-item_count, -count) %>% ungroup %>%
+    dplyr::mutate(month_id = "Jul",
+                  `id` = NA) %>% as_tibble
   
   #oh2
-  oh2_gut_summ <<- read.csv(file = "./data/raw-data/gut_data/oh2/oh2_gut_full.csv", T)
-  oh2_gut_summ <<- oh2_gut_summ %>% dplyr::mutate(diet_item = str_replace(diet_item, ".*dia.*","diatom"),
+  oh2_gut_summ <<- read.csv(file = "./data/raw-data/gut_data/oh2/oh2_gut_full.csv", T) %>%
+    plyr::rbind.fill(data.frame(diet_item = "green_algae")) %>%
+    # oh2_gut_summ <<- oh2_gut_summ %>% 
+    dplyr::mutate(diet_item = str_replace(diet_item, ".*dia.*","diatom"),
                                            diet_item = str_replace(diet_item, ".*dino.*", "green_algae"),
                                            diet_item = str_replace(diet_item, ".*Bryo.*", "plant_material"),
                                            diet_item = str_replace(diet_item, ".*Ulva.*", "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(area = 0)) %>% ungroup %>%
-    as_tibble
+    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(rel_area = 0.001)) %>%
+    dplyr::filter(!is.na(taxon)) %>%
+    dplyr::mutate(rel_area = ifelse(rel_area == 0, 0.001, rel_area),
+                  count = rel_area*1000) %>%
+    group_by(site, date, taxon) %>%
+    dplyr::mutate(item_count = sum(count), rel_area = count/item_count) %>% 
+    select(-item_count, -count) %>% ungroup %>%
+    dplyr::mutate(month_id = "Jul",
+                  `id` = NA) %>% as_tibble
   ## create a list of gut data
   diet_list = list(hver = hver_gut_summ, st6 = st6_gut_summ, st9 = st9_gut_summ, st7 = st7_gut_summ, oh2 = oh2_gut_summ, st14 = st14_gut_summ) %>%
     rlist::list.subset(names(stream_order_list))

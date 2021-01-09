@@ -30,6 +30,7 @@ create_diet_matrices <- function(gut_lists, spp_list = production_summaries[["pr
   #create blank stream matrices
   # debugonce(create_matrix)
   stream_matrices = map2(spp_list, resource_list, ~create_matrix(.x,.y)) %>% rlist::list.subset(names(stream_order_list))
+  
   return(stream_matrices = stream_matrices)
   
 }

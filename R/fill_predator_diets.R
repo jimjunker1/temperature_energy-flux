@@ -25,14 +25,14 @@ fill_predator_diets <- function(seasonal_diet_matrices) {
   predator_lists = list(hver = c("Limnophora.riparia","Sperchon.glandulosus"),
                         st6 = c("Limnophora.riparia","Sperchon.glandulosus","Macropelopia", "Antocha.sp.","Ephydridae.sp."),
                         st9 = c("Limnophora.riparia","Sperchon.glandulosus","Macropelopia", "Antocha.sp.","Ephydridae.sp.", "Clinocera.stagnalis"),
-                        st7 = c("Limnophora.riparia","Sperchon.glandulosus"),
-                        oh2 = c("Limnophora.riparia","Sperchon.glandulosus", "Macropelopia"),
+                        st7 = c("Limnophora.riparia","Sperchon.glandulosus", "Dicranota","Clinocera"),
+                        oh2 = c("Limnophora.riparia","Sperchon.glandulosus", "Macropelopia","Dicranota","Clinocera"),
                         st14 = c("Limnophora.riparia","Sperchon.glandulosus", "Antocha.sp.")) %>% 
     rlist::list.subset(names(stream_order_list))
   
   
   ## combine the blank matrices and the seasonal matrices
-  filled_matrices = vector('list', length = length(diet_splits))
+  filled_matrices = vector('list', length = length(seasonal_diet_matrices))
   filled_matrices = filled_matrices %>% setNames(., nm = levels(stream_order)) %>% rlist::list.subset(names(stream_order_list))
   for(i in 1:length(filled_matrices)){
     x = seasonal_diet_matrices[[i]]

@@ -19,7 +19,17 @@ the_plan <-
   # gut_df = create_gut_dists(gut_lists),
   
   # gut_summaries = summarise_guts(gut_df),
+  # 
+  modeled_diets = model_diet_props(gut_lists),
   
+  # re-establish conflicts
+  conflicted:::conflicts_register(),
+  
+  #create full data frame of site x yr_third x taxon for diet proportions
+  full_diet_df = create_diet_df(gut_lists, production_summaries[["production_spp_list"]]),
+  # predict diets 
+  predicted_diets = predict_diets(full_diet_df, modeled_diets),
+  #create blank diet matrices to fill in  
   blank_diet_matrices = create_diet_matrices(gut_lists, production_summaries[["production_spp_list"]]),
   
   seasonal_diet_matrices = create_seasonal_matrices(blank_diet_matrices, gut_lists),

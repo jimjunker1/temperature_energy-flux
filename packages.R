@@ -14,7 +14,8 @@
   devtools::install_github("jimjunker1/junkR")
   library(junkR)
   conflict_prefer('count', 'dplyr')
-  p_load_gh("milesmcbain/dflow")
+  devtools::install_github("milesmcbain/dflow")
+  library(dflow)
   rm("package.list" )
   # len <<- function(data)
   # {

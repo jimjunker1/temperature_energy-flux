@@ -3,33 +3,40 @@
 ##' .. content for \details{} ..
 ##'
 ##' @title
-##' @param gut_lists
-##' @param spp_list
-create_diet_matrices <- function(gut_lists, spp_list = production_summaries[["production_spp_list"]]) {
-## ++++ Helper functions ++++ ##
-  create_matrix = function(spp_list, resource_list){
-    # create three matrices for 1:4. 5:8, 9:12 months
-    spp_matrix = matrix(0, nrow = nrow(spp_list), ncol = nrow(spp_list))
-    rownames(spp_matrix) <- colnames(spp_matrix) <- unlist(spp_list)
-    res_matrix = matrix(0, nrow = length(resource_list), ncol = length(resource_list))
-    rownames(res_matrix) <- colnames(res_matrix) <- unlist(resource_list)
-    
-    # create combined lists
-    full_matrix = as.matrix(gtools::smartbind(spp_matrix, res_matrix, fill = 0))
-    rownames(full_matrix)<- colnames(full_matrix)
+##' @param diet_df
+##' @param seasonal_boot_list
+##' 
+create_diet_matrices <- function(diet_df = modeled_diets[['diet_seasonal_boot_split']], seasonal_boot_split) {
+ 
+  ## ++++ Helper functions ++++ ##
+  
+  create_matrix = function(single_diet_df, name_order){
+    # create matrix from full diet proportion data.frame
+    # this function takes a single_diet_df, so it must be mapped
+    # if converting a list
+    spp_names = unique(single_diet_df$taxon)
+    spp_names = spp_names[spp_names %in% name_order]
+    res_names = unique(single_diet_df$diet_item)
+    full_names = c(spp_names, res_names)
+    full_long_df = expand.grid(taxon = full_names, diet_item = full_names)
+    res_long_df = single_diet_df %>% select(taxon, diet_item, rel_area)
+    filled_long_df = join(full_long_df, res_long_df) %>% dplyr::mutate(rel_area = tidyr::replace_na(rel_area, 0))
+    # create matrix from long data frame
+    full_matrix = filled_long_df %>% pivot_wider(names_from = 'taxon', values_from = 'rel_area', values_fn = mean) %>%
+      column_to_rownames('diet_item') %>% as.matrix
+
     return(full_matrix)
   }
   
-  
-## ++++ End Helper functions ++++ ##
-  
-  spp_list = spp_list %>% rlist::list.subset(names(stream_order_list))
-  
-  resource_list = gut_lists[["resource_list"]] %>% rlist::list.subset(names(stream_order_list))
+  ## ++++ End Helper functions ++++ ##
+  # set the name order
+  name_list = seasonal_boot_split %>% map(~.x %>% pluck(1) %>% pluck(1) %>% select(taxon_id) %>% unlist) %>% 
+    rlist::list.subset(names(stream_order_list))
   
   #create blank stream matrices
-  # debugonce(create_matrix)
-  stream_matrices = map2(spp_list, resource_list, ~create_matrix(.x,.y)) %>% rlist::list.subset(names(stream_order_list))
+  debugonce(create_matrix)
+  stream_matrices = future_map2(diet_df, name_list, function(x,y){x %>% 
+      future_map(., ~.x %>% future_map(.,~create_matrix(.x,y )))}) %>% rlist::list.subset(names(stream_order_list))
   
   return(stream_matrices = stream_matrices)
   

@@ -10,7 +10,10 @@ read_production <- function() {
   prod_full_list = readRDS(file = "./data/derived-data/prod_full_fin.rds") %>%
     #rename Tubificid update to Naidid to recognize taxon changes
     purrr::map(~.x %>% purrr::map(~.x %>% dplyr::mutate(taxon_id = case_when(stringr::str_detect("Tubificid 1",taxon_id) ~ "Naidid 1",
-                                                                             stringr::str_detect("Tub. 2", taxon_id) ~ "Naidid 2", 
+                                                                             stringr::str_detect("Tub. 2", taxon_id) ~ "Naidid 2",
+                                                                             stringr::str_detect(" Eukiefferiella|Eukiefferiella", taxon_id) ~ "Eukiefferiella sp.",
+                                                                             stringr::str_detect("Lumb 3", taxon_id) ~ "Lumbricidae",
+                                                                             stringr::str_detect("Orthocladius fridgidus", taxon_id) ~ "Orthocladius frigidus",
                                                                              TRUE ~ taxon_id )))) %>%
     rlist::list.subset(names(stream_order_list))
   
@@ -22,7 +25,7 @@ read_production <- function() {
                               'Snail.egg','Thrips'),
                       oh2 = c(),
                       st7 = c(),
-                      st14 = c('Homoptera', 'S..vernum.pupa', 'S..vitattum.pupa', 'Spider..terr..','Thrips')) %>%
+                      st14 = c('Homoptera', 'S..vernum.pupa', 'S..vitattum.pupa', 'Spider..terr..','Thrips','S. vitattum pupa','S. vernum pupa')) %>%
     rlist::list.subset(names(stream_order_list))
   
   ## remove species with no 
@@ -94,6 +97,19 @@ read_production <- function() {
                                  M_mg_ind = bio_mg_m/n_ind_m))%>%
     rlist::list.subset(names(stream_order_list))
   
-  return(list(int_comm_boots = int_comm_boots, ann_comm_boots = ann_comm_boots, ann_spp_boots = ann_spp_boots, int_spp_boots = int_spp_boots, int_spp_summary = int_spp_summary))
+  # build a summary df to back out interval level flux after combining into thirds
+  int_spp_meta = map(int_spp_boots, ~.x %>%
+                          dplyr::mutate(month_id = lubridate::month(as.Date(date_id)),
+                                        yr_third = case_when(month_id %in% 1:4 ~ "first",
+                                                             month_id %in% 5:8 ~ "second",
+                                                             month_id %in% 9:12 ~ "third"),
+                                        jul_day = julian(as.Date(date_id), origin = as.Date("2010-01-01")),
+                                        y_day = lubridate::yday(date_id)) %>%
+                          group_by(site_id, taxon_id, boot_id, yr_third) %>%
+                          dplyr::mutate(cum_prod = sum(prod_mg_m_int, na.rm = TRUE),
+                                        prop_prod = prod_mg_m_int/cum_prod) %>%
+                          ungroup) %>% rlist::list.subset(names(stream_order_list))
+  
+  return(list(int_comm_boots = int_comm_boots, ann_comm_boots = ann_comm_boots, ann_spp_boots = ann_spp_boots, int_spp_boots = int_spp_boots, int_spp_summary = int_spp_summary, int_spp_meta = int_spp_meta))
 
 }

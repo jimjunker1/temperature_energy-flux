@@ -9,28 +9,56 @@ read_clean_guts <- function() {
   #####    Create taxon rename lists   #####
   
   old_names <- list(c("Csylvestris"),
-                    c("Radix", "RadixBalthica"),
-                    c("Eukie","Eminor"),
+                    c("Radix", "RadixBalthica","Radix.Balthica","Radix.balthica"),
+                    c("Eukie","Eminor","Eukiefferiella sp."),
                     c("Ooblidens"),
                     c("Tany"),
-                    c("Theinem"),
-                    c("Simuliumvittatum", "Svitt"),
-                    c("Oligo"), 
-                    c("Ofridgidus"),
-                    c("Rhecricotopus","Rheocricotpus"),
-                    c("Orthoclad", "Odentiformes"))
+                    c("Theinem","Theinemanniella"),
+                    c("Simuliumvittatum", "Svitt", "Simulium.vittatum"),
+                    c("Oligo", "Lumb 3","Lumb"), 
+                    c("Ofridgidus", "Orthocladius fridgidus","Orthocladius.fridgidus"),
+                    c("Rhecricotopus","Rheocricotpus","Rheocricotopus.effusus","Rheocricotopus"),
+                    c("Orthoclad"),
+                    c("Ceratopegonid"),
+                    c("Chaetocladius dentiforceps","Odentiformes"),
+                    c("Diamesa.bohemani_zernyi"),
+                    c("Diamesa.bertrami"),
+                    c("Eukiefferiella.claripennis"),
+                    c("Eukiefferiella.minor","Eukiefferiella.mino"),
+                    c("Micropsectra", "Micropsectra.sp."),
+                    c("Parochlus"),
+                    c("Potomaphylax.cingulatus"),
+                    c("Prosimulium","Prosimulium.ursinum"),
+                    c("Simulium.vernum"),
+                    c("Sperchon"),
+                    c("Oligochaeta.A"),
+                    c("Clinocera"))
   
   new_names <- list("Cricotopus sylvestris",
                     "Radix balthica",
-                    "Eukiefferiella",
+                    "Eukiefferiella sp.",
                     "Orthocladius oblidens",
                     "Macropelopia",
                     "Thienemanniella sp.",
                     "Simulium vittatum",
                     "Lumbricidae",
-                    "Orthocladius fridgidus",
-                    "Rheocricotopus",
-                    "Orthocladius")
+                    "Orthocladius frigidus",
+                    "Rheocricotopus effusus",
+                    "Orthocladius spp.",
+                    "Ceratopogonidae",
+                    "Chaetocladius dentiforceps",
+                    "Diamesa bohemani_zernyi",
+                    "Diamesa bertrami",
+                    "Eukiefferiella claripennis",
+                    "Eukiefferiella minor",
+                    "Micropsectra sp.",
+                    "Parochlus sp.",
+                    "Potamophylax cingulatus",
+                    "Prosimulium ursinum", 
+                    "Simulium vernum",
+                    "Sperchon glandulosus",
+                    "Oligochaeta A",
+                    "Clinocera stagnalis")
   
   taxon_name_keyval = setNames(rep(new_names, lengths(old_names)), unlist(old_names))
   #####    Gut Content Data Import ####
@@ -197,11 +225,14 @@ read_clean_guts <- function() {
     dplyr::mutate(diet_item = str_replace(diet_item, ".*dia.*","diatom"),
                                            diet_item = str_replace(diet_item, ".*dino.*", "green_algae"),
                                            diet_item = str_replace(diet_item, ".*Bryo.*", "plant_material"),
-                                           diet_item = str_replace(diet_item, ".*Ulva.*", "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(rel_area = 0.001)) %>%
+                                           diet_item = str_replace(diet_item, ".*Ulva.*", "filamentous"),
+                  taxon = recode(taxon, !!!taxon_name_keyval)) %>%
+    group_by(site, date, taxon, diet_item) %>% 
+    dplyr::summarise(rel_area = sum(rel_area)) %>% ungroup %>% 
+    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(rel_area = 0.01)) %>%
     dplyr::filter(!is.na(taxon)) %>%
     dplyr::mutate(rel_area = ifelse(rel_area == 0, 0.001, rel_area),
-                  count = rel_area*1000) %>%
+                  `count` = rel_area*1000) %>%
     group_by(site, date, taxon) %>%
     dplyr::mutate(item_count = sum(count), rel_area = count/item_count) %>%
     select(-item_count, -count) %>% ungroup %>%
@@ -215,8 +246,11 @@ read_clean_guts <- function() {
     dplyr::mutate(diet_item = str_replace(diet_item, ".*dia.*","diatom"),
                                            diet_item = str_replace(diet_item, ".*dino.*", "green_algae"),
                                            diet_item = str_replace(diet_item, ".*Bryo.*", "plant_material"),
-                                           diet_item = str_replace(diet_item, ".*Ulva.*", "filamentous")) %>%
-    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(rel_area = 0.001)) %>%
+                                           diet_item = str_replace(diet_item, ".*Ulva.*", "filamentous"),
+                  taxon = recode(taxon, !!!taxon_name_keyval)) %>%
+    group_by(site, date, taxon, diet_item) %>% 
+    dplyr::summarise(rel_area = sum(rel_area)) %>% ungroup %>% 
+    tidyr::complete(diet_item, nesting(site, date, taxon), fill = list(rel_area = 0.01)) %>%
     dplyr::filter(!is.na(taxon)) %>%
     dplyr::mutate(rel_area = ifelse(rel_area == 0, 0.001, rel_area),
                   count = rel_area*1000) %>%

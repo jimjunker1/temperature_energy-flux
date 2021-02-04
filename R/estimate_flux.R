@@ -3,24 +3,34 @@
 ##' .. content for \details{} ..
 ##'
 ##' @title
-##' @param diet_matrices
+##' @param seasonal_diets
 ##' @param seasonal_fluxes
-estimate_flux <- function(diet_matrices, seasonal_fluxes = seasonal_fluxes[["seasonal_spp_boots_split"]]) {
+estimate_flux <- function(seasonal_diets = diet_matrices, seasonal_fluxes = seasonal_boot_split) {
   ## ++++ Helper functions ++++ ##
+  prod_to_met <- function(production, NPE,...){
+    production %>% 
+      dplyr::mutate(across(contains("prod"), list(loss = ~.x/NPE), .names = "{.fn}")) %>% 
+      dplyr::select(taxon_id, loss) %>% tibble::deframe() -> losses
+  }
   
-  boot_flux_function = function(mat_list, losses, resources_mat, efficiences_vct, NPE,...){
+  boot_flux_function = function(mat, losses, resource_effs_vct,...){
     
-    
-    colnames(mat_list) %>% tibble %>%
+    colnames(mat) %>% tibble %>%
       setNames(., nm = 'matrix_name') %>%
-      dplyr::mutate(efficiencies = dplyr::recode(matrix_name, !!!resource_keyval),
-                    efficiencies = tidyr::replace_na(efficiencies, 0.7)) -> matrix_effiencies
-    boots = mat_list
+      dplyr::mutate(efficiencies = dplyr::recode(matrix_name, !!!resource_effs_vct, .default = 0.7)) -> x 
+   
+      setNames(x$efficiencies, nm = x$matrix_name)-> matrix_efficiencies
+      
+      resource_losses = setNames(rep(0, length(resource_effs_vct)), nm = names(resource_effs_vct))
+      losses = c(losses,resource_losses)
+    
+    flux_obj = fluxing(mat = mat, losses = losses, efficiencies =  matrix_efficiencies,
+                                bioms.losses = FALSE, bioms.prefs = FALSE, ef.level = 'prey', method = 'tbp')
+    return(flux_obj)
     
   }
   ## ++++ End Helper functions ++++ ##
-   prod_list_split = 
-  
+
   
   # resource date frame with efficiences
   diet_item = list("amorphous_detritus",
@@ -45,12 +55,27 @@ estimate_flux <- function(diet_matrices, seasonal_fluxes = seasonal_fluxes[["sea
  # estimate the beta distributions to draw diet AEs from
    set.seed(123)
    beta_dist.pars = map(efficiencies, ~rriskDistributions::get.beta.par(p = c(0.025,0.5,0.975), q = unlist(.x), plot = FALSE, show.output = FALSE))
-   res_effs = map(beta_dist.pars, ~rbeta(1e3, shape1 = .x[1], shape2 = .x[2])) %>% setNames(., nm = unlist(diet_item))
+   res_effs = map(beta_dist.pars, ~rbeta(nboot, shape1 = .x[1], shape2 = .x[2])) %>% 
+     setNames(., nm = unlist(diet_item)) %>% bind_cols %>% split(., seq(nrow(.))) %>% map(~unlist(.))
 
  #NPE quantile 0.025,0.5,0.975
+   set.seed(42)
    NPE_dist.pars = rriskDistributions::get.beta.par(p = c(0.025,0.5,0.975),q = c(0.4,0.45,0.5), show.output = FALSE, plot = FALSE)
-   NPE = rbeta(1e3, shape1 = NPE_dist.pars[1], shape2 = NPE_dist.pars[2])
+   NPE = rbeta(nboot, shape1 = NPE_dist.pars[1], shape2 = NPE_dist.pars[2])
  # combined the production from Jan-Apr, May-Aug, Sep-Dec
-
-
+   
+   # convert production to metabolic fluxes
+   # debugonce(prod_to_met)
+   fluxes = map(seasonal_fluxes, ~.x %>% map(., ~.x %>% map2(., NPE, ~prod_to_met(.x, NPE = .y)))) %>% rlist::list.subset(names(stream_order_list))
+   # seasonal_diets= seasonal_diets[1:2]
+   # fluxes = fluxes[1:2]
+   # 
+   # debugonce(boot_flux_function)
+   # a = boot_flux_function(x,y,z)
+   flux_full = map2(seasonal_diets, fluxes, function(x,y){
+     map2(x, y, function(a,b){
+   pmap(list(a,b,res_effs), ~boot_flux_function(mat =..1, losses = ..2, resource_effs_vct = ..3))
+     })})
+       
+   return(flux_full)
 }

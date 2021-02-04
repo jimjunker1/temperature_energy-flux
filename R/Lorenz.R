@@ -16,8 +16,9 @@ library(ggplot2)
 #'lcs_table is used to compute the values of each Lorenz curve
 #' @param ps is a list of observed abundance/frequency vectors corresponding to multiple assemblages. 
 #' @return the values for plotting the Lorenz curve of each assemblage.
-lcs_table = function(ps){
+lcs_table = function(ps, resp_var = NULL, sort_var = NULL,...){
   lc = function(p,j){
+    if(is.vector(p)){
     p = p[p>0]
     s = length(p)
     p = p/sum(p)
@@ -25,7 +26,17 @@ lcs_table = function(ps){
     out_x = sapply(1:s, function(i){i/s})
     out_y = sapply(1:s, function(i){sum(p[1:i])})
     out = data.frame(x = c(0,out_x),y = c(0,out_y),source = names(ps)[j])
-  }
+    } else{ p <- data.frame(p)
+    p <- p[resp_var > 0,]
+    s <- nrow(p)
+    resp_string = paste0("relative_",resp_var)
+    # resp_var = as.name(resp_var)
+    p[[resp_string]] <- with(p, resp_var/sum(resp_var)) -> p.rel
+    p.rel = p.rel %>% dplyr::arrange(sort_var)
+    out_x <- sapply(1:s, function(i){i/s})
+    out_y <- sapply(1:s, function(i){sum(p.rel[1:i,resp_var])})
+    out <- data.frame(x = c(0,out_x), y = c(0,out_y), source = names(ps)[j])
+  }};debugonce(lc)
   curves = lapply(1:length(ps),function(j){lc(ps[[j]],j)})
   curves = do.call(rbind,curves)
 }
@@ -63,11 +74,11 @@ lcs_plot = function(curves){
 
 #' This code is modified from Chao and Ricotta 2019 (Ecology)
 #' source: https://github.com/AnneChao/Evenness/blob/master/Evenness.R
-#' Gini_even computes the two Gini evenness indices mentioned in the Discussion section and in Appendix S4.
+#' gini_even computes the two Gini evenness indices mentioned in the Discussion section and in Appendix S4.
 #' 
 #' @param x is an observed species abundance or frequency or production vector. 
 #' @return a vector of two Gini evenness indices (non-normalized and normalizd).
-Gini_even <- function(x){
+gini_even <- function(x){
   x <- sort(x[x>0], decreasing = T)/sum(x)
   S <- length(x)
   ipi <- sapply(1:S, function(i) i*x[i]) %>% sum

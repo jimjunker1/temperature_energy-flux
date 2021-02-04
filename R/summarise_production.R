@@ -45,7 +45,7 @@ summarise_production <- function(production_boots) {
                                                                              quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE))))) %>% 
    bind_rows
   
-   production_spp_list = ann_spp_summary %>% named_group_split(site_id) %>% map(~.x %>% select(taxon_id))
+   production_spp_list = ann_spp_summary %>% named_group_split(site_id) %>% map(~.x %>% select(taxon_id)) %>% rlist::list.subset(names(stream_order_list))
    
    return(list(int_comm_summary = int_comm_summary, ann_comm_summary = ann_comm_summary, ann_spp_summary = ann_spp_summary, int_spp_summary= int_spp_summary, production_spp_list = production_spp_list))
 

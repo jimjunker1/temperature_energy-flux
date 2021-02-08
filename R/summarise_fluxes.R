@@ -40,9 +40,11 @@ summarise_fluxes <- function(flux_estimates, int_spp_meta = production_boots[["i
                                                             quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE))))) %>%
   bind_rows
   
-  annual_spp_flux_summary <- flux_boots_df %>% 
-    group_by(site, boot_id, diet_item, taxon) %>% 
-    dplyr::summarise(flux_mg_m_y = sum(flux_mg_m_third))%>% ungroup %>%
+  annual_spp_flux_boots <- flux_boots_df %>% 
+    group_by(site, boot_id, taxon) %>% 
+    dplyr::summarise(flux_mg_m_y = sum(flux_mg_m_third))%>% ungroup 
+    
+    annual_spp_flux_summary <- annual_spp_flux_boots %>%
     group_by(site, taxon) %>% dplyr::summarise(across(matches('flux'), list(mean = ~mean(.x, na.rm = TRUE),
                                                                             quant2.5 = ~quantile(.x, 0.025, na.rm = TRUE),
                                                                             quant25 = ~quantile(.x, 0.25, na.rm = TRUE),
@@ -66,6 +68,6 @@ summarise_fluxes <- function(flux_estimates, int_spp_meta = production_boots[["i
     # group_by(site, date_id, jul_day, y_day, yr_third ) %>%
     dplyr::mutate(flux_mg_m_int = prop_prod*flux_mg_m_third)
   
-  return(list(flux_boots_df = flux_boots_df, annual_spp_diet_flux_summary = annual_spp_diet_flux_summary, annual_spp_flux_summary = annual_spp_flux_summary , annual_comm_flux_summary = annual_comm_flux_summary, int_spp_flux_boots = int_spp_flux_boots))
+  return(list(flux_boots_df = flux_boots_df, annual_spp_diet_flux_summary = annual_spp_diet_flux_summary, annual_spp_flux_boots = annual_spp_flux_boots, annual_spp_flux_summary = annual_spp_flux_summary , annual_comm_flux_summary = annual_comm_flux_summary, int_spp_flux_boots = int_spp_flux_boots))
   
 }

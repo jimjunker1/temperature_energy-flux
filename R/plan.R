@@ -34,11 +34,26 @@ the_plan <-
   flux_summaries = summarise_fluxes(flux_estimates, production_boots[["int_spp_meta"]]),
   
    ### trait analyses
+  #
+  spp_rankings_boots = rank_spp_boots(production_boots[['ann_spp_boots']]),
+  #
+  spp_rankings_summary = rank_spp_traits(production_summaries[["ann_spp_summary"]], flux_summaries[["annual_spp_flux_summary"]]),
   
-  spp_rankings = rank_spp_traits(production_summaries),
+  gini_analysis = analyze_gini(flux_summaries[["annual_spp_flux_boots"]]),
+  #
+  lorenz_analysis = analyze_lorenz(flux_summaries[["annual_spp_flux_boots"]], spp_rankings_boots),
+  #lorenz asymmetry analysis
+  lorenz_asym_analysis = analyze_lorenz_asymmetry(lorenz_analysis),
   
-  # gini_analysis = analyze_gini(spp_rankings),
-
+   
+   ### figures
+  #
+  annual_spp_flux_fig = plot_spp_flux(flux_summaries[["annual_spp_flux_summary"]], environment_data[["stream_temp_labels"]]),
+  #
+  spp_trait_histograms = plot_trait_histogram(spp_rankings_summary),
+  #
+  lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
+  
   # target_name = target(
   #   command = {
   #     rmarkdown::render(knitr_in("docs/prelim-doc.Rmd"))

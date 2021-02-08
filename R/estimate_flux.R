@@ -18,11 +18,12 @@ estimate_flux <- function(seasonal_diets = diet_matrices, seasonal_fluxes = seas
     colnames(mat) %>% tibble %>%
       setNames(., nm = 'matrix_name') %>%
       dplyr::mutate(efficiencies = dplyr::recode(matrix_name, !!!resource_effs_vct, .default = 0.7)) -> x 
-   
+   spp_order = colnames(mat)
       setNames(x$efficiencies, nm = x$matrix_name)-> matrix_efficiencies
       
       resource_losses = setNames(rep(0, length(resource_effs_vct)), nm = names(resource_effs_vct))
       losses = c(losses,resource_losses)
+      matrix_efficiencies = matrix_efficiencies[spp_order];losses = losses[spp_order]
     
     flux_obj = fluxing(mat = mat, losses = losses, efficiencies =  matrix_efficiencies,
                                 bioms.losses = FALSE, bioms.prefs = FALSE, ef.level = 'prey', method = 'tbp')
@@ -30,8 +31,6 @@ estimate_flux <- function(seasonal_diets = diet_matrices, seasonal_fluxes = seas
     
   }
   ## ++++ End Helper functions ++++ ##
-
-  
   # resource date frame with efficiences
   diet_item = list("amorphous_detritus",
                 "cyanobacteria",
@@ -67,11 +66,10 @@ estimate_flux <- function(seasonal_diets = diet_matrices, seasonal_fluxes = seas
    # convert production to metabolic fluxes
    # debugonce(prod_to_met)
    fluxes = map(seasonal_fluxes, ~.x %>% map(., ~.x %>% map2(., NPE, ~prod_to_met(.x, NPE = .y)))) %>% rlist::list.subset(names(stream_order_list))
-   # seasonal_diets= seasonal_diets[1:2]
-   # fluxes = fluxes[1:2]
+    # seasonal_diets= seasonal_diets[1:2]
+    # fluxes = fluxes[1:2]
    # 
    # debugonce(boot_flux_function)
-   # a = boot_flux_function(x,y,z)
    flux_full = map2(seasonal_diets, fluxes, function(x,y){
      map2(x, y, function(a,b){
    pmap(list(a,b,res_effs), ~boot_flux_function(mat =..1, losses = ..2, resource_effs_vct = ..3))

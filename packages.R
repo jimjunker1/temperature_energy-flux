@@ -49,6 +49,7 @@
 
   cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
   # load("./object_files/ocecolors.rda")
+  overkt_to_C <- function(a){1/(a*(8.61733*10^-5)) - 273.15}
   theme_mod = function(){theme_bw() %+replace% theme(panel.grid = element_blank())}
   theme_black = function() {theme_bw() %+replace% theme(panel.background = element_rect(fill = 'transparent', colour = NA),panel.grid = element_blank(), axis.ticks = element_line(color = 'white'),
                                                           axis.title = element_text(color = 'white'), axis.text = element_text(color = 'white'), plot.background =element_rect(fill = 'transparent', colour = NA),

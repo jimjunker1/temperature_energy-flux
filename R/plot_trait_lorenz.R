@@ -10,6 +10,8 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
 
  lorenz_analysis[["relative_flux_df"]] %>%
     ggplot(aes(x = rel_spp, y = rel_flux)) +
+    geom_abline(color = "black")+
+    geom_abline(intercept = 1, slope = -1, color = "black", linetype = "dotted")+
     geom_line(aes(group = boot_id), size = 1, color = 'grey', alpha = 0.5) +
     geom_line(data = lorenz_analysis[["relative_flux_summary"]], aes(x = rel_spp, y = rel_flux, color = site), size = 1.5)+
     scale_x_continuous(name = "Cumulative species", limits = c(0,1), expand = c(0,0.03))+
@@ -27,6 +29,8 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
     
     lorenz_analysis[["pb_ranking_boots"]] %>%
         ggplot(aes(x = rel_spp, y = rel_flux)) +
+        geom_abline(color = "black")+
+        geom_abline(intercept = 1, slope = -1, color = "black", linetype = "dotted")+
         geom_line(aes(group = boot_id), color = "grey", alpha = 0.5) +
         geom_line(data = spp_rankings_summary[["PB_spp_rank"]], aes(x = rel_spp, y = rel_flux, color = site), size = 1.5) +
         scale_x_continuous(name = "Cumulative species", limits = c(0,1), expand = c(0,0.03))+
@@ -44,6 +48,8 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
     
     lorenz_analysis[["M_ranking_boots"]] %>%
         ggplot(aes(x = rel_spp, y = rel_flux)) +
+        geom_abline(color = "black")+
+        geom_abline(intercept = 1, slope = -1, color = "black", linetype = "dotted")+
         geom_line(aes(group = boot_id), color = "grey", alpha = 0.5) +
         geom_line(data = spp_rankings_summary[["M_spp_rank"]], aes(x = rel_spp, y = rel_flux, color = site), size = 1.5) +
         scale_x_continuous(name = "Cumulative species", limits = c(0,1), expand = c(0,0.03))+
@@ -61,9 +67,11 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
     
     lorenz_analysis[["bio_ranking_boots"]] %>%
         ggplot(aes(x = rel_bio, y = rel_flux)) +
+        geom_abline(color = "black")+
+        geom_abline(intercept = 1, slope = -1, color = "black", linetype = "dotted")+
         geom_line(aes(group = boot_id), color = "grey", alpha = 0.5) +
         geom_line(data = spp_rankings_summary[["bio_spp_rank"]], aes(x = rel_bio, y = rel_flux, color = site), size = 1.5) +
-        scale_x_continuous(name = "Cumulative species", limits = c(0,1), expand = c(0,0.03))+
+        scale_x_continuous(name = "Cumulative Biomass", limits = c(0,1), expand = c(0,0.03))+
         scale_y_continuous(name = "Cumulative flux", limits = c(0,1), expand = c(0,0.03))+
         scale_colour_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
         theme_tufte(ticks = TRUE) +

@@ -3,12 +3,12 @@ title: "Prelim report"
 author: "Junker"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
-  html_document:
-      keep_md: true
-      toc: true
-      toc_float: true
-      toc_depth: 3
-      numbered_sections: true
+  html_document: 
+    keep_md: yes
+    toc: yes
+    toc_float: yes
+    numbered_sections: yes
+bibliography: refs.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -18,8 +18,7 @@ source("./packages.R")
 stream_order = factor(c("hver", "st6","st9", "st7","oh2","st14"))#stream ordering
 stream_temp_labels = c("27.2","17.6","11.2","5.8","5.5","5.0")#stream annual temperature labels
 oce_temp_pos = c(256,212,168,124,80,1)#color positions in 'temperature' list of ocecolors
-
-drake::loadd("spp_rankings")
+library(knitr)
 
 ```
 
@@ -27,41 +26,101 @@ drake::loadd("spp_rankings")
 
 Preliminary figures for exploring data analyses and figures.
 
-### Histograms of PB, M, and Biomass among streams.
+First, thing I did was find a way to model and propagate error of diets across sites. To do so, I build a bayesian random effects model that incorporated varying seasons, taxon, and streams and modeled the multinomial diet response using a dirichlet family distributional model. The model priors assume equal contribution of all diet items, which is conservative, but it outputs posterior distributions of diet proportions. These we can draw from for each taxa and each bootstrap to incorporate uncertainty through the flux estimates. I only estimated this for non-predators and then predators assumed to have a diet of 100% animal material. The posterior distributions look something like the plot below. This is subsampled to allow for a more manageable plot file size, but it captures the distributions.
 
-```{r pb historgram, echo = FALSE, warnings = FALSE}
-pb_df = spp_rankings[['PB_spp_rank']] %>% bind_rows %>% dplyr::filter(pb_y_mean >0) %>% dplyr::mutate(site_id = factor(site_id, levels = rev(stream_order)))
-bio_df = spp_rankings[['bio_spp_rank']] %>% bind_rows %>% dplyr::filter(bio_mg_m_mean >0 | is.na(bio_mg_m_mean)) %>% dplyr::mutate(site_id = factor(site_id, levels = rev(stream_order)))
-M_df = spp_rankings[['M_spp_rank']] %>% bind_rows %>% dplyr::filter(M_mg_ind_mean >0 | is.na(M_mg_ind_mean)) %>% dplyr::mutate(site_id = factor(site_id, levels = rev(stream_order)))
+### Stream-level posterior distributions of diet contributions
 
-pb_boxplot = ggplot(pb_df,aes(x = site_id, y = log10(pb_y_mean))) + geom_violin(aes(fill = site_id), alpha = 0.5) +
-  geom_jitter(aes( fill = site_id),color = 'black', size = 2, shape = 21, alpha = 0.5) +
-  scale_fill_manual(values = rev(ocecolors[['temperature']][oce_temp_pos]), labels = rev(stream_temp_labels)) +
-  theme(axis.title.x = element_blank(), legend.title = element_blank(), legend.position = c(0,0), legend.justification = c(0,0),
-        legend.background = element_rect(fill = 'transparent', colour = NA))
-# pb_boxplot
+```{r diet plots, echo = FALSE, warning=FALSE}
 
-M_boxplot = ggplot(M_df,aes(x = site_id, y = log10(M_mg_ind_mean))) + geom_violin(aes(fill = site_id), alpha = 0.5) +
-  geom_jitter(aes( fill = site_id),color = 'black', size = 2, shape = 21, alpha = 0.5) +
-  scale_fill_manual(values = rev(ocecolors[['temperature']][oce_temp_pos]), labels = rev(stream_temp_labels)) +
-  theme(axis.title.x = element_blank(), legend.title = element_blank(), legend.position = "none")
+drake::loadd(prelim_diet_figures)
 
-bio_boxplot = ggplot(bio_df,aes(x = site_id, y = log10(bio_mg_m_mean))) + geom_violin(aes(fill = site_id), alpha = 0.5) +
-  geom_jitter(aes( fill = site_id),color = 'black', size = 2, shape = 21, alpha = 0.5) +
-  scale_fill_manual(values = rev(ocecolors[['temperature']][oce_temp_pos]), labels = rev(stream_temp_labels)) +
-  theme(axis.title.x = element_blank(), legend.title = element_blank(),legend.position = "none")
-
-grid.arrange(pb_boxplot, M_boxplot, bio_boxplot, ncol = 3)
+prelim_diet_figures
 
 ```
 
-### Rank plots 
+### Rank plots
 
+When we look at the distribution of OM flux to taxa, we see varying evenness in the distributions of OM fluxes. One way to view this is rank-production plots:
+
+```{r rank-production plots, echo = FALSE, warning=FALSE, height = 8, width = 8, units = 'in'}
+drake::loadd(annual_spp_flux_fig)
+
+annual_spp_flux_fig
+
+```
+
+This gives the impression that the evenness of production is highest in the mid range temperatures. However, evenness is not as straightforward because evenness is related to species richness in almost all formulations of it. A consensus seems to be emerging that evenness must be corrected for richness to compare across sites [@chao2019]. Once we correct for this we see evenness is not lowest at higher temperatures, but in the middle when we account for species richness. This is based on the Gini index which measures inequality and when standardized ranges from 0 to 1.
+
+```{r gini table, echo = FALSE, warning=FALSE}
+
+drake::loadd(gini_analysis)
+drake::loadd(environment_data)
+
+ann_temps = environment_data[["ann_stream_temps"]]
+
+gini_summ = gini_analysis[["stream_gini_summary"]] %>% dplyr::select(c(site, contains("mean"), contains("quant2.5"), contains("quant97.5"))) %>% left_join(ann_temps %>% dplyr::select(site = "SITE", tempC), by = "site") %>% dplyr::mutate(tempc = round(tempC, 1)) %>% dplyr::select(site, tempC, contains('Non-normalized'), contains("Normalized")) %>% dplyr::arrange(desc(tempC))
+knitr::kable(gini_summ, digits = 2)
+```
+
+Another way to view this is to look at the accumulation of flux across the accumulation of species standardize 0-1. This is often viewed as a Lorenz curve. Here we order species by annual flux, $x_i$ is the annual flux of species *i*, such that $x_1 < x_2 < ... < x_n$. If every species contributes an equal amount to production the Lorenz curve falls along the solid 1:1 line on the plot. The bold colored lines represent the mean value and each grey line is an individual bootstrapped estimate. 
+
+### Lorenz curves of cumulative flux with species
+
+```{r lorenz of flux, echo = FALSE, warning=FALSE}
+drake::loadd(lorenz_trait_fig)
+
+lorenz_trait_fig[[1]]
+
+```
+
+Here we see that total community flux accumulates differently across the streams. There are a few instances when it looks like abrupt 'jumps' in cumulative flux. These are mostly driven by species that dominate biomass. When we look at how flux accumulates with biomass we see the curves fall near the 1:1 lines, which is expected since standing biomass strongly influences production. In st14 we see lots of variation driven by empty samples and low sample size in the winter.  
+
+### Lorenz curve of cumulative flux v. biomass
+
+```{r lorenz biomass, echo = FALSE, warning=FALSE}
+
+lorenz_trait_fig[[4]]
+
+```
+
+This allows us an opportunity to look how total community flux accumulates across different species traits in a standardized way. So rather than the distribution differences attributed to different absolute magnitudes they are attributed to the relative magnitudes. So how does temperature modify how flux accumulates with species traits such as annual P:B and mean body size. First, a look at the distribution of traits across taxa in the streams.
+
+### Histograms of PB, M, and Biomass among streams.
+
+```{r pb histogram, echo = FALSE, warnings = FALSE}
+
+drake::loadd(spp_trait_histograms)
+
+grid.draw(spp_trait_histograms)
+
+```
+
+So how does flux accumulate with annual *P:B* across sites? Here, we order each species by *P:B*, such that $pb_1 < pb_2 < ... < pb_n$. We see the most striking differences at the warmest and coldest sites. At hver, OM flux is disproportionately skewed towards taxa with higher annual *P:B* and in st14 flux is disproportionately skewed towards low *P:B* taxa.
+
+### Accumulation of flux with P:B across sites
+
+```{r pb lorenz, echo = FALSE, warning=FALSE}
+lorenz_trait_fig[[2]]
+```
+
+So how does flux accumulate with mean body size, *M*, across sites? Here, we order each species by *M*, such that $M_1 < M_2 < ... < M_n$. This give a complementary story to *P:B*, flux in hver is disproportionately skewed towards lower *M*, and st14 skewed towards larger relative *M*. We are also able to glean a bit more information from some of the mid temperature streams. In st9 (11.2 $^\circ$C) the largest taxa also has the largest flux (and biomass)
+
+### Accumulation of flux with M across sites
+
+```{r M lorenz, echo = FALSE, warning=FALSE}
+lorenz_trait_fig[[3]]
+```
 
 
 ## Reproducibility
 
-<details><summary>Reproducibility receipt</summary>
+<details>
+
+<summary>
+
+Reproducibility receipt
+
+</summary>
 
 ```{r}
 ## datetime
@@ -82,3 +141,5 @@ sessionInfo()
 ```
 
 </details>
+
+## References

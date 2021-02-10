@@ -86,3 +86,42 @@ gini_even <- function(x){
 }
 
 
+#' This code is modified from ineq::Lasym
+#' Lasym_strict computes the Lorenz asymmetry coefficient of a Lorenz curve ordered on a variable
+#' 
+#' @param x is an observed species abundance or frequency or production vector.
+#' @param ord_var is the variable by which to order the production 
+#' @return a vector of two Gini evenness indices (non-normalized and normalizd).
+Lasym_strict <- function (x, n = rep(1, length(x)), ord_var = NULL, interval = FALSE, na.rm = TRUE, decreasing = TRUE,...) 
+{
+  if (!na.rm && any(is.na(x))) 
+    return(rep.int(NA_real_, 1L + as.integer(interval)))
+  x <- as.numeric(na.omit(x))
+  if(decreasing == TRUE){
+  o <- x %>% dplyr::arrange(x, desc(ord_var))
+  } else{
+  o <- dplyr::arrange(x, ord_var)
+  }
+  x <- x[o]
+  w <- n[o]
+  mu <- weighted.mean(ord_var, w)
+  xlow <- x[ord_var < mu]
+  m <- sum(w[xlow])
+  n <- sum(w)
+  Lm <- sum(w[xlow] * x[xlow])
+  Ln <- sum(w * x)
+  if (any(xeq <- x == mu)) {
+    a <- sum(w[xeq])
+    Lma <- sum(w[xlow | xeq] * x[xlow | xeq])
+    Lac <- c(m/n + Lm/Ln, (m + a)/n + Lma/Ln)
+    if (!interval) 
+      Lac <- mean(Lac)
+  }
+  else {
+    xm <- max(x[xlow])
+    xm1 <- min(x[!xlow])
+    delta <- (mu - xm)/(xm1 - xm)
+    Lac <- (m + delta)/n + (Lm + delta * xm1)/Ln
+  }
+  Lac
+}

@@ -48,16 +48,18 @@ the_plan <-
    
    ### figures
   #
+  prelim_diet_figures = plot_stream_diets(modeled_diets[["diet_predictions"]]),
+  #
   annual_spp_flux_fig = plot_spp_flux(flux_summaries[["annual_spp_flux_summary"]], environment_data[["stream_temp_labels"]]),
   #
   spp_trait_histograms = plot_trait_histogram(spp_rankings_summary),
   #
   lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
   
-  # target_name = target(
-  #   command = {
-  #     rmarkdown::render(knitr_in("docs/prelim-doc.Rmd"))
-  #     file_out("docs/prelim-doc.html")
-  #   }
-  # )  
+  target_name = target(
+    command = {
+      rmarkdown::render(knitr_in("docs/prelim-doc.Rmd"))
+      file_out("docs/prelim-doc.html")
+    }
+  )
 )

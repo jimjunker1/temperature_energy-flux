@@ -87,25 +87,21 @@ gini_even <- function(x){
 
 
 #' This code is modified from ineq::Lasym
-#' Lasym_strict computes the Lorenz asymmetry coefficient of a Lorenz curve ordered on a variable
+#' Lasym_strict computes the Lorenz asymmetry coefficient of a Lorenz curve with a strict ordering of values
+#' e.g., not descending 
 #' 
 #' @param x is an observed species abundance or frequency or production vector.
-#' @param ord_var is the variable by which to order the production 
-#' @return a vector of two Gini evenness indices (non-normalized and normalizd).
-Lasym_strict <- function (x, n = rep(1, length(x)), ord_var = NULL, interval = FALSE, na.rm = TRUE, decreasing = TRUE,...) 
+#' @param ord_var is the variable by which to order x
+#' @return a value of asymmetry
+Lasym_strict <- function (x, resp_var = NULL, ord_var = NULL, interval = FALSE, na.rm = TRUE,...) 
 {
   if (!na.rm && any(is.na(x))) 
     return(rep.int(NA_real_, 1L + as.integer(interval)))
-  x <- as.numeric(na.omit(x))
-  if(decreasing == TRUE){
-  o <- x %>% dplyr::arrange(x, desc(ord_var))
-  } else{
+  # x <- as.numeric(na.omit(x))
   o <- dplyr::arrange(x, ord_var)
-  }
-  x <- x[o]
-  w <- n[o]
-  mu <- weighted.mean(ord_var, w)
-  xlow <- x[ord_var < mu]
+  
+  mu <- mean(resp_var, na.rm = TRUE)
+  xlow <- x[resp_var < mu]
   m <- sum(w[xlow])
   n <- sum(w)
   Lm <- sum(w[xlow] * x[xlow])

@@ -5,7 +5,7 @@
 ##' @title
 ##' @param flux_estimates
 ##' @param int_spp_meta
-summarise_fluxes <- function(flux_estimates, int_spp_meta = production_boots[["int_spp_meta"]]) {
+summarise_fluxes <- function(flux_estimates = flux_estimates[["flux_full"]], int_spp_meta = production_boots[["int_spp_meta"]]) {
 
   #compress the flux matrix to the OM fluxes from resources
   compress_flux <- function(mat){
@@ -55,7 +55,7 @@ summarise_fluxes <- function(flux_estimates, int_spp_meta = production_boots[["i
   annual_comm_flux_summary <- flux_boots_df %>%
     group_by(site, boot_id, diet_item, taxon) %>% 
     dplyr::summarise(flux_mg_m_y = sum(flux_mg_m_third))%>% ungroup %>%
-    group_by(site, boot_id) %>% dplyr::summarise(across(matches('flux'), list(flux_mg_m_y = ~sum(.x, na.rm = TRUE)))) %>%
+    group_by(site, boot_id) %>% dplyr::summarise(across(matches('flux'), list(flux_mg_m_y = ~sum(.x, na.rm = TRUE)), .names = "{.fn}")) %>%
     group_by(site) %>% dplyr::summarise(across(matches('flux'), list(mean = ~mean(.x, na.rm = TRUE),
                                                                      quant2.5 = ~quantile(.x, 0.025, na.rm = TRUE),
                                                                      quant25 = ~quantile(.x, 0.25, na.rm = TRUE),

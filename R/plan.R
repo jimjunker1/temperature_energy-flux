@@ -31,19 +31,27 @@ the_plan <-
   # estimate the fluxes, YEAH!!
   flux_estimates = estimate_flux(diet_matrices, seasonal_boot_split),
   #
-  flux_summaries = summarise_fluxes(flux_estimates, production_boots[["int_spp_meta"]]),
+  flux_summaries = summarise_fluxes(flux_estimates[["flux_full"]], production_boots[["int_spp_meta"]]),
   
    ### trait analyses
   #
   spp_rankings_boots = rank_spp_boots(production_boots[['ann_spp_boots']]),
   #
   spp_rankings_summary = rank_spp_traits(production_summaries[["ann_spp_summary"]], flux_summaries[["annual_spp_flux_summary"]]),
-  
+  #
+  random_rankings = create_random_ranks(flux_summaries[["annual_spp_flux_boots"]], n = 1e5),
+  #
   gini_analysis = analyze_gini(flux_summaries[["annual_spp_flux_boots"]]),
   #
   lorenz_analysis = analyze_lorenz(flux_summaries[["annual_spp_flux_boots"]], spp_rankings_boots),
   #lorenz asymmetry analysis
-  lorenz_asym_analysis = analyze_lorenz_asymmetry(lorenz_analysis),
+  # lorenz_asym_analysis = analyze_lorenz_asymmetry(lorenz_analysis),
+  #skew
+  skew_analysis = analyze_skew(lorenz_analysis, random_rankings),
+  # diversity analyses
+  # hill_diversity_analysis = analyze_hill_diversity(flux_summaries[["annual_spp_flux_boots"]], flux_summaries[["ann_spp_flux_summary"]]),
+  #partial dominance
+  partial_dominance_analysis = analyze_dominance(flux_summaries[["annual_spp_flux_boots"]]),
   
    
    ### figures
@@ -56,10 +64,10 @@ the_plan <-
   #
   lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
   
-  target_name = target(
-    command = {
-      rmarkdown::render(knitr_in("docs/prelim-doc.Rmd"))
-      file_out("docs/prelim-doc.html")
-    }
-  )
+  # target_name = target(
+    # command = {
+      # rmarkdown::render(knitr_in("docs/prelim-doc.Rmd"))
+      # file_out("docs/prelim-doc.html")
+    # }
+  # )
 )

@@ -74,6 +74,9 @@ estimate_flux <- function(seasonal_diets = diet_matrices, seasonal_fluxes = seas
      map2(x, y, function(a,b){
    pmap(list(a,b,res_effs), ~boot_flux_function(mat =..1, losses = ..2, resource_effs_vct = ..3))
      })})
+   
+   ann_fluxes = fluxes %>% map(~.x %>% map(~.x %>% bind_rows(.id = 'boot_id')) %>% bind_rows(.id = 'yr_third') %>% pivot_longer(-boot_id:-yr_third, names_to = 'taxon', values_to = 'flux_mg_m') %>%
+                                             group_by(taxon, boot_id) %>% dplyr::summarise(flux_mg_m_y = sum(flux_mg_m, na.rm = TRUE))) %>% bind_rows(.id = 'site')
        
-   return(flux_full)
+   return(list(energy_demand= ann_fluxes, flux_full = flux_full))
 }

@@ -3,12 +3,12 @@
   if(!require("pacman")) install.packages("pacman")
   library(pacman)
   package.list <- c("conflicted", "dotenv", "drake","data.table","gtools",
-                    "RCurl","plyr","tidyverse","furrr", "fnmate", 
+                    "RCurl","plyr","tidyverse","furrr", "fnmate", "moments",
                     "dflow","rmarkdown","tictoc","chron","lubridate","httr","TTR", 
                     "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown",
                     "viridis", "broom","bbmle","ggthemes", "ggeffects",
                     "fluxweb","igraph","ggraph","magick","cowplot","rriskDistributions",
-                    "rstan", "brms", "tidybayes", "parallel")
+                    "rstan", "brms", "tidybayes", "parallel", "hillR")
   p_load(char = package.list, install = TRUE, character.only = TRUE)
   # p_load_gh("jimjunker1/junkR")
   devtools::install_github("jimjunker1/junkR")
@@ -70,6 +70,7 @@
   
 source("./R/fluxweb_mod_function.R")
 source("./R/Lorenz.R")
+source("./R/Evenness.R")
 nboot = 1e3
 theme_set(theme_mod())
 options(mc.cores = parallel::detectCores()-1)

@@ -34,7 +34,7 @@ create_diet_matrices <- function(diet_df = modeled_diets[['diet_seasonal_boot_sp
     rlist::list.subset(names(stream_order_list))
   
   #create blank stream matrices
-  debugonce(create_matrix)
+  # debugonce(create_matrix)
   stream_matrices = map2(diet_df, name_list, function(x,y){x %>% 
      map(., ~.x %>% future_map(.,~create_matrix(.x,y )))}) %>% rlist::list.subset(names(stream_order_list))
   

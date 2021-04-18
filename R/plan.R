@@ -49,25 +49,44 @@ the_plan <-
   #skew
   skew_analysis = analyze_skew(lorenz_analysis, random_rankings),
   # diversity analyses
-  # hill_diversity_analysis = analyze_hill_diversity(flux_summaries[["annual_spp_flux_boots"]], flux_summaries[["ann_spp_flux_summary"]]),
+  hill_diversity_analysis = analyze_hill_diversity(flux_summaries[["annual_spp_flux_summary"]]),
   #partial dominance
   partial_dominance_analysis = analyze_dominance(flux_summaries[["annual_spp_flux_boots"]]),
   
    
    ### figures
   #
-  prelim_diet_figures = plot_stream_diets(modeled_diets[["diet_predictions"]]),
+  prelim_diet_figures = plot_stream_diets(modeled_diets[["diet_predictions"]]),#figure s1
   #
   annual_spp_flux_fig = plot_spp_flux(flux_summaries[["annual_spp_flux_summary"]], environment_data[["stream_temp_labels"]]),
+  #
+  # evenness_profile_fig = plot_evenness_profile(hill_diversity_analysis),
   #
   spp_trait_histograms = plot_trait_histogram(spp_rankings_summary),
   #
   lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
+  #
+  random_skew_fig = plot_random_skew(skew_analysis),
+  
   
   # target_name = target(
     # command = {
-      # rmarkdown::render(knitr_in("docs/prelim-doc.Rmd"))
-      # file_out("docs/prelim-doc.html")
+      # rmarkdown::render(knitr_in("doc/prelim-doc.Rmd"))
+      # file_out("doc/prelim-doc.html")
     # }
+  # ),
+  # 
+  # ms_file = target(
+  #   command = {
+  #     rmarkdown::render(knitr_in("doc/./ms/ms.Rmd"))
+  #     file_out("doc/./ms/ms.docx")
+  #   }
+  # ),
+  # 
+  # figure_file = target(
+  #   command = {
+  #     rmarkdown::render(knitr_in("doc/./ms/tables-figures.Rmd"))
+  #     file_out("doc/./ms/tables-figures.docx")
+  #   }
   # )
 )

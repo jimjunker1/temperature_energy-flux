@@ -16,6 +16,7 @@ rank_spp_traits <- function(ann_spp_summary = production_summaries[["ann_spp_sum
     left_join(ann_flux_summary, by = c('site', 'taxon')) %>%
     # purrr::map(~.x %>%
                  dplyr::select(site, taxon, matches('prod.*_mean'), matches('flux')) %>%
+                 dplyr::filter_at(vars(matches('flux')), all_vars(. > 0)) %>% 
                  dplyr::mutate(prod_ann_rank = dense_rank(prod_mg_m_y_mean)) %>%
                  dplyr::arrange(across(matches('.*ann_rank'))) %>%
                  dplyr::mutate(cumul_flux = cumsum(flux_mg_m_y_mean),
@@ -32,7 +33,8 @@ rank_spp_traits <- function(ann_spp_summary = production_summaries[["ann_spp_sum
     left_join(ann_flux_summary, by = c('site', 'taxon')) %>%
     # purrr::map(~.x %>%
           dplyr::select(site, taxon, matches('bio.*_mean'), matches('flux')) %>%
-          dplyr::mutate(bio_ann_rank = dense_rank(bio_mg_m_mean)) %>%
+    dplyr::filter_at(vars(matches('flux')), all_vars(. > 0)) %>% 
+    dplyr::mutate(bio_ann_rank = dense_rank(bio_mg_m_mean)) %>%
             dplyr::arrange(across(matches('.*ann_rank'))) %>%
             dplyr::mutate(cumul_flux = cumsum(flux_mg_m_y_mean),
                           cumul_bio = cumsum(bio_mg_m_mean),
@@ -50,7 +52,8 @@ rank_spp_traits <- function(ann_spp_summary = production_summaries[["ann_spp_sum
     left_join(ann_flux_summary, by = c('site', 'taxon')) %>%
     # purrr::map(~.x %>%
           dplyr::select(site, taxon, matches('n.*_mean'), matches('flux')) %>%
-          dplyr::mutate(n_ann_rank = dense_rank(n_ind_m_mean)) %>%
+    dplyr::filter_at(vars(matches('flux')), all_vars(. > 0)) %>% 
+    dplyr::mutate(n_ann_rank = dense_rank(n_ind_m_mean)) %>%
             dplyr::arrange(across(matches('.*ann_rank'))) %>%
             dplyr::mutate(cumul_flux = cumsum(flux_mg_m_y_mean),
                           rel_flux = cumul_flux/sum(flux_mg_m_y_mean)) %>%
@@ -66,7 +69,8 @@ rank_spp_traits <- function(ann_spp_summary = production_summaries[["ann_spp_sum
     left_join(ann_flux_summary, by = c('site', 'taxon')) %>%
     # purrr::map(~.x %>%
           dplyr::select(site, taxon, matches('M_mg.*mean'), matches('flux')) %>%
-          dplyr::mutate(M_ann_rank = dense_rank(M_mg_ind_mean))%>%
+    dplyr::filter_at(vars(matches('flux')), all_vars(. > 0)) %>% 
+    dplyr::mutate(M_ann_rank = dense_rank(M_mg_ind_mean))%>%
             dplyr::arrange(across(matches('.*ann_rank'))) %>%
             dplyr::mutate(cumul_flux = cumsum(flux_mg_m_y_mean),
                           rel_flux = cumul_flux/sum(flux_mg_m_y_mean)) %>%
@@ -82,7 +86,8 @@ rank_spp_traits <- function(ann_spp_summary = production_summaries[["ann_spp_sum
     left_join(ann_flux_summary, by = c('site', 'taxon')) %>%
     # purrr::map(~.x %>%
           dplyr::select(site, taxon, matches('pb.*_mean'), matches('flux')) %>%
-          dplyr::mutate(pb_ann_rank = dense_rank(pb_y_mean))%>%
+    dplyr::filter_at(vars(matches('flux')), all_vars(. > 0)) %>% 
+    dplyr::mutate(pb_ann_rank = dense_rank(pb_y_mean))%>%
             dplyr::arrange(across(matches('.*ann_rank'))) %>%
             dplyr::mutate(cumul_flux = cumsum(flux_mg_m_y_mean),
                           rel_flux = cumul_flux/sum(flux_mg_m_y_mean)) %>%

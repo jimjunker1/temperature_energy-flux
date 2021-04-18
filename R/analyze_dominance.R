@@ -36,6 +36,7 @@ analyze_dominance <- function(ann_spp_flux_boots = flux_summaries[["annual_spp_f
     group_by(site) %>% select(contains('mean')) %>%
     dplyr::arrange(desc(flux_mg_m_y_mean)) %>%
     dplyr::mutate(rel_flux = flux_mg_m_y_mean/sum(flux_mg_m_y_mean),
+                  spp_rank = dense_rank(rel_flux),
                   partial_dominance = part_dominance(rel_flux))
     
 

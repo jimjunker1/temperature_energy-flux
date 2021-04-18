@@ -43,8 +43,8 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
               legend.title = element_blank(),
               legend.spacing.y = unit(0.0003,'cm'),
               legend.key.size = unit(0.4,'cm'),
-              strip.text = element_blank()) +
-        facet_wrap(~site, ncol = 2) -> pb_lorenze_flux_plot
+              strip.text = element_blank(), axis.title = element_blank()) +
+        facet_wrap(~site, ncol = 1) -> pb_lorenz_flux_plot
     
     lorenz_analysis[["M_ranking_boots"]] %>%
         ggplot(aes(x = rel_spp, y = rel_flux)) +
@@ -57,13 +57,13 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
         scale_colour_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
         theme_tufte(ticks = TRUE) +
         geom_rangeframe(sides = "lb")+
-        theme(legend.position = c(0,1),
+        theme(legend.position = "none",
               legend.justification = c("left", "top"), 
               legend.title = element_blank(),
               legend.spacing.y = unit(0.0003,'cm'),
               legend.key.size = unit(0.4,'cm'),
-              strip.text = element_blank()) +
-        facet_wrap(~site, ncol = 2) -> M_lorenze_flux_plot
+              strip.text = element_blank(), axis.title = element_blank()) +
+        facet_wrap(~site, ncol = 1) -> M_lorenz_flux_plot
     
     lorenz_analysis[["bio_ranking_boots"]] %>%
         ggplot(aes(x = rel_bio, y = rel_flux)) +
@@ -82,9 +82,9 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
               legend.spacing.y = unit(0.0003,'cm'),
               legend.key.size = unit(0.4,'cm'),
               strip.text = element_blank()) +
-        facet_wrap(~site, ncol = 2) -> bio_lorenze_flux_plot
+        facet_wrap(~site, ncol = 2) -> bio_lorenz_flux_plot
         
     
-    return(list(lorenz_flux_plot = lorenz_flux_plot, pb_lorenze_flux_plot = pb_lorenze_flux_plot, M_lorenze_flux_plot = M_lorenze_flux_plot, bio_lorenze_flux_plot = bio_lorenze_flux_plot))
+    return(list(lorenz_flux_plot = lorenz_flux_plot, pb_lorenz_flux_plot = pb_lorenz_flux_plot, M_lorenz_flux_plot = M_lorenz_flux_plot, bio_lorenz_flux_plot = bio_lorenz_flux_plot))
     
 }

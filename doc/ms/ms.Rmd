@@ -1,0 +1,308 @@
+---
+title: "Manuscript title here"
+author: 
+- name: James R Junker
+  affiliation: Dept. of Ecology, Montana State University, Bozeman, MT USA
+output:
+   word_document:
+     reference_docx: docx_template.docx
+   pdf_document:
+     keep_tex: true
+   html_document: default
+header-includes:
+- \usepackage{lineno}
+- \usepackage{amsmath}
+- \linenumbers
+linestretch: 1
+bibliography: refs.bib
+link-citations: no
+link-color: grey
+csl: ecology.csl
+editor_options: 
+  markdown: 
+    wrap: 180
+---
+
+```{r import general objects, echo=FALSE, message=FALSE, warning=FALSE}
+
+source("./packages.R")
+
+```
+<!--- Title page details --->
+
+\newpage
+
+<!--- this is a note in Rmarkdown --->
+
+# Abstract
+
+\newpage
+
+# Introduction
+
+<!--- warming and effects in food webs --->
+
+Temperature is an important abiotic variable with increasing relevance as warming global temperatures alter the diversity, structure, and functioning of Earth's ecosystems
+[@walther2002]. Temperature's effect on ecosystems manifest through complex direct and indirect pathways such as shifting species ranges [][] and subsequent changes to local and
+regional communities [], species adaptations [@gibert2017], and through effects on individual metabolic rates [@brown2004; @gillooly2001]. While a growing body of theoretical and
+empirical study has enhanced our knowledge of temperature-mediated changes to ecosystems [@oconnor2009], general patterns are uncertain and empirical studies often idiosyncratic [@zhang2017; @nelson2017],
+especially at higher levels of organizations such as communities and food webs [@walther2002; @woodward2010b]. Yet, identifying general effects of temperature is a necessary step
+towards understanding how future warming may alter the functioning of ecosystems and the services they provide.
+
+<!--- Speeding up of food web: Species levels--->
+
+Temperature has the potential to alter the provision and maintenance of ecosystem services by modifying the interactions among species [@brose2012; @woodward2010b] that underpin ecosystem functions [@deruiter1995; @thompson2012]. The signature of temperature on the stability and dynamics of food webs is present across global climate gradients [@baiser2019] where its direct and indirect effects alter the magnitudes and relative distributions among species and trophic levels [@may1972; @mccann1998; @barnes2018]. Direct changes through species richness effects [@gibert2019]. Indirect through the distribution of consumer and prey species and it effects on the acquisition and allocation of resources among species [@zhang2017] --macroecology of food web dynamics and stability are controlled by the .
+
+Temperature can directly alter the distribution of species interactions by asymmetric responses in organismal traits among species [e.g., attack rate, handling time, growth rates,
+etc.; @dell2014].
+
+<!--- Connect traits to the 'speed' of ecosystem energy fluxes--->
+
+Metabolic rates
+
+acquisition of resources by consumer Generally, temperature is predicted to have disproportionately higher effects on consumers relative to resources [@allen2005; @vasseur2005;
+@oconnor2011]
+
+Here, we measured the patterning and distribution of organic matter fluxes within invertebrate food webs across a natural stream temperature gradient (\~5 - 28$^\circ$C). Previous
+research in these streams has shown a strong positive effect of temperature on primary production both among streams [@demars2011; @padfield2017] and within streams seasonally
+[@ogorman2012; @hood2018]. Consumers rely largely on autochthonous resource [@ogorman2012; @nelson2019] and therefore the dynamics of primary production have a strong control on consumer energy demand [@junker2020], as such, we predicted total annual OM fluxes to
+consumers to scale with among stream patterns in primary production and consumer energy demand, and therefore, increase with temperature across streams. We, further expected that increasing temperature would reduce consumer species [@ogorman2019], thereby altering how OM fluxes are distributed within and across communities. The distribution of OM fluxes to consumers will shift towards relatively faster, higher turnover consumer at higher temperatures, 'speeding up' consumer dynamics both through direct effects on consumer turnover and through a decrease in mean body size. Seasonally, warmer streams will lead to earlier food web fluxes in warmer compared to colder streams.
+
+# Methods
+
+We studied six streams within the Hengill geothermal field of southwestern Iceland (64$^\circ$ 03'N 021$^\circ$ 18'W) that varied in mean annual temperature. Hengill is
+characterized by indirect geothermal heating of groundwater [@arnason1969], leading to a natural variability in water temperatures (4.5--54.0 $^\circ$C), but similar solute
+chemistries [@friberg2009]. These conditions create a "natural laboratory" for isolating the effects of temperature on ecosystem processes [@ogorman2014; @nelson2017a]. We selected
+streams to maximize the temperature range, while minimizing differences in the structural aspects of primary producers. In each stream, we measured temperature and water depth
+every 15 min from July 2010 through August 2012 (U20-001-01 water-level logger, Onset Computer Corp. Pocasset, MA, USA). Light availability in the watershed was measured every 15
+min from atmospheric stations (HOBO pendant temperature/light UA-002-64, Onset Computer Corp. Pocasset, MA, USA).
+
+## Invertebrate sampling
+
+We sampled macroinvertebrate communities approximately monthly from July 2011 to August 2012 in four streams and from October 2010 to October 2011 in two streams used in a previous
+study (*n* = 6 streams). The two streams were part of an experiment beginning October 2011, therefore overlapping years were not used to exclude the impact of experimental
+manipulation [see @nelson2017; @nelson2017a]. Inter-annual comparisons of primary and secondary production in previous studies showed minimal differences among years in
+unmanipulated streams, suggesting that combining data from different years would not significantly bias our results [@nelson2017; @hood2018]. We collected fiver Surber samples
+(0.023 m^2^, 250 $\mu$m mesh) from randomly selected locations within each stream. Within the sampler, inorganic substrates were disturbed to \~10 cm depth and invertebrates and
+organic matter were removed from stones with a brush. Samples were then preserved with 5% formaldehyde until laboratory analysis. In the laboratory, we split samples into coarse
+(\>1 mm) and fine (\<1 mm but \>250 $\mu$m) fractions using nested sieves and then removed invertebrates form each fraction under a dissecting microscope (10--15 x magnification).
+For particularly large samples, fine fractions were subsampled (1/2--1/16th) using a modified Folsom plankton splitter prior to removal of invertebrates. Subsamples were scaled to
+the rest of the sample assuming similar abundance and body size distributions. Macroinvertebrates were identified to the lowest practical taxonomic level (usually genus) with
+taxonomic keys [@peterson1977; @merritt2008; @andersen2013]. Taxon-specific abundance and biomass were scaled to a per meter basis by dividing by the Surber sampler area.
+
+## Secondary Production
+
+Daily secondary production of invertebrate taxa was calculated using the instantaneous growth rate method [IGR; @benke2017]. Growth rates were determined using taxon appropriate
+approaches described in [@junker2020]. Briefly, growth rates of common taxa (e.g., Chironomidae spp., Radix balthica, etc.) were determined using *in situ* chambers [@huryn1986].
+Multiple individuals (*n* = 5--15) within small size categories (\~1 mm length range) were photographed next to a field micrometer, placed into the stream within pre-conditioned
+chambers for 7--15 days, after which they were again photographed. Individual lengths were measured from field pictures using image analysis software [@schindelin2012], and body
+lengths were converted to mass (mg ash-free dry mass [AFDM]) using published length-mass regressions [@benke1999; @ogorman2012; @hannesdottir2013]. Growth rates (*g*, d^-1^) were
+calculated by the changes in mean body size (*W*) over a given time interval (*t*) with the following equation:
+
+$$g = log_e ( W_{t+\Delta t} / W_t) / \Delta t$$
+
+Variability in growth rates was estimated by bootstrapping through repeated resampling of individual lengths with replacement (*n* = 500). For taxa which exhibit synchronous growth
+and development (e.g., Simuliidae spp., some Chironomidae spp., etc.), we examined temporal changes in length-frequency distributions and calculated growth rates and uncertainty
+using a bootstrap technique similar to that described in Benke and Huryn [-@benke2017]. Individual Lengths were converted to mg AFDM using published length-mass regression cited
+above and size-frequency histograms were visually inspected for directional changes in body size through time. For each date, size-frequency distributions were resampled with
+replacement (*n* = 500) and growth rates estimated from equation 1. We prevented the calculation of negative growth rates by requiring $W_{t + \Delta t}$ \> $W_t$. To estimate
+growth rates of taxa for which growth could not be estimated empirically, we developed stream-specific growth rate models by constructing multivariate linear regressions of
+empirical growth data against body size and temperature within each stream. To estimate uncertainty in production of each taxon, we used a bootstrapping technique that resampled
+measured growth rates, in addition to abundance and size distributions from individual samples. For each iteration (*n* = 1000), size-specific growth rates were multiplied by mean
+interval biomass for each size class and the number of days between sample dates to estimate size class-specific production. For each interval, size classes were summed for each
+taxon to calculate total population-level production. Intervals were summed to estimate annual secondary production.
+
+## Diet analysis
+
+**Come back and confirm this section** Macroinvertebrate diets were quantified for dominant taxa in each stream. We focused on numerically abundant taxa and/or taxa with relatively
+high annual production. A minimum of five individuals were selected from samples, and, when possible included individuals of different size classes to account for ontogenetic
+shifts in diet. We included individuals from different seasons to capture concurrent ontogenetic and seasonal changes. For small-bodied taxa, we combined multiple individuals (*n*
+= 3--5) to ensure samples contained enough material for quantification. We used methods outlined in Rosi-Marshall [-@rosi-marshall2016] to remove gut tracts and prepare gut content
+slides. Briefly, we removed the foregut from each individual or collection of individuals and sonicated gut contents in water for 30 seconds. Gut content slurries were filtered
+onto gridded nitrocellulose membrane filters (Metricel GN-6, 25 mm, 0.45 $\mu$m pore size; Gelman Sciences, Ann Arbor, MI, USA), dried at 60 $^\circ$C for 15 min, placed on a
+microscope slide, cleared with Type B immersion old, and covered with a cover slip. We took 5--10 random photographs under 200--400x magnification, depending on the density of
+particles, using a digital camera mounted on a compound microscope. From these photographs we identified all particles within each field and measured the relative area of particles
+using image analysis software [@schindelin2012]. We identified particles as diatoms, green and filamentous algae, cyanobacteria, amorphous detritus, vascular and non-vascular
+plants (bryophytes), and animal material. We calculated the proportion of each food category in the gut by dividing their summed area by the total area of all particles. Gut
+contents of many predators were empty or contained unidentifiable, macerated prey. For these taxa, we assumed 100% animal material.
+
+To estimate variability in diet compositions and to impute missing values for non-dominant, yet present, taxa, we modeled the diet proportions within each stream using a
+hierarchical multivariate model [@fordyce2011]. Here, the diet of a consumer population, *i*, is a multinomial vector,$\overrightarrow{y_i}$, of
+$$\overrightarrow{y_i} \sim Multinomial(\overrightarrow{p_i}, n_i)$$ $$\overrightarrow{p_i} \sim Dirichlet(\overrightarrow{q_i} \times  \alpha) $$ where, $\overrightarrow{p_i}$, is
+a vector of consumer diet proportions, $\overrightarrow{q_i}$ is a vector of the population's diet proportions and $\alpha$ is a concentration parameter of the Dirichlet process.
+We used uniform priors for $\overrightarrow{q_i}$ and $\alpha$, $$\overrightarrow{q_i} \sim Dirichlet(\overrightarrow{\textbf{1}})$$ $$\alpha \sim Uniform(0,\textit{c})$$ where,
+$\overrightarrow{\textbf{1}}$ is a vector of ones the same length of basal resource types and $\textit{c}$ is the presumed maximum value the concentration value. **add in
+site-level model parameter and model fitting language**. Models were fit in Stan with the 'brms' package in R [@burkner2017]. For non-dominant taxa, diet proportions were imputed
+from the hierarchical model by resampling from posterior distributions. Importantly, this process allowed to maintain the hierarchical structure of the data when imputing missing
+values.
+
+## Organic Matter Consumption Estimates
+
+Consumption fluxes (g m^-2^ t^-1^) were calculated using the trophic basis of production method (TBP; [@benke1980]. Taxon-specific secondary production estimates were combined with
+diet proportions, diet-specific assimilation efficiencies, $AE_{i}$, and assumed net production efficiencies, $NPE$, to estimate consumption of organic matter. For each food
+category, $\textit{i}$, diet proportions were multiplied by the gross growth efficiency ($GGE_{i} = AE_{i} * NPE$) to calculate the relative production attributable to each food
+category. The relative production from each food type was then multiplied by the interval-level production and finally divided by $GGE_{i}$ to estimate consumption of organic
+matter from each food category by a consumer [@benke1980]. Consumption was calculated for each taxon across sampling intervals (typically \~1 month). Total interval consumption was
+calculated by summing across all taxa, while annual consumption was calculated by summing across all taxa and intervals. Variability in consumption estimates was estimated through
+a Monte Carlo approach, wherein bootstrapped vectors of secondary production for each taxon (see *Secondary production* methods above) were resampled and consumption estimated with
+the TBP method using simulated diet proportions (see *Diet analysis* above), diet-specific assimilation efficiencies, and net production efficiency. Variability in $AE_{i}$ was
+incoporated by resampling values from beta distributions fit to median and 2.5% and 97.5% percentiles for each diet item: diatoms = 0.30 (95% percentile interval (PI): 0.24-0.36),
+filamentous and green algae = 0.30 (95% PI: 0.24-0.36), cyanobacteria = 0.10 (95% PI: 0.08-0.12), amorphous detritus = 0.10 (95% PI: 0.08-0.12), vascular and non-vascular plants
+(bryophytes) = 0.1 (95% PI:: 0.08-0.12), and animal material = 0.7 (95% PI: 0.56-0.84)[@welch1968; @cross2007; @cross2011; @benke1980; @benke1997]. Variability in $NPE$ was
+incorporated by resampling values from an assumed beta distribution with median $NPE$ = 0.45 (95% PI = 0.4-0.5). Beta distributions were fit using the 'get.beta.par()' function
+within the *rriskDistributions* package [@belgorodski2017].
+
+## Quantifying the distribution of food web fluxes
+
+### Evenness Among consumers
+
+To visualize and quantify how evenly OM fluxes were distributed among consumers within a stream, we constructed Lorenz curves [@lorenz1905] on ordered relative consumption fluxes,
+such that in a community with $S$ species and the relative consumption of species *i*, $p_i$, is ordered $p_1 \leq p_2 \leq ... p_S$. The Lorenz curve plots how a value, in this
+case OM flux, accumulates with increasing cumulative proportion of species. In a community with perfectly equal distribution of OM consumption among species, the Lorenz curve is
+simply a straight diagonal line. Deviation from perfect equality was calculated as the Gini coefficient [@gini1921], normalized for differences in $S$ among streams, $G^*$
+[@solomon1975; @chao2019]: $$ G^* = (2 \sum_{i = 1}^S ip_i -2)/(S-1)$$ 
+
+### Distribution along species' trait axes
+
+We were interested in how OM fluxes were distributed (randomly vs. non-randomly) in relation to species traits (i.e., body size, $P:B$ ratio, population biomass) across the temperature gradient. We used a permutation analyses to test for non-random patterns in OM flux with species traits. First, we ordered species based on within-stream ranking of annual population traits (i.e, $M$, $P:B$). We then calculated a measure of skewness, $Sk_{flux}$, based on quartiles of the distribution of OM fluxes in relation to species traits as:
+
+$$Sk_{flux} = f_{Q0.75} - 2f_{Q0.5} + f_{Q0.25}/ f_{Q0.75}-f_{Q0.25}$$
+
+where, $f_{Qx}$, is the cumulative flux at some quantile, $Qx$, of the community trait distribution. To determine the probability of observing the skewness we observe in the data compared to random ordering, we constructed a distribution of skewness estimates from random species ordering while maintaining the relative distribution of OM fluxes. The number of unique orderings of species increases to computationally intractable numbers very quickly (e.g., $S!$), therefore we permuted 1,000,000 random species orderings and calculating the skew in the cumulative distribution of annual OM fluxes. We then use this random distribution to estimate the probability of observing a skewness as extreme or greater. 
+
+
+## Statistical Analyses
+
+# Results
+
+```{r load objects from cache, echo = FALSE, warning = FALSE, message=FALSE}
+library(tidyverse)
+ drake::loadd(flux_estimates)
+ energy_demand = flux_estimates[["energy_demand"]]
+ comm_energy_demand_summary = energy_demand %>%
+    group_by(site, boot_id) %>% 
+    dplyr::summarise(flux_mg_m_y = sum(flux_mg_m_y)) %>%
+    ungroup %>% group_by(site) %>%
+    dplyr::summarise(across(matches('flux'), list(mean = ~mean(.x, na.rm = TRUE),
+                                                            quant2.5 = ~quantile(.x, 0.025, na.rm = TRUE),
+                                                            quant25 = ~quantile(.x, 0.25, na.rm = TRUE),
+                                                            quant50 = ~quantile(.x, 0.50, na.rm = TRUE),
+                                                            quant75 = ~quantile(.x, 0.75, na.rm = TRUE),
+                                                            quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE)))) %>%
+  bind_rows
+  min_demand = comm_energy_demand_summary %>% dplyr::slice(which.min(flux_mg_m_y_mean))
+  max_demand = comm_energy_demand_summary %>% dplyr::slice(which.max(flux_mg_m_y_mean))
+  
+drake::loadd(flux_summaries)
+annual_comm_flux_summary = flux_summaries[["annual_comm_flux_summary"]]
+min_flux = annual_comm_flux_summary %>% dplyr::slice(which.min(flux_mg_m_y_mean))
+max_flux = annual_comm_flux_summary %>% dplyr::slice(which.max(flux_mg_m_y_mean))
+
+```
+## Community OM fluxes
+
+Annual community energy demand mirrored patterns of secondary production previously reported [@junker2020].Community energy demand varied ~`r round((max_demand$flux_mg_m_y_mean/min_demand$flux_mg_m_y_mean),1)`-fold across streams (`r round((min_demand$flux_mg_m_y_mean/1000), 3)`[`r round((min_demand$flux_mg_m_y_quant2.5/1000),3)` , `r round((min_demand$flux_mg_m_y_quant97.5/1000),3)`] to `r round((max_demand$flux_mg_m_y_mean/1000),1)` [`r round((max_demand$flux_mg_m_y_quant2.5/1000),1)` , `r round((max_demand$flux_mg_m_y_quant97.5/1000),1)`]; g AFDM $m^{-2} y^{-1}$ mean [95% percentile interval (PI)]) and was positively related to temperature. Total OM flux through the consumer community was strongly associated with community energy demand and varied from `r round((min_flux$flux_mg_m_y_mean/1000),1)` [`r round((min_flux$flux_mg_m_y_quant2.5/1000),1)`,`r round((min_flux$flux_mg_m_y_quant97.5/1000),1)`] to `r round((max_flux$flux_mg_m_y_mean/1000),1)`[`r round((max_flux$flux_mg_m_y_quant2.5/1000),1)`,`r round((max_flux$flux_mg_m_y_quant97.5/1000),1)`] g AFDM $m^{-2} y^{-1}$.
+
+```{r diet import, echo = FALSE, include = TRUE, message=FALSE, warning = FALSE}
+drake::loadd(modeled_diets)
+diet_predictions_site = modeled_diets[["diet_predictions"]] %>%
+   dplyr::mutate(site = factor(site, levels = names(stream_order_list))) %>%
+    group_by(site, diet_item) %>%
+    dplyr::summarise(across(rel_area, list(mean = ~mean(.x, na.rm = TRUE),
+                                                            quant2.5 = ~quantile(.x, 0.025, na.rm = TRUE),
+                                                            quant25 = ~quantile(.x, 0.25, na.rm = TRUE),
+                                                            quant50 = ~quantile(.x, 0.50, na.rm = TRUE),
+                                                            quant75 = ~quantile(.x, 0.75, na.rm = TRUE),
+                                                            quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE))))
+
+diet_predictions_item = modeled_diets[["diet_predictions"]] %>%
+   dplyr::mutate(site = factor(site, levels = names(stream_order_list))) %>%
+    group_by(diet_item) %>%
+    dplyr::summarise(across(rel_area, list(mean = ~mean(.x, na.rm = TRUE),
+                                                            quant2.5 = ~quantile(.x, 0.025, na.rm = TRUE),
+                                                            quant25 = ~quantile(.x, 0.25, na.rm = TRUE),
+                                                            quant50 = ~quantile(.x, 0.50, na.rm = TRUE),
+                                                            quant75 = ~quantile(.x, 0.75, na.rm = TRUE),
+                                                            quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE))))
+```
+
+Patterns of OM flux among streams were most closely tied to total energy demands as consumer diets exhibited high similarity among streams (Figure SX). Diets composition among all streams were dominated by diatoms (`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant97.5')) %>% round(1)`]), amorphous detritus (`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant97.5')) %>% round(1)`]), and green algae (`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant97.5')) %>% round(1)`]). Calculated percent similarity among streams ranged from XX to XX and showed no relationship with mean stream temperature.
+
+## Evenness of OM fluxes within streams 
+
+```{r species richness, echo = FALSE, warning=FALSE, message=FALSE}
+spp_richness = energy_demand %>% group_by(site) %>% dplyr::summarise(taxon_n = n_distinct(taxon))
+
+drake::loadd(gini_analysis)
+gini_summary = gini_analysis[["stream_gini_summary"]] %>% set_names(make.names(names(.)))
+
+```
+
+Generally, the material fluxes within a stream were distributed unequally among consumers, however, this varied among streams (Figure 1; Figure S1). The calculated inequality, i.e. Gini coefficient, ranged from `r gini_summary %>% select('Non.normalized.Gini_mean') %>% min %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_min(Non.normalized.Gini_mean) %>% select(Non.normalized.Gini_quant2.5) %>% round(2)` , `r gini_summary %>% data.frame %>% dplyr::slice_min(Non.normalized.Gini_mean) %>%  select('Non.normalized.Gini_quant97.5') %>% round(2)`] to `r gini_summary %>% data.frame %>% dplyr::slice_max(Non.normalized.Gini_mean) %>%  select('Non.normalized.Gini_mean') %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_max(Non.normalized.Gini_mean) %>% select('Non.normalized.Gini_quant2.5') %>% round(2)` , `r gini_summary %>% data.frame %>% dplyr::slice_max(Non.normalized.Gini_mean) %>% select('Non.normalized.Gini_quant97.5') %>% round(2)`]; Table 1). Differences in inequality were partly attributed to consumer species richness among streams which ranged from `r spp_richness %>% select(taxon_n) %>% min` to `r spp_richness %>% select(taxon_n) %>% max` consumers. Patterns of material fluxes were still unequally distributed among consumers even after correcting for differences in species richness (Normalized Gini coefficient: `r gini_summary %>% select('Normalized.Gini_mean') %>% min %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_min(Normalized.Gini_mean) %>% select(Normalized.Gini_quant2.5) %>% round(2)` , `r gini_summary %>% data.frame %>% dplyr::slice_min(Normalized.Gini_mean) %>%  select('Normalized.Gini_quant97.5') %>% round(2)`] to `r gini_summary %>% data.frame %>% dplyr::slice_max(Normalized.Gini_mean) %>%  select('Normalized.Gini_mean') %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_max(Normalized.Gini_mean) %>% select('Normalized.Gini_quant2.5') %>% round(2)` , `r gini_summary %>% data.frame %>% dplyr::slice_max(Normalized.Gini_mean) %>% select('Normalized.Gini_quant97.5') %>% round(2)`]; Table 1).
+
+```{r spp flux summaries, echo = FALSE, warning=FALSE, message=FALSE}
+drake::loadd(spp_rankings_summary)
+spp_flux_summary = spp_rankings_summary[["prod_spp_rank"]]
+select_dom = function(x){
+  x= x[which(!is.na(x$taxon)),]
+  x = x %>% dplyr::mutate(tot_n = max(prod_ann_rank, na.rm = TRUE))
+  if(sum(x$rel_flux >= 0.15) > 1){
+    y = x[which(x$rel_flux >= 0.15),]
+    } else{
+      y = x[which(x$prod_ann_rank >= (max(x$prod_ann_rank)-1)),]
+   }
+  return(y)
+}
+
+spp_dominance = spp_flux_summary %>% named_group_split(site) %>% map(.,~select_dom(.x)) %>% bind_rows(.id = 'site') %>% 
+  group_by(site) %>%
+  dplyr::summarise(n_dom = n(), 
+                   tot_n = unique(tot_n),
+                   dom_flux = 1-min(rel_flux, na.rm = TRUE), 
+                   dom_spp = 1-min(rel_spp))
+
+n_dom_min = spp_dominance %>% dplyr::slice(which.min(n_dom))
+n_dom_max = spp_dominance %>% dplyr::slice(which.max(n_dom))
+
+perc_dom_min = spp_dominance %>% dplyr::slice(which.min(dom_spp))
+perc_dom_max = spp_dominance %>% dplyr::slice(which.max(dom_spp))
+
+
+```
+
+Unequal distributions of fluxes within streams corresponded to very different patterns in dominance of OM fluxes across streams (Figure 1a). For example, in an absolute sense, ~85% of total flux was contributed by `r n_dom_min$n_dom` to `r n_dom_max$n_dom` species (`r round(n_dom_min$dom_flux,2)`% to `r round(n_dom_max$dom_flux,2)`% of flux, respectively). Relatively, this flux was attributed by `r round(perc_dom_min$dom_spp*100,0)`% to `r round(perc_dom_max$dom_spp*100,0)`% of the species assemblage. 
+
+## Trait distributions among sites and taxa
+
+```{r trait summary, echo = FALSE, warning=FALSE, message=FALSE}
+drake::loadd(spp_rankings_summary)
+pb_summ = spp_rankings_summary[["PB_spp_rank"]] %>% na.omit %>% group_by(site) %>% dplyr::summarise(across(matches("pb.*mean"), ~mean(.x,na.rm = TRUE)))
+
+m_summ = spp_rankings_summary[["M_spp_rank"]] %>% na.omit %>% group_by(site) %>% dplyr::summarise(across(matches(".*ind_mean"), ~mean(.x,na.rm = TRUE)))
+
+drake::loadd(skew_analysis)
+
+pb_summ = skew_analysis[["PB_skew_summ"]]
+
+m_summ = skew_analysis[["M_skew_summ"]]
+```
+
+The fluxes of OM were distributed differently across body sizes and turnover rates (**P:B**) among and within streams. Across streams, mean body size of taxa ranged from `r m_summ %>% slice_min(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` to `r m_summ %>% slice_max(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` and mean annual P:B ranged from `r pb_summ %>% slice_min(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` to `r pb_summ %>% slice_max(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` (Figure 2). Fluxes were skewed differentially towards larger body sizes (positive skew) among streams, with skew estimates with body size (**M**) ranging from `r m_summ %>% slice_min(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` to `r m_summ %>% slice_max(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` (Figure 3). Similarly, skew in fluxes towards high turnover taxa varied among streams ranging from `r pb_summ %>% slice_min(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean)%>% round(2)` to `r pb_summ %>% slice_max(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` (Figure 3).
+
+When compared to random
+
+-- mean skew with M ranged from 
+
+-- The probability of observing these values of skew with pb `r pb_summ %>% select(matches("pb.*prob_mean")) %>% min%>% round(2)` to `r pb_summ %>% select(matches("pb.*prob_mean")) %>% max%>% round(2)`
+
+-- The probability of observing these values of skew with M `r m_summ %>% select(matches("M.*prob_mean")) %>% min%>% round(2)` to `r m_summ %>% select(matches("M.*prob_mean")) %>% max%>% round(2)`
+
+
+
+# Discussion
+
+# Acknowledgements
+
+Jeff Wesner and Abe Kanz for code sharing and discussions on modeling diet proportions.
+
+# References

@@ -127,29 +127,35 @@ plants (bryophytes), and animal material. We calculated the proportion of each f
 contents of many predators were empty or contained unidentifiable, macerated prey. For these taxa, we assumed 100% animal material.
 
 To estimate variability in diet compositions and to impute missing values for non-dominant, yet present, taxa, we modeled the diet proportions within each stream using a
-hierarchical multivariate model [@fordyce2011]. Here, the diet of a consumer population, *i*, is a multinomial vector,$\overrightarrow{y_i}$, of
+hierarchical multivariate model [@fordyce2011, @coblentz2017]. Here, the diet of a consumer population, *i*, is a multinomial vector,$\overrightarrow{y_i}$, of
 $$\overrightarrow{y_i} \sim Multinomial(\overrightarrow{p_i}, n_i)$$ $$\overrightarrow{p_i} \sim Dirichlet(\overrightarrow{q_i} \times  \alpha) $$ where, $\overrightarrow{p_i}$, is
 a vector of consumer diet proportions, $\overrightarrow{q_i}$ is a vector of the population's diet proportions and $\alpha$ is a concentration parameter of the Dirichlet process.
 We used uniform priors for $\overrightarrow{q_i}$ and $\alpha$, $$\overrightarrow{q_i} \sim Dirichlet(\overrightarrow{\textbf{1}})$$ $$\alpha \sim Uniform(0,\textit{c})$$ where,
 $\overrightarrow{\textbf{1}}$ is a vector of ones the same length of basal resource types and $\textit{c}$ is the presumed maximum value the concentration value. **add in
-site-level model parameter and model fitting language**. Models were fit in Stan with the 'brms' package in R [@burkner2017]. For non-dominant taxa, diet proportions were imputed
+site-level model parameter and model fitting language** . Models were fit in Stan with the 'brms' package in R [@burkner2017]. For non-dominant taxa, diet proportions were imputed
 from the hierarchical model by resampling from posterior distributions. Importantly, this process allowed to maintain the hierarchical structure of the data when imputing missing
 values.
+
+From modeled diet compositions, we estimated trophic redundancy within and across stream food webs by calculating proportional similarities [*PS*; @whittaker1952] among modeled diet estimates (proportional similarity estimates from empirical diets give similar results to modeled estimates; Supporting Materials). Proportional similarities were calculated as:
+
+$$ PS = 1 - 0.5 \sum_{j=1}^S|p_{x,i} - p_{y,i}|$$
+
+where, *p~x,i~* is the proportion of food resource *i* in the diet of taxon *x*, *p~y,i~* is the proportion of food resource *i* in the diet of taxon *y*, and there are *S* food categories. Proportional similarity was calculated across all taxa within a stream based on modeled diet contributions from each taxon. To calculate *PS* among streams we sampled 1000 estimates of the mean stream-level diet proportions for each stream and calculated *PS* for each. 
 
 ## Organic Matter Consumption Estimates
 
 Consumption fluxes (g m^-2^ t^-1^) were calculated using the trophic basis of production method (TBP; [@benke1980]. Taxon-specific secondary production estimates were combined with
-diet proportions, diet-specific assimilation efficiencies, $AE_{i}$, and assumed net production efficiencies, $NPE$, to estimate consumption of organic matter. For each food
-category, $\textit{i}$, diet proportions were multiplied by the gross growth efficiency ($GGE_{i} = AE_{i} * NPE$) to calculate the relative production attributable to each food
+diet proportions, diet-specific assimilation efficiencies, *AE~i~*, and assumed net production efficiencies, *NPE*, to estimate consumption of organic matter. For each food
+category, *i*, diet proportions were multiplied by the gross growth efficiency ($GGE_{i} = AE_{i} * NPE$) to calculate the relative production attributable to each food
 category. The relative production from each food type was then multiplied by the interval-level production and finally divided by $GGE_{i}$ to estimate consumption of organic
 matter from each food category by a consumer [@benke1980]. Consumption was calculated for each taxon across sampling intervals (typically \~1 month). Total interval consumption was
 calculated by summing across all taxa, while annual consumption was calculated by summing across all taxa and intervals. Variability in consumption estimates was estimated through
 a Monte Carlo approach, wherein bootstrapped vectors of secondary production for each taxon (see *Secondary production* methods above) were resampled and consumption estimated with
-the TBP method using simulated diet proportions (see *Diet analysis* above), diet-specific assimilation efficiencies, and net production efficiency. Variability in $AE_{i}$ was
-incoporated by resampling values from beta distributions fit to median and 2.5% and 97.5% percentiles for each diet item: diatoms = 0.30 (95% percentile interval (PI): 0.24-0.36),
+the TBP method using modeled diet proportions (see *Diet analysis* above), diet-specific assimilation efficiencies, and net production efficiency. Variability in *AE~i~* was
+incorporated by resampling values from beta distributions fit to median and 2.5% and 97.5% percentiles for each diet item: diatoms = 0.30 (95% percentile interval (PI): 0.24-0.36),
 filamentous and green algae = 0.30 (95% PI: 0.24-0.36), cyanobacteria = 0.10 (95% PI: 0.08-0.12), amorphous detritus = 0.10 (95% PI: 0.08-0.12), vascular and non-vascular plants
-(bryophytes) = 0.1 (95% PI:: 0.08-0.12), and animal material = 0.7 (95% PI: 0.56-0.84)[@welch1968; @cross2007; @cross2011; @benke1980; @benke1997]. Variability in $NPE$ was
-incorporated by resampling values from an assumed beta distribution with median $NPE$ = 0.45 (95% PI = 0.4-0.5). Beta distributions were fit using the 'get.beta.par()' function
+(bryophytes) = 0.1 (95% PI:: 0.08-0.12), and animal material = 0.7 (95% PI: 0.56-0.84)[@welch1968; @cross2007; @cross2011; @benke1980; @benke1997]. Variability in *NPE* was
+incorporated by resampling values from an assumed beta distribution with median *NPE* = 0.45 (95% PI = 0.4-0.5). Beta distributions were fit using the 'get.beta.par()' function
 within the *rriskDistributions* package [@belgorodski2017].
 
 ## Quantifying the distribution of food web fluxes
@@ -168,8 +174,7 @@ We were interested in how OM fluxes were distributed (randomly vs. non-randomly)
 
 $$Sk_{flux} = f_{Q0.75} - 2f_{Q0.5} + f_{Q0.25}/ f_{Q0.75}-f_{Q0.25}$$
 
-where, $f_{Qx}$, is the cumulative flux at some quantile, $Qx$, of the community trait distribution. To determine the probability of observing the skewness we observe in the data compared to random ordering, we constructed a distribution of skewness estimates from random species ordering while maintaining the relative distribution of OM fluxes. The number of unique orderings of species increases to computationally intractable numbers very quickly (e.g., $S!$), therefore we permuted 1,000,000 random species orderings and calculating the skew in the cumulative distribution of annual OM fluxes. We then use this random distribution to estimate the probability of observing a skewness as extreme or greater. 
-
+where, $f_{Qx}$, is the cumulative flux at some quantile, $Qx$, of the community trait distribution. To determine the probability of observing the skewness we observe in the data compared to random ordering, we constructed a distribution of skewness estimates from random species ordering while maintaining the relative distribution of OM fluxes. The number of unique orderings of species increases to computationally intractable numbers very quickly (e.g., $S!$), therefore we permuted 1,000,000 random species orderings and calculating the skew in the cumulative distribution of annual OM fluxes. We then use this random distribution to estimate the probability of observing a skewness as extreme or greater.
 
 ## Statistical Analyses
 
@@ -201,7 +206,7 @@ max_flux = annual_comm_flux_summary %>% dplyr::slice(which.max(flux_mg_m_y_mean)
 ```
 ## Community OM fluxes
 
-Annual community energy demand mirrored patterns of secondary production previously reported [@junker2020].Community energy demand varied ~`r round((max_demand$flux_mg_m_y_mean/min_demand$flux_mg_m_y_mean),1)`-fold across streams (`r round((min_demand$flux_mg_m_y_mean/1000), 3)`[`r round((min_demand$flux_mg_m_y_quant2.5/1000),3)` , `r round((min_demand$flux_mg_m_y_quant97.5/1000),3)`] to `r round((max_demand$flux_mg_m_y_mean/1000),1)` [`r round((max_demand$flux_mg_m_y_quant2.5/1000),1)` , `r round((max_demand$flux_mg_m_y_quant97.5/1000),1)`]; g AFDM $m^{-2} y^{-1}$ mean [95% percentile interval (PI)]) and was positively related to temperature. Total OM flux through the consumer community was strongly associated with community energy demand and varied from `r round((min_flux$flux_mg_m_y_mean/1000),1)` [`r round((min_flux$flux_mg_m_y_quant2.5/1000),1)`,`r round((min_flux$flux_mg_m_y_quant97.5/1000),1)`] to `r round((max_flux$flux_mg_m_y_mean/1000),1)`[`r round((max_flux$flux_mg_m_y_quant2.5/1000),1)`,`r round((max_flux$flux_mg_m_y_quant97.5/1000),1)`] g AFDM $m^{-2} y^{-1}$.
+Annual community energy demand mirrored patterns of secondary production previously reported [@junker2020]. Community energy demand varied ~`r round((max_demand$flux_mg_m_y_mean/min_demand$flux_mg_m_y_mean),1)`-fold across streams (`r round((min_demand$flux_mg_m_y_mean/1000), 3)`[`r round((min_demand$flux_mg_m_y_quant2.5/1000),3)` , `r round((min_demand$flux_mg_m_y_quant97.5/1000),3)`] to `r round((max_demand$flux_mg_m_y_mean/1000),1)` [`r round((max_demand$flux_mg_m_y_quant2.5/1000),1)` , `r round((max_demand$flux_mg_m_y_quant97.5/1000),1)`]; g AFDM $m^{-2} y^{-1}$ mean [95% percentile interval (PI)]) and was positively related to temperature. Total OM flux through the consumer community was strongly associated with community energy demand and varied from `r round((min_flux$flux_mg_m_y_mean/1000),1)` [`r round((min_flux$flux_mg_m_y_quant2.5/1000),1)`,`r round((min_flux$flux_mg_m_y_quant97.5/1000),1)`] to `r round((max_flux$flux_mg_m_y_mean/1000),1)`[`r round((max_flux$flux_mg_m_y_quant2.5/1000),1)`,`r round((max_flux$flux_mg_m_y_quant97.5/1000),1)`] g AFDM $m^{-2} y^{-1}$.
 
 ```{r diet import, echo = FALSE, include = TRUE, message=FALSE, warning = FALSE}
 drake::loadd(modeled_diets)
@@ -224,9 +229,20 @@ diet_predictions_item = modeled_diets[["diet_predictions"]] %>%
                                                             quant50 = ~quantile(.x, 0.50, na.rm = TRUE),
                                                             quant75 = ~quantile(.x, 0.75, na.rm = TRUE),
                                                             quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE))))
+
+drake::loadd(diet_similarity)
+min_within_overlap = diet_similarity[['within_overlap_summ']] %>% dplyr::slice_min(meanoverlap_mean)
+max_within_overlap = diet_similarity[['within_overlap_summ']] %>% dplyr::slice_max(meanoverlap_mean)
+
+# min_among_overlap = diet_similarity[[]]
+
+among_overlap_mean = mean(diet_similarity[['among_overlap_mean']], na.rm = TRUE)
+among_overlap_quant2.5 = quantile(diet_similarity[['among_overlap_mean']], 0.025, na.rm = TRUE)
+among_overlap_quant97.5 = quantile(diet_similarity[['among_overlap_mean']], 0.975, na.rm = TRUE)
+
 ```
 
-Patterns of OM flux among streams were most closely tied to total energy demands as consumer diets exhibited high similarity among streams (Figure SX). Diets composition among all streams were dominated by diatoms (`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant97.5')) %>% round(1)`]), amorphous detritus (`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant97.5')) %>% round(1)`]), and green algae (`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant97.5')) %>% round(1)`]). Calculated percent similarity among streams ranged from XX to XX and showed no relationship with mean stream temperature.
+Patterns of OM flux among streams were most closely tied to total consumer energy demands as consumer diets exhibited high similarity among streams (Figure SX). Diets composition among all streams were dominated by diatoms (`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant97.5')) %>% round(1)`]), amorphous detritus (`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant97.5')) %>% round(1)`]), and green algae (`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('mean')) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant2.5')) %>% round(1)`,`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant97.5')) %>% round(1)`]). Within streams, diet similarity ranged from `r min_within_overlap %>% dplyr::select(meanoverlap_mean) %>% round(2)` (`r round(min_within_overlap$meanoverlap_quant2.5,2)` -- `r round(min_within_overlap$meanoverlap_quant97.5,2)`) to `r max_within_overlap %>% dplyr::select(meanoverlap_mean) %>% round(2)` (`r round(max_within_overlap$meanoverlap_quant2.5,2)` -- `r round(max_within_overlap$meanoverlap_quant97.5,2)`). Among streams, diet overlap was similarly high and mean overlap among all streams was `r round(among_overlap_mean,2)`% (`r round(among_overlap_quant2.5,2)` -- `r round(among_overlap_quant97.5,2)` 95% PI). Diet similarity of pairwise comparisons among streams showed Pairwise comparisons among streams calculated percent similarity among streams ranged from XX to XX and showed no relationship with mean stream temperature.
 
 ## Evenness of OM fluxes within streams 
 
@@ -261,8 +277,8 @@ spp_dominance = spp_flux_summary %>% named_group_split(site) %>% map(.,~select_d
                    dom_flux = 1-min(rel_flux, na.rm = TRUE), 
                    dom_spp = 1-min(rel_spp))
 
-n_dom_min = spp_dominance %>% dplyr::slice(which.min(n_dom))
-n_dom_max = spp_dominance %>% dplyr::slice(which.max(n_dom))
+n_dom_min = spp_dominance %>% dplyr::slice_min(n_dom)
+n_dom_max = spp_dominance %>% dplyr::slice_max(n_dom)
 
 perc_dom_min = spp_dominance %>% dplyr::slice(which.min(dom_spp))
 perc_dom_max = spp_dominance %>% dplyr::slice(which.max(dom_spp))
@@ -272,7 +288,7 @@ perc_dom_max = spp_dominance %>% dplyr::slice(which.max(dom_spp))
 
 Unequal distributions of fluxes within streams corresponded to very different patterns in dominance of OM fluxes across streams (Figure 1a). For example, in an absolute sense, ~85% of total flux was contributed by `r n_dom_min$n_dom` to `r n_dom_max$n_dom` species (`r round(n_dom_min$dom_flux,2)`% to `r round(n_dom_max$dom_flux,2)`% of flux, respectively). Relatively, this flux was attributed by `r round(perc_dom_min$dom_spp*100,0)`% to `r round(perc_dom_max$dom_spp*100,0)`% of the species assemblage. 
 
-## Trait distributions among sites and taxa
+## OM fluxes along species trait distributions among sites and taxa
 
 ```{r trait summary, echo = FALSE, warning=FALSE, message=FALSE}
 drake::loadd(spp_rankings_summary)
@@ -282,21 +298,14 @@ m_summ = spp_rankings_summary[["M_spp_rank"]] %>% na.omit %>% group_by(site) %>%
 
 drake::loadd(skew_analysis)
 
-pb_summ = skew_analysis[["PB_skew_summ"]]
+pb_skew_summ = skew_analysis[["PB_skew_summ"]]
 
-m_summ = skew_analysis[["M_skew_summ"]]
+m_skew_summ = skew_analysis[["M_skew_summ"]]
 ```
 
-The fluxes of OM were distributed differently across body sizes and turnover rates (**P:B**) among and within streams. Across streams, mean body size of taxa ranged from `r m_summ %>% slice_min(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` to `r m_summ %>% slice_max(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` and mean annual P:B ranged from `r pb_summ %>% slice_min(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` to `r pb_summ %>% slice_max(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` (Figure 2). Fluxes were skewed differentially towards larger body sizes (positive skew) among streams, with skew estimates with body size (**M**) ranging from `r m_summ %>% slice_min(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` to `r m_summ %>% slice_max(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` (Figure 3). Similarly, skew in fluxes towards high turnover taxa varied among streams ranging from `r pb_summ %>% slice_min(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean)%>% round(2)` to `r pb_summ %>% slice_max(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` (Figure 3).
+The fluxes of OM were distributed differently across body sizes and turnover rates (*P:B*) among and within streams. Across streams, mean body size of taxa ranged from `r m_summ %>% slice_min(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` to `r m_summ %>% slice_max(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` and mean annual P:B ranged from `r pb_summ %>% slice_min(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` to `r pb_summ %>% slice_max(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` (Figure 2). Fluxes were skewed differentially towards larger body sizes (positive skew) or towards smaller body sizes (negative skew) among streams, with skew estimates with body size (*M*) ranging from `r m_skew_summ %>% slice_min(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` to `r m_skew_summ %>% slice_max(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` (Figure 3). Similarly, skew in fluxes towards high turnover taxa varied among streams ranging from `r pb_skew_summ %>% slice_min(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean)%>% round(2)` to `r pb_skew_summ %>% slice_max(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` (Figure 3).
 
-When compared to random
-
--- mean skew with M ranged from 
-
--- The probability of observing these values of skew with pb `r pb_summ %>% select(matches("pb.*prob_mean")) %>% min%>% round(2)` to `r pb_summ %>% select(matches("pb.*prob_mean")) %>% max%>% round(2)`
-
--- The probability of observing these values of skew with M `r m_summ %>% select(matches("M.*prob_mean")) %>% min%>% round(2)` to `r m_summ %>% select(matches("M.*prob_mean")) %>% max%>% round(2)`
-
+When compared to a random ordering while also preserving the relative distribution of fluxes among taxa, the probability of observing a similar or more extreme skew of within stream OM fluxes in relation to species body size ranged from `r m_skew_summ %>% select(matches("M.*prob_mean")) %>% min%>% round(2)` to `r m_skew_summ %>% select(matches("M.*prob_mean")) %>% max%>% round(2)`. Similarly, the probability of a more extremely skewed distribution in relation to population biomass turnover ranged from `r pb_skew_summ %>% select(matches("pb.*prob_mean")) %>% min%>% round(2)` to `r pb_skew_summ %>% select(matches("pb.*prob_mean")) %>% max%>% round(2)`. 
 
 
 # Discussion

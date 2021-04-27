@@ -52,11 +52,19 @@ the_plan <-
   hill_diversity_analysis = analyze_hill_diversity(flux_summaries[["annual_spp_flux_summary"]]),
   #partial dominance
   partial_dominance_analysis = analyze_dominance(flux_summaries[["annual_spp_flux_boots"]]),
-  
-   
+  #
+  # NMDS_analysis = 
+  #diet overlap
+  diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]], modeled_diets[["diet_predictions"]]),
+  # temperature trait relationships
+  temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']], gini_analysis[['stream_gini_df']],
+                                         diet_similarity, n_boot = 1e5),
+
    ### figures
   #
   prelim_diet_figures = plot_stream_diets(modeled_diets[["diet_predictions"]]),#figure s1
+  #
+  diet_similarity_analysis = plot_diet_similarity(diet_similarity),
   #
   annual_spp_flux_fig = plot_spp_flux(flux_summaries[["annual_spp_flux_summary"]], environment_data[["stream_temp_labels"]]),
   #
@@ -66,7 +74,7 @@ the_plan <-
   #
   lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
   #
-  random_skew_fig = plot_random_skew(skew_analysis),
+  random_skew_fig = plot_random_skew(skew_analysis, random_rankings),
   
   
   # target_name = target(

@@ -50,15 +50,15 @@ drake::loadd(annual_spp_flux_fig)
 annual_spp_flux_fig
 ```
 
-\newpage
+<!-- \newpage -->
 
-Figure 2. Evenness profiles of species' relatives fluxes among streams.
+<!-- Figure 2. Evenness profiles of species' relatives fluxes among streams. -->
 
-```{r evenness profile, echo=FALSE, warning=FALSE, message=FALSE,  fig.width=5, fig.height=5, dpi = 450}
-loadd(hill_diversity_analysis)
-hill_diversity_analysis
+<!-- ```{r evenness profile, echo=FALSE, warning=FALSE, message=FALSE,  fig.width=5, fig.height=5, dpi = 450} -->
+<!-- loadd(hill_diversity_analysis) -->
+<!-- hill_diversity_analysis -->
 
-```
+<!-- ``` -->
 
 \newpage 
 
@@ -82,6 +82,15 @@ grid.arrange(lorenz_trait_fig[["pb_lorenz_flux_plot"]], lorenz_trait_fig[["M_lor
 
 \newpage
 
+Figure 4. Bootstrapped distribution of skew statistics from OM fluxes with body size, *M*, and (b) population annual production:biomass ratio relative to the distribution of skew statistics of 100,000 random orderings.
+
+```{r skew distribution, echo = FALSE, warning=FALSE, message=FALSE}
+drake::loadd(random_skew_fig)
+grid.draw(random_skew_fig)
+
+```
+
+\newpage
 Figure S1. Modeled diet proportions among streams
 
 ```{r diets, echo=FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450}

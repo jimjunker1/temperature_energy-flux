@@ -95,7 +95,8 @@ analyze_diet_similarity <- function(gut_df = gut_lists[["diet_list"]], diet_pred
    apply(., c(1,2), function(x) quantile(x,probs = c(0.025, 0.5, 0.975), na.rm = TRUE))
   
   return(list(within_diet_overlap = within_empirical_overlap, within_diet_overlap_minmax = within_diet_overlap_minmax,
-              within_overlap_summ = within_overlap_summ, among_modeled_overlap = among_modeled_overlap, among_overlap_mean = among_overlap_mean,
+              within_overlap_summ = within_overlap_summ, among_modeled_overlap = among_modeled_overlap,
+              among_overlap_array = among_overlap_array, among_overlap_mean = among_overlap_mean, 
               pair_overlap_mean = pair_overlap_mean, pair_overlap_quantiles = pair_overlap_quantiles))
   
 }

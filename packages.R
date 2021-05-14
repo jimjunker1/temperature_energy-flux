@@ -8,7 +8,7 @@
                     "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown",
                     "viridis", "broom","bbmle","ggthemes", "ggeffects",
                     "fluxweb","igraph","ggraph","magick","cowplot","rriskDistributions",
-                    "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp")
+                    "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp", "rsample")
   p_load(char = package.list, install = TRUE, character.only = TRUE)
   # p_load_gh("jimjunker1/junkR")
   remotes::install_github("jimjunker1/junkR")

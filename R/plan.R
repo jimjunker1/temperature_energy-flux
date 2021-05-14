@@ -58,7 +58,7 @@ the_plan <-
   diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]], modeled_diets[["diet_predictions"]]),
   # temperature trait relationships
   temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']], gini_analysis[['stream_gini_df']],
-                                         diet_similarity, n_boot = 1e5),
+                                         diet_similarity[['among_modeled_overlap']], n_boot = 1e5),
 
    ### figures
   #

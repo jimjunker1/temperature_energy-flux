@@ -1,0 +1,57 @@
+---
+title: "Manuscript title here"
+author: 
+- name: James R Junker
+  affiliation: Dept. of Ecology, Montana State University, Bozeman, MT USA
+output:
+   word_document:
+     reference_docx: docx_template.docx
+   pdf_document:
+     keep_tex: true
+   html_document: default
+header-includes:
+- \usepackage{lineno}
+- \usepackage{amsmath}
+- \usepackage{indentfirst}
+- \linenumbers
+# - \setlength\parindent{24pt}\setlength{\parskip}{0.0pt plus 1.0pt}
+indent: true
+linestretch: 1
+bibliography: refs.bib
+link-citations: no
+link-color: grey
+csl: ecology.csl
+editor_options: 
+  markdown: 
+    wrap: 180
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Analysis
+
+## Reproducibility
+
+<details><summary>Reproducibility receipt</summary>
+
+```{r}
+## datetime
+Sys.time()
+
+## repository
+if(requireNamespace('git2r', quietly = TRUE)) {
+  git2r::repository()
+} else {
+  c(
+    system2("git", args = c("log", "--name-status", "-1"), stdout = TRUE),
+    system2("git", args = c("remote", "-v"), stdout = TRUE)
+  )
+}
+
+## session info
+sessionInfo()
+```
+
+</details>

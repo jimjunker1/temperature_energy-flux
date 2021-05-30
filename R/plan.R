@@ -50,6 +50,8 @@ the_plan <-
   skew_analysis = analyze_skew(lorenz_analysis, random_rankings),
   # diversity analyses
   hill_diversity_analysis = analyze_hill_diversity(flux_summaries[["annual_spp_flux_summary"]]),
+  # community diversity change through time
+  diversity_analysis = analyze_diversity(production_boots),
   #partial dominance
   partial_dominance_analysis = analyze_dominance(flux_summaries[["annual_spp_flux_boots"]]),
   #
@@ -58,7 +60,8 @@ the_plan <-
   diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]], modeled_diets[["diet_predictions"]]),
   # temperature trait relationships
   temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']], gini_analysis[['stream_gini_df']],
-                                         diet_similarity[['among_modeled_overlap']], n_boot = 1e5),
+                                         diet_similarity[['among_modeled_overlap']], skew_analysis, n_boot = 1e5),
+  
 
    ### figures
   #
@@ -66,7 +69,8 @@ the_plan <-
   #
   diet_similarity_analysis = plot_diet_similarity(diet_similarity),
   #
-  annual_spp_flux_fig = plot_spp_flux(flux_summaries[["annual_spp_flux_summary"]], environment_data[["stream_temp_labels"]]),
+  annual_spp_flux_fig = plot_spp_flux(flux_summaries[["annual_spp_flux_summary"]], 
+                                      environment_data[["stream_temp_labels"]]),
   #
   # evenness_profile_fig = plot_evenness_profile(hill_diversity_analysis),
   #
@@ -97,4 +101,11 @@ the_plan <-
   #     file_out("doc/./ms/tables-figures.docx")
   #   }
   # )
+  
+  target_name = target(
+    command = {
+      rmarkdown::render(knitr_in("doc/./coherence_ms/coherence_ms.Rmd"))
+      file_out("doc/./coherence_ms/coherence_ms.docx")
+    }
+  )
 )

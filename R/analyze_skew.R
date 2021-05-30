@@ -77,8 +77,8 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
     named_group_split(site) %>% rlist::list.subset(names(stream_order_list))
   
   # debugonce(skew_probs)
-  PB_skew_probs = map2(stream_PB_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "pb_y_skew"))
-  M_skew_probs = map2(stream_M_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "M_mg_ind_skew"))
+  PB_skew_probs = future_map2(stream_PB_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "pb_y_skew"))
+  M_skew_probs = future_map2(stream_M_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "M_mg_ind_skew"))
 
   PB_skew_summ = PB_skew_boots %>%
     group_by(site) %>%
@@ -116,5 +116,5 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
                                                               quant75 = ~quantile(.x, 0.75, na.rm = TRUE),
                                                               quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE)))))
   
-  return(list(pb_skew_boots = PB_skew_boots, M_skew_boots = M_skew_boots, PB_skew_probs = PB_skew_probs, M_skew_probs = M_skew_probs, PB_skew_summ = PB_skew_summ, M_skew_summ = M_skew_summ))
+  return(list(pb_skew_boots = PB_skew_boots, M_skew_boots = M_skew_boots, pb_skew_probs = PB_skew_probs, M_skew_probs = M_skew_probs, pb_skew_summ = PB_skew_summ, M_skew_summ = M_skew_summ))
 }

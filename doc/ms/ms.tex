@@ -1,0 +1,804 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Manuscript title here},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{lineno}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\linenumbers
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\title{Manuscript title here}
+\author{true}
+\date{}
+
+\begin{document}
+\maketitle
+
+\setstretch{1}
+\newpage
+
+\hypertarget{abstract}{%
+\section{Abstract}\label{abstract}}
+
+\newpage
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\setlength\parindent{24pt}
+
+Temperature is an important abiotic variable with increasing relevance
+as warming global temperatures alter the diversity, structure, and
+functioning of Earth's ecosystems (Walther et al. 2002). Temperature's
+effect on ecosystems manifest through complex direct and indirect
+pathways such as shifting species ranges {[}{]}{[}{]} and subsequent
+changes to local and regional communities {[}{]}, species adaptations
+(Gibert and DeLong 2017), and through effects on individual metabolic
+rates (Gillooly et al. 2001, Brown et al. 2004). While a growing body of
+theoretical and empirical study has enhanced our knowledge of
+temperature-mediated changes to ecosystems (O'Connor et al. 2009),
+general patterns are uncertain and empirical studies often idiosyncratic
+(Nelson et al. 2017a, Zhang et al. 2017), especially at higher levels of
+organizations such as communities and food webs (Walther et al. 2002,
+Woodward et al. 2010). Yet, identifying general effects of temperature
+is a necessary step towards understanding how future warming may alter
+the functioning of ecosystems and the services they provide.
+
+\par
+
+\setlength\parindent{24pt}
+
+Temperature has the potential to alter the provision and maintenance of
+ecosystem services by modifying the interactions among species (Woodward
+et al. 2010, Brose et al. 2012) that underpin ecosystem functions (de
+Ruiter et al. 1995, Thompson et al. 2012). The signature of temperature
+on the stability and dynamics of food webs is present across global
+climate gradients (Baiser et al. 2019) where its direct and indirect
+effects alter the magnitudes and relative distributions among species
+and trophic levels (May 1972, McCann et al. 1998, Barnes et al. 2018).
+Direct changes through species richness effects (Gibert 2019). Indirect
+through the distribution of consumer and prey species and it effects on
+the acquisition and allocation of resources among species (Zhang et al.
+2017) --macroecology of food web dynamics and stability are controlled
+by the .
+
+\par
+
+\setlength\parindent{24pt}
+
+Temperature can directly alter the distribution of species interactions
+by asymmetric responses in organismal traits among species {[}e.g.,
+attack rate, handling time, growth rates, etc.; Dell et al. (2014){]}.
+
+Metabolic rates
+
+acquisition of resources by consumer Generally, temperature is predicted
+to have disproportionately higher effects on consumers relative to
+resources (Allen et al. 2005, Vasseur and McCann 2005,
+\textbf{oconnor2011?})
+
+Here, we measured the patterning and distribution of organic matter
+fluxes within invertebrate food webs across a natural stream temperature
+gradient (\textasciitilde5 - 28\(^\circ\)C). Previous research in these
+streams has shown a strong positive effect of temperature on primary
+production both among streams (Padfield et al. 2017,
+\textbf{demars2011?}) and within streams seasonally (O'Gorman et al.
+2012, Hood et al. 2018). Consumers rely largely on autochthonous
+resource (O'Gorman et al. 2012, \textbf{nelson2019?}) and therefore the
+dynamics of primary production have a strong control on consumer energy
+demand (Junker et al. 2020), as such, we predicted total annual OM
+fluxes to consumers to scale with among stream patterns in primary
+production and consumer energy demand, and therefore, increase with
+temperature across streams. We, further expected that increasing
+temperature would reduce consumer species (\textbf{ogorman2019?}),
+thereby altering how OM fluxes are distributed within and across
+communities. The distribution of OM fluxes to consumers will shift
+towards relatively faster, higher turnover consumer at higher
+temperatures, `speeding up' consumer dynamics both through direct
+effects on consumer turnover and through a decrease in mean body size.
+Seasonally, warmer streams will lead to earlier food web fluxes in
+warmer compared to colder streams.
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+We studied six streams within the Hengill geothermal field of
+southwestern Iceland (64\(^\circ\) 03'N 021\(^\circ\) 18'W) that varied
+in mean annual temperature. Hengill is characterized by indirect
+geothermal heating of groundwater (Arnason et al. 1969), leading to a
+natural variability in water temperatures (4.5--54.0 \(^\circ\)C), but
+similar solute chemistries (Friberg et al. 2009). These conditions
+create a ``natural laboratory'' for isolating the effects of temperature
+on ecosystem processes (O'Gorman et al. 2014, Nelson et al. 2017b). We
+selected streams to maximize the temperature range, while minimizing
+differences in the structural aspects of primary producers. In each
+stream, we measured temperature and water depth every 15 min from July
+2010 through August 2012 (U20-001-01 water-level logger, Onset Computer
+Corp.~Pocasset, MA, USA). Light availability in the watershed was
+measured every 15 min from atmospheric stations (HOBO pendant
+temperature/light UA-002-64, Onset Computer Corp.~Pocasset, MA, USA).
+
+\hypertarget{invertebrate-sampling}{%
+\subsection{Invertebrate sampling}\label{invertebrate-sampling}}
+
+We sampled macroinvertebrate communities approximately monthly from July
+2011 to August 2012 in four streams and from October 2010 to October
+2011 in two streams used in a previous study (\emph{n} = 6 streams). The
+two streams were part of an experiment beginning October 2011, therefore
+overlapping years were not used to exclude the impact of experimental
+manipulation (see Nelson et al. 2017a, 2017b). Inter-annual comparisons
+of primary and secondary production in previous studies showed minimal
+differences among years in unmanipulated streams, suggesting that
+combining data from different years would not significantly bias our
+results (Nelson et al. 2017a, Hood et al. 2018). We collected fiver
+Surber samples (0.023 m\textsuperscript{2}, 250 \(\mu\)m mesh) from
+randomly selected locations within each stream. Within the sampler,
+inorganic substrates were disturbed to \textasciitilde10 cm depth and
+invertebrates and organic matter were removed from stones with a brush.
+Samples were then preserved with 5\% formaldehyde until laboratory
+analysis. In the laboratory, we split samples into coarse (\textgreater1
+mm) and fine (\textless1 mm but \textgreater250 \(\mu\)m) fractions
+using nested sieves and then removed invertebrates form each fraction
+under a dissecting microscope (10--15 x magnification). For particularly
+large samples, fine fractions were subsampled (1/2--1/16th) using a
+modified Folsom plankton splitter prior to removal of invertebrates.
+Subsamples were scaled to the rest of the sample assuming similar
+abundance and body size distributions. Macroinvertebrates were
+identified to the lowest practical taxonomic level (usually genus) with
+taxonomic keys (Peterson 1977, Merritt et al. 2008, Andersen et al.
+2013). Taxon-specific abundance and biomass were scaled to a per meter
+basis by dividing by the Surber sampler area.
+
+\hypertarget{secondary-production}{%
+\subsection{Secondary Production}\label{secondary-production}}
+
+Daily secondary production of invertebrate taxa was calculated using the
+instantaneous growth rate method {[}IGR; Benke and Huryn (2017){]}.
+Growth rates were determined using taxon appropriate approaches
+described in (Junker et al. 2020). Briefly, growth rates of common taxa
+(e.g., Chironomidae spp., Radix balthica, etc.) were determined using
+\emph{in situ} chambers (Huryn and Wallace 1986). Multiple individuals
+(\emph{n} = 5--15) within small size categories (\textasciitilde1 mm
+length range) were photographed next to a field micrometer, placed into
+the stream within pre-conditioned chambers for 7--15 days, after which
+they were again photographed. Individual lengths were measured from
+field pictures using image analysis software (Schindelin et al. 2012),
+and body lengths were converted to mass (mg ash-free dry mass
+{[}AFDM{]}) using published length-mass regressions (Benke et al. 1999,
+O'Gorman et al. 2012, Hannesdóttir et al. 2013). Growth rates (\emph{g},
+d\textsuperscript{-1}) were calculated by the changes in mean body size
+(\emph{W}) over a given time interval (\emph{t}) with the following
+equation:
+
+\[g = log_e ( W_{t+\Delta t} / W_t) / \Delta t\]
+
+Variability in growth rates was estimated by bootstrapping through
+repeated resampling of individual lengths with replacement (\emph{n} =
+500). For taxa which exhibit synchronous growth and development (e.g.,
+Simuliidae spp., some Chironomidae spp., etc.), we examined temporal
+changes in length-frequency distributions and calculated growth rates
+and uncertainty using a bootstrap technique similar to that described in
+Benke and Huryn (2017). Individual Lengths were converted to mg AFDM
+using published length-mass regression cited above and size-frequency
+histograms were visually inspected for directional changes in body size
+through time. For each date, size-frequency distributions were resampled
+with replacement (\emph{n} = 500) and growth rates estimated from
+equation 1. We prevented the calculation of negative growth rates by
+requiring \(W_{t + \Delta t}\) \textgreater{} \(W_t\). To estimate
+growth rates of taxa for which growth could not be estimated
+empirically, we developed stream-specific growth rate models by
+constructing multivariate linear regressions of empirical growth data
+against body size and temperature within each stream. To estimate
+uncertainty in production of each taxon, we used a bootstrapping
+technique that resampled measured growth rates, in addition to abundance
+and size distributions from individual samples. For each iteration
+(\emph{n} = 1000), size-specific growth rates were multiplied by mean
+interval biomass for each size class and the number of days between
+sample dates to estimate size class-specific production. For each
+interval, size classes were summed for each taxon to calculate total
+population-level production. Intervals were summed to estimate annual
+secondary production.
+
+\hypertarget{diet-analysis}{%
+\subsection{Diet analysis}\label{diet-analysis}}
+
+\textbf{Come back and confirm this section} Macroinvertebrate diets were
+quantified for dominant taxa in each stream. We focused on numerically
+abundant taxa and/or taxa with relatively high annual production. A
+minimum of five individuals were selected from samples, and, when
+possible included individuals of different size classes to account for
+ontogenetic shifts in diet. We included individuals from different
+seasons to capture concurrent ontogenetic and seasonal changes. For
+small-bodied taxa, we combined multiple individuals (\emph{n} = 3--5) to
+ensure samples contained enough material for quantification. We used
+methods outlined in Rosi-Marshall (2016) to remove gut tracts and
+prepare gut content slides. Briefly, we removed the foregut from each
+individual or collection of individuals and sonicated gut contents in
+water for 30 seconds. Gut content slurries were filtered onto gridded
+nitrocellulose membrane filters (Metricel GN-6, 25 mm, 0.45 \(\mu\)m
+pore size; Gelman Sciences, Ann Arbor, MI, USA), dried at 60 \(^\circ\)C
+for 15 min, placed on a microscope slide, cleared with Type B immersion
+old, and covered with a cover slip. We took 5--10 random photographs
+under 200--400x magnification, depending on the density of particles,
+using a digital camera mounted on a compound microscope. From these
+photographs we identified all particles within each field and measured
+the relative area of particles using image analysis software (Schindelin
+et al. 2012). We identified particles as diatoms, green and filamentous
+algae, cyanobacteria, amorphous detritus, vascular and non-vascular
+plants (bryophytes), and animal material. We calculated the proportion
+of each food category in the gut by dividing their summed area by the
+total area of all particles. Gut contents of many predators were empty
+or contained unidentifiable, macerated prey. For these taxa, we assumed
+100\% animal material.
+
+To estimate variability in diet compositions and to impute missing
+values for non-dominant, yet present, taxa, we modeled the diet
+proportions within each stream using a
+
+hierarchical multivariate model (\textbf{coblentz2017?}). Here, the diet
+of a consumer population, \emph{i}, is a multinomial
+vector,\(\overrightarrow{y_i}\), of
+\[\overrightarrow{y_i} \sim Multinomial(\overrightarrow{p_i}, n_i)\]
+\[\overrightarrow{p_i} \sim Dirichlet(\overrightarrow{q_i} \times  \alpha) \]
+where, \(\overrightarrow{p_i}\), is a vector of consumer diet
+proportions, \(\overrightarrow{q_i}\) is a vector of the population's
+diet proportions and \(\alpha\) is a concentration parameter of the
+Dirichlet process. We used uniform priors for \(\overrightarrow{q_i}\)
+and \(\alpha\),
+\[\overrightarrow{q_i} \sim Dirichlet(\overrightarrow{\textbf{1}})\]
+\[\alpha \sim Uniform(0,\textit{c})\] where,
+\(\overrightarrow{\textbf{1}}\) is a vector of ones the same length of
+basal resource types and \(\textit{c}\) is the presumed maximum value
+the concentration value. \textbf{add in site-level model parameter and
+model fitting language} . Models were fit in Stan with the `brms'
+package in R (Bürkner 2017). For non-dominant taxa, diet proportions
+were imputed from the hierarchical model by resampling from posterior
+distributions. Importantly, this process allowed to maintain the
+hierarchical structure of the data when imputing missing values.
+
+From modeled diet compositions, we estimated trophic redundancy within
+and across stream food webs by calculating proportional similarities
+{[}\emph{PS}; (\textbf{whittaker1952?}){]} among modeled diet estimates
+(proportional similarity estimates from empirical diets give similar
+results to modeled estimates; Supporting Materials). Proportional
+similarities were calculated as:
+
+\[ PS = 1 - 0.5 \sum_{j=1}^S|p_{x,i} - p_{y,i}|\]
+
+where, \emph{p\textsubscript{x,i}} is the proportion of food resource
+\emph{i} in the diet of taxon \emph{x}, \emph{p\textsubscript{y,i}} is
+the proportion of food resource \emph{i} in the diet of taxon \emph{y},
+and there are \emph{S} food categories. Proportional similarity was
+calculated across all taxa within a stream based on modeled diet
+contributions from each taxon. To calculate \emph{PS} among streams we
+sampled 1000 estimates of the mean stream-level diet proportions for
+each stream and calculated \emph{PS} for each.
+
+\hypertarget{organic-matter-consumption-estimates}{%
+\subsection{Organic Matter Consumption
+Estimates}\label{organic-matter-consumption-estimates}}
+
+Consumption fluxes (g m\textsuperscript{-2} t\textsuperscript{-1}) were
+calculated using the trophic basis of production method (TBP; (Benke and
+Wallace 1980). Taxon-specific secondary production estimates were
+combined with
+
+diet proportions, diet-specific assimilation efficiencies,
+\emph{AE\textsubscript{i}}, and assumed net production efficiencies,
+\emph{NPE}, to estimate consumption of organic matter. For each food
+category, \emph{i}, diet proportions were multiplied by the gross growth
+efficiency (\(GGE_{i} = AE_{i} * NPE\)) to calculate the relative
+production attributable to each food category. The relative production
+from each food type was then multiplied by the interval-level production
+and finally divided by \(GGE_{i}\) to estimate consumption of organic
+matter from each food category by a consumer (Benke and Wallace 1980).
+Consumption was calculated for each taxon across sampling intervals
+(typically \textasciitilde1 month). Total interval consumption was
+calculated by summing across all taxa, while annual consumption was
+calculated by summing across all taxa and intervals. Variability in
+consumption estimates was estimated through a Monte Carlo approach,
+wherein bootstrapped vectors of secondary production for each taxon (see
+\emph{Secondary production} methods above) were resampled and
+consumption estimated with the TBP method using modeled diet proportions
+(see \emph{Diet analysis} above), diet-specific assimilation
+efficiencies, and net production efficiency. Variability in
+\emph{AE\textsubscript{i}} was incorporated by resampling values from
+beta distributions fit to median and 2.5\% and 97.5\% percentiles for
+each diet item: diatoms = 0.30 (95\% percentile interval (PI):
+0.24-0.36), filamentous and green algae = 0.30 (95\% PI: 0.24-0.36),
+cyanobacteria = 0.10 (95\% PI: 0.08-0.12), amorphous detritus = 0.10
+(95\% PI: 0.08-0.12), vascular and non-vascular plants (bryophytes) =
+0.1 (95\% PI:: 0.08-0.12), and animal material = 0.7 (95\% PI:
+0.56-0.84)(Welch 1968, Benke and Wallace 1980, 1997, Cross et al. 2007,
+2011). Variability in \emph{NPE} was incorporated by resampling values
+from an assumed beta distribution with median \emph{NPE} = 0.45 (95\% PI
+= 0.4-0.5). Beta distributions were fit using the `get.beta.par()'
+function within the \emph{rriskDistributions} package (Belgorodski et
+al. 2017).
+
+\hypertarget{quantifying-the-distribution-of-food-web-fluxes}{%
+\subsection{Quantifying the distribution of food web
+fluxes}\label{quantifying-the-distribution-of-food-web-fluxes}}
+
+\hypertarget{evenness-among-consumers}{%
+\subsubsection{Evenness Among
+consumers}\label{evenness-among-consumers}}
+
+To visualize and quantify how evenly OM fluxes were distributed among
+consumers within a stream, we constructed Lorenz curves (Lorenz 1905) on
+ordered relative consumption fluxes, such that in a community with \(S\)
+species and the relative consumption of species \emph{i}, \(p_i\), is
+ordered \(p_1 \leq p_2 \leq ... p_S\). The Lorenz curve plots how a
+value, in this
+
+case OM flux, accumulates with increasing cumulative proportion of
+species. In a community with perfectly equal distribution of OM
+consumption among species, the Lorenz curve is simply a straight
+diagonal line. Deviation from perfect equality was calculated as the
+Gini coefficient (Gini 1921), normalized for differences in \(S\) among
+streams, \(G^*\) (Solomon 1975, Chao and Ricotta 2019):
+\[ G^* = (2 \sum_{i = 1}^S ip_i -2)/(S-1)\]
+
+\hypertarget{distribution-along-species-trait-axes}{%
+\subsubsection{Distribution along species' trait
+axes}\label{distribution-along-species-trait-axes}}
+
+We were interested in how OM fluxes were distributed (randomly
+vs.~non-randomly) in relation to species traits (i.e., body size,
+\(P:B\) ratio, population biomass) across the temperature gradient. We
+used a permutation analyses to test for non-random patterns in OM flux
+with species traits. First, we ordered species based on within-stream
+ranking of annual population traits (i.e, \(M\), \(P:B\)). We then
+calculated a measure of skewness, \(Sk_{flux}\), based on quartiles of
+the distribution of OM fluxes in relation to species traits as:
+
+\[Sk_{flux} = f_{Q0.75} - 2f_{Q0.5} + f_{Q0.25}/ f_{Q0.75}-f_{Q0.25}\]
+
+where, \(f_{Qx}\), is the cumulative flux at some quantile, \(Qx\), of
+the community trait distribution. To determine the probability of
+observing the skewness we observe in the data compared to random
+ordering, we constructed a distribution of skewness estimates from
+random species ordering while maintaining the relative distribution of
+OM fluxes. The number of unique orderings of species increases to
+computationally intractable numbers very quickly (e.g., \(S!\)),
+therefore we permuted 1,000,000 random species orderings and calculating
+the skew in the cumulative distribution of annual OM fluxes. We then use
+this random distribution to estimate the probability of observing a
+skewness as extreme or greater.
+
+\hypertarget{statistical-analyses}{%
+\subsection{Statistical Analyses}\label{statistical-analyses}}
+
+Relationships between mean annual temperature (\(^\circ\)C) and mean
+community \emph{M} and \emph{P:B} were assessed with bootstrapped linear
+regressions. Here, \ensuremath{10^{5}} values of mean \emph{M} or
+\emph{P:B} were resampled with replacement from each stream. For each
+resampling event, a linear model was fit between
+\emph{log\textsubscript{e}}-transformed \emph{M} or \emph{P:B} and mean
+annual temperature. Response variables \emph{M} and \emph{P:B} were
+transformed to meet assumptions of normality of residuals variation.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{community-om-fluxes}{%
+\subsection{Community OM fluxes}\label{community-om-fluxes}}
+
+Annual community energy demand mirrored patterns of secondary production
+previously reported (Junker et al. 2020). Community energy demand varied
+\textasciitilde44.2-fold across streams (1.005{[}0.556 , 1.555{]} to
+44.4 {[}32.4 , 57.8{]}; g AFDM \(m^{-2} y^{-1}\) mean {[}95\% percentile
+interval (PI){]}) and was positively related to temperature. Total OM
+flux through the consumer community was strongly associated with
+community energy demand and varied from 3.9 {[}2.1,6.2{]} to
+177.4{[}125.6,236.6{]} g AFDM \(m^{-2} y^{-1}\).
+
+Patterns of OM flux among streams were most closely tied to total
+consumer energy demands as consumer diets exhibited high similarity
+among streams (Figure SX). Diets composition among all streams were
+dominated by diatoms (44.1\% {[}c(\texttt{2.5\%} = 0),c(\texttt{97.5\%}
+= 75.5){]}), amorphous detritus (17.4\% {[}c(\texttt{2.5\%} =
+0),c(\texttt{97.5\%} = 32.3){]}), and green algae (13.2\%
+{[}c(\texttt{2.5\%} = 0),c(\texttt{97.5\%} = 42.6){]}). Within streams,
+diet similarity ranged from 0.7 (0.66 -- 0.73) to 0.75 (0.71 -- 0.79).
+Among streams, diet overlap was similarly high and mean overlap among
+all streams was 0.89\% (0.84 -- 0.92 95\% PI). Diet similarity of
+pairwise comparisons among streams showed little differences in diet
+among streams and no clear relationship with temperature (Supporting
+Materials).
+
+\hypertarget{evenness-of-om-fluxes-within-streams}{%
+\subsection{Evenness of OM fluxes within
+streams}\label{evenness-of-om-fluxes-within-streams}}
+
+Generally, the material fluxes within a stream were distributed
+unequally among consumers, however, this varied among streams (Figure 1;
+Figure S1). The calculated inequality, i.e.~Gini coefficient, ranged
+from 0.07 {[}0.05 , 0.1{]} to 0.27 {[}0.24 , 0.31{]}; Table 1).
+Differences in inequality were partly attributed to consumer species
+richness among streams which ranged from 14 to 34 consumers. Patterns of
+material fluxes were still unequally distributed among consumers even
+after correcting for differences in species richness (Normalized Gini
+coefficient: 0.04 {[}0.02 , 0.07{]} to 0.25 {[}0.21 , 0.28{]}; Table 1).
+
+Unequal distributions of fluxes within streams corresponded to very
+different patterns in dominance of OM fluxes across streams (Figure 1a).
+For example, in an absolute sense, \textasciitilde85\% of total flux was
+contributed by 2 to 11 species (0.85\% to 0.85\% of flux, respectively).
+Relatively, this flux was attributed by 3\% to 29\% of the species
+assemblage.
+
+\hypertarget{om-fluxes-along-species-trait-distributions-among-sites-and-taxa}{%
+\subsection{OM fluxes along species trait distributions among sites and
+taxa}\label{om-fluxes-along-species-trait-distributions-among-sites-and-taxa}}
+
+The fluxes of OM were distributed differently across body sizes and
+turnover rates (\emph{P:B}) among and within streams. Across streams,
+mean body size of taxa ranged from 0.13 to 2.66 and mean annual P:B
+ranged from 4.23 to 31.67 (Figure 2). Both, \emph{M} and \emph{P:B}
+showed associations with mean annual stream temperature that were
+negative and positive, respectively. Generally, mean \emph{M} of the
+community decreased -9.5\% (95\% PI, -11.1\% -- -8\%) for each increase
+in 1\(^\circ\)C. In contrast, mean population \emph{P:B} of the
+community increased 18.8\% (95\% IP, 17\% -- 20.7\%) for each
+1\(^\circ\)C in mean annual stream temperature. Fluxes were skewed
+differentially towards larger body sizes (positive skew) or towards
+smaller body sizes (negative skew) among streams, with skew estimates
+with body size (\emph{M}) ranging from 0.13 to -0.84 (Figure 3).
+Similarly, skew in fluxes towards high turnover taxa varied among
+streams ranging from 0.25 to 1 (Figure 3).
+
+When compared to a random ordering while also preserving the relative
+distribution of fluxes among taxa, the probability of observing a
+similar or more extreme skew of within stream OM fluxes in relation to
+species body size ranged from 0.16 to 0.38. Similarly, the probability
+of a more extremely skewed distribution in relation to population
+biomass turnover ranged from 0.09 to 0.34.
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+Jeff Wesner and Abe Kanz for code sharing and discussions on modeling
+diet proportions.
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\hypertarget{ref-allen2005}{}%
+Allen, A. P., J. F. Gillooly, and J. H. Brown. 2005. Linking the global
+carbon cycle to individual metabolism. Functional Ecology 19:202--213.
+
+\leavevmode\hypertarget{ref-andersen2013}{}%
+Andersen, T., P. S. Cranston, and J. H. Epler. 2013. Chironomidae of the
+{Holarctic} region: {Keys} and diagnoses, {Part} 1. {Media Tryck},
+{Lund, Sweden}.
+
+\leavevmode\hypertarget{ref-arnason1969}{}%
+Arnason, B., P. Theodorsson, S. Björnsson, and K. Saemundsson. 1969.
+Hengill, a high temperature thermal area in {Iceland}. Bulletin
+Volcanologique 33:245--259.
+
+\leavevmode\hypertarget{ref-baiser2019}{}%
+Baiser, B., D. Gravel, A. R. Cirtwill, J. A. Dunne, A. K. Fahimipour, L.
+J. Gilarranz, J. A. Grochow, D. Li, N. D. Martinez, A. McGrew, T.
+Poisot, T. N. Romanuk, D. B. Stouffer, L. B. Trotta, F. S. Valdovinos,
+R. J. Williams, S. A. Wood, and J. D. Yeakel. 2019. Ecogeographical
+rules and the macroecology of food webs. Global Ecology and Biogeography
+28:1204--1218.
+
+\leavevmode\hypertarget{ref-barnes2018}{}%
+Barnes, A. D., M. Jochum, J. S. Lefcheck, N. Eisenhauer, C. Scherber, M.
+I. O'Connor, P. de Ruiter, and U. Brose. 2018. Energy {Flux}: {The Link}
+between {Multitrophic Biodiversity} and {Ecosystem Functioning}. Trends
+in Ecology \& Evolution 33:186--197.
+
+\leavevmode\hypertarget{ref-belgorodski2017}{}%
+Belgorodski, N., M. Greiner, K. Tolksdorf, and K. Schueller. 2017.
+{rriskDistributions}: {Fitting Distributions} to {Given Data} or {Known
+Quantiles}.
+
+\leavevmode\hypertarget{ref-benke2017}{}%
+Benke, A. C., and A. D. Huryn. 2017. Secondary production and
+quantitative food webs. Pages 235--254 Methods in {Stream Ecology}.
+{Elsevier}.
+
+\leavevmode\hypertarget{ref-benke1999}{}%
+Benke, A. C., A. D. Huryn, L. A. Smock, and J. B. Wallace. 1999.
+Length-{Mass Relationships} for {Freshwater Macroinvertebrates} in
+{North America} with {Particular Reference} to the {Southeastern United
+States}. Journal of the North American Benthological Society
+18:308--343.
+
+\leavevmode\hypertarget{ref-benke1980}{}%
+Benke, A. C., and J. B. Wallace. 1980. Trophic basis of production among
+net-spinning caddisflies in a southern appalachain stream. Ecology
+61:108--118.
+
+\leavevmode\hypertarget{ref-benke1997}{}%
+Benke, A. C., and J. B. Wallace. 1997. Trophic {Basis} of {Production
+Among Riverine Caddisflies}: {Implications} for {Food Web Analysis}.
+Ecology 78:1132--1145.
+
+\leavevmode\hypertarget{ref-brose2012}{}%
+Brose, U., J. A. Dunne, Montoya José M., O. L. Petchey, F. D. Schneider,
+and U. Jacob. 2012. Climate change in size-structured ecosystems.
+Philosophical Transactions of the Royal Society B: Biological Sciences
+367:2903--2912.
+
+\leavevmode\hypertarget{ref-brown2004}{}%
+Brown, J. H., J. F. Gillooly, A. P. Allen, V. M. Savage, and G. B. West.
+2004. Toward a {Metabolic Theory} of {Ecology}. Ecology 85:1771--1789.
+
+\leavevmode\hypertarget{ref-burkner2017}{}%
+Bürkner, P.-C. 2017. Brms: {An R Package} for {Bayesian Multilevel
+Models Using Stan}. Journal of Statistical Software 80:1--28.
+
+\leavevmode\hypertarget{ref-chao2019}{}%
+Chao, A., and C. Ricotta. 2019. Quantifying evenness and linking it to
+diversity, beta diversity, and similarity. Ecology 100:e02852.
+
+\leavevmode\hypertarget{ref-cross2011}{}%
+Cross, W. F., C. V. Baxter, K. C. Donner, E. J. Rosi-Marshall, T. A.
+Kennedy, R. O. Hall, H. A. W. Kelly, and R. S. Rogers. 2011. Ecosystem
+ecology meets adaptive management: Food web response to a controlled
+flood on the {Colorado River}, {Glen Canyon}. Ecological Applications
+21:2016--2033.
+
+\leavevmode\hypertarget{ref-cross2007}{}%
+Cross, W. F., J. B. Wallace, and A. D. Rosemond. 2007. Nutrient
+{Enrichment Reduces Constraints} on {Material Flows} in a
+{Detritus}-{Based Food Web}. Ecology 88:2563--2575.
+
+\leavevmode\hypertarget{ref-deruiter1995}{}%
+de Ruiter, P. C., A.-M. Neutel, and J. C. Moore. 1995. Energetics,
+{Patterns} of {Interaction Strengths}, and {Stability} in {Real
+Ecosystems}. Science 269:1257--1260.
+
+\leavevmode\hypertarget{ref-dell2014}{}%
+Dell, A. I., S. Pawar, and V. M. Savage. 2014. Temperature dependence of
+trophic interactions are driven by asymmetry of species responses and
+foraging strategy. Journal of Animal Ecology 83:70--84.
+
+\leavevmode\hypertarget{ref-fordyce2011}{}%
+Fordyce, J. A., Z. Gompert, M. L. Forister, and C. C. Nice. 2011. A
+{Hierarchical Bayesian Approach} to {Ecological Count Data}: {A Flexible
+Tool} for {Ecologists}. PLOS ONE 6:e26785.
+
+\leavevmode\hypertarget{ref-friberg2009}{}%
+Friberg, N., J. B. Dybkjær, J. S. Olafsson, G. M. Gislason, S. E.
+Larsen, and T. L. Lauridsen. 2009. Relationships between structure and
+function in streams contrasting in temperature. Freshwater Biology
+54:2051--2068.
+
+\leavevmode\hypertarget{ref-gibert2019}{}%
+Gibert, J. P. 2019. Temperature directly and indirectly influences food
+web structure. Scientific Reports 9:5312.
+
+\leavevmode\hypertarget{ref-gibert2017}{}%
+Gibert, J. P., and J. P. DeLong. 2017. Phenotypic variation explains
+food web structural patterns. Proceedings of the National Academy of
+Sciences 114:11187--11192.
+
+\leavevmode\hypertarget{ref-gillooly2001}{}%
+Gillooly, J. F., J. H. Brown, G. B. West, V. M. Savage, and E. L.
+Charnov. 2001. Effects of size and temperature on metabolic rate.
+Science (New York, N.Y.) 293:2248--2251.
+
+\leavevmode\hypertarget{ref-gini1921}{}%
+Gini, C. 1921. Measurement of {Inequality} of {Incomes}. The Economic
+Journal 31:124--126.
+
+\leavevmode\hypertarget{ref-hannesdottir2013}{}%
+Hannesdóttir, E. R., G. M. Gíslason, J. S. Ólafsson, Ó. P. Ólafsson, and
+E. J. O'Gorman. 2013. Increased {Stream Productivity} with {Warming
+Supports Higher Trophic Levels}. Advances in Ecological Research
+48:285--342.
+
+\leavevmode\hypertarget{ref-hood2018}{}%
+Hood, J. M., J. P. Benstead, W. F. Cross, A. D. Huryn, P. W. Johnson, G.
+M. Gíslason, J. R. Junker, D. Nelson, J. S. Ólafsson, and C. Tran. 2018.
+Increased resource use efficiency amplifies positive response of aquatic
+primary production to experimental warming. Global Change Biology
+24:1069--1084.
+
+\leavevmode\hypertarget{ref-huryn1986}{}%
+Huryn, A. D., and J. B. Wallace. 1986. A method for obtaining in situ
+growth rates of larval {Chironomidae} ({Diptera}) and its application to
+studies of secondary Production1. Limnology and Oceanography
+31:216--221.
+
+\leavevmode\hypertarget{ref-junker2020}{}%
+Junker, J. R., W. F. Cross, J. P. Benstead, A. D. Huryn, J. M. Hood, D.
+Nelson, G. M. Gíslason, and J. S. Ólafsson. 2020. Resource supply
+governs the apparent temperature dependence of animal production in
+stream ecosystems. Ecology Letters 23:1809--1819.
+
+\leavevmode\hypertarget{ref-lorenz1905}{}%
+Lorenz, M. O. 1905. Methods of {Measuring} the {Concentration} of
+{Wealth}. Publications of the American Statistical Association 9:209.
+
+\leavevmode\hypertarget{ref-may1972}{}%
+May, R. M. 1972. Will a {Large Complex System} be {Stable}? Nature
+238:413--414.
+
+\leavevmode\hypertarget{ref-mccann1998}{}%
+McCann, K., A. Hastings, and G. R. Huxel. 1998. Weak trophic
+interactions and the balance of nature. Nature 395:794--798.
+
+\leavevmode\hypertarget{ref-merritt2008}{}%
+Merritt, R. W., K. W. Cummins, and M. B. Berg, editors. 2008. An
+{Introduction} to the {Aquatic Insects} of {North America}. Fourth.
+{Kendall/Hunt Publishing Co.}, {Dubuque, IA}.
+
+\leavevmode\hypertarget{ref-nelson2017}{}%
+Nelson, D., J. P. Benstead, A. D. Huryn, W. F. Cross, J. M. Hood, P. W.
+Johnson, J. R. Junker, G. M. Gíslason, and J. S. Ólafsson. 2017a. Shifts
+in community size structure drive temperature invariance of secondary
+production in a stream-warming experiment. Ecology 98:1797--1806.
+
+\leavevmode\hypertarget{ref-nelson2017a}{}%
+Nelson, D., J. P. Benstead, A. D. Huryn, W. F. Cross, J. M. Hood, P. W.
+Johnson, J. R. Junker, G. M. Gíslason, and J. S. Ólafsson. 2017b.
+Experimental whole-stream warming alters community size structure.
+Global Change Biology 23:2618--2628.
+
+\leavevmode\hypertarget{ref-oconnor2009}{}%
+O'Connor, M. I., M. F. Piehler, D. M. Leech, A. Anton, and J. F. Bruno.
+2009. Warming and {Resource Availability Shift Food Web Structure} and
+{Metabolism}. PLOS Biology 7:e1000178.
+
+\leavevmode\hypertarget{ref-ogorman2014}{}%
+O'Gorman, E. J., J. P. Benstead, W. F. Cross, N. Friberg, J. M. Hood, P.
+W. Johnson, B. D. Sigurdsson, and G. Woodward. 2014. Climate change and
+geothermal ecosystems: Natural laboratories, sentinel systems, and
+future refugia. Global Change Biology 20:3291--3299.
+
+\leavevmode\hypertarget{ref-ogorman2012}{}%
+O'Gorman, E. J., D. E. Pichler, G. Adams, J. P. Benstead, H. Cohen, N.
+Craig, W. F. Cross, B. O. L. Demars, N. Friberg, G. M. Gíslason, R.
+Gudmundsdóttir, A. Hawczak, J. M. Hood, L. N. Hudson, L. Johansson, M.
+P. Johansson, J. R. Junker, A. Laurila, J. R. Manson, E. Mavromati, D.
+Nelson, J. S. Ólafsson, D. M. Perkins, O. L. Petchey, M. Plebani, D. C.
+Reuman, B. C. Rall, R. Stewart, M. S. A. Thompson, and G. Woodward.
+2012. Impacts of {Warming} on the {Structure} and {Functioning} of
+{Aquatic Communities}. Pages 81--176 Advances in {Ecological Research}.
+{Elsevier}.
+
+\leavevmode\hypertarget{ref-padfield2017}{}%
+Padfield, D., C. Lowe, A. Buckling, R. Ffrench-Constant, S. Jennings, F.
+Shelley, J. S. Ólafsson, and G. Yvon-Durocher. 2017. Metabolic
+compensation constrains the temperature dependence of gross primary
+production. Ecology Letters 20:1250--1260.
+
+\leavevmode\hypertarget{ref-peterson1977}{}%
+Peterson, B. V. 1977. Black flies of {Iceland} ({Diptera}-{Simuliidae}).
+Canadian Entomologist 109:449--472.
+
+\leavevmode\hypertarget{ref-rosi-marshall2016}{}%
+Rosi-Marshall, E. J., H. A. Wellard Kelly, R. O. Hall, and K. A. Vallis.
+2016. Methods for quantifying aquatic macroinvertebrate diets.
+Freshwater Science 35:229--236.
+
+\leavevmode\hypertarget{ref-schindelin2012}{}%
+Schindelin, J., I. Arganda-Carreras, E. Frise, V. Kaynig, M. Longair, T.
+Pietzsch, S. Preibisch, C. Rueden, S. Saalfeld, B. Schmid, J.-Y.
+Tinevez, D. J. White, V. Hartenstein, K. Eliceiri, P. Tomancak, and A.
+Cardona. 2012. Fiji: An open-source platform for biological-image
+analysis. Nature Methods 9:676--682.
+
+\leavevmode\hypertarget{ref-solomon1975}{}%
+Solomon, D. L. 1975. A comparative approach to species diversity:7.
+
+\leavevmode\hypertarget{ref-thompson2012}{}%
+Thompson, R. M., U. Brose, J. A. Dunne, R. O. Hall, S. Hladyz, R. L.
+Kitching, N. D. Martinez, H. Rantala, T. N. Romanuk, D. B. Stouffer, and
+J. M. Tylianakis. 2012. Food webs: Reconciling the structure and
+function of biodiversity. Trends in Ecology \& Evolution 27:689--697.
+
+\leavevmode\hypertarget{ref-vasseur2005}{}%
+Vasseur, D. A., and K. S. McCann. 2005. A {Mechanistic Approach} for
+{Modeling Temperature}-{Dependent Consumer}-{Resource Dynamics}. The
+American Naturalist 166:184--198.
+
+\leavevmode\hypertarget{ref-walther2002}{}%
+Walther, G.-R., E. Post, P. Convey, A. Menzel, C. Parmesan, T. J. C.
+Beebee, J.-M. Fromentin, O. Hoegh-Guldberg, and F. Bairlein. 2002.
+Ecological responses to recent climate change. Nature 416:389--395.
+
+\leavevmode\hypertarget{ref-welch1968}{}%
+Welch, H. E. 1968. Relationships between {Assimiliation Efficiencies}
+and {Growth Efficiencies} for {Aquatic Consumers}. Ecology 49:755--759.
+
+\leavevmode\hypertarget{ref-woodward2010b}{}%
+Woodward, G., J. P. Benstead, O. S. Beveridge, J. Blanchard, T. Brey, L.
+E. Brown, W. F. Cross, N. Friberg, T. C. Ings, U. Jacob, S. Jennings, M.
+E. Ledger, A. M. Milner, J. M. Montoya, E. O'Gorman, J. M. Olesen, O. L.
+Petchey, D. E. Pichler, D. C. Reuman, M. S. A. Thompson, F. J. F. Van
+Veen, and G. Yvon-Durocher. 2010. Ecological {Networks} in a {Changing
+Climate}. Pages 71--138 Advances in {Ecological Research}. {Elsevier}.
+
+\leavevmode\hypertarget{ref-zhang2017}{}%
+Zhang, L., D. Takahashi, M. Hartvig, and K. H. Andersen. 2017. Food-web
+dynamics under climate change. Proceedings of the Royal Society B:
+Biological Sciences 284:20171772.
+
+\end{CSLReferences}
+
+\end{document}

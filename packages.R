@@ -72,7 +72,7 @@
 source("./R/fluxweb_mod_function.R")
 source("./R/Lorenz.R")
 source("./R/Evenness.R")
-nboot = 1e3
+# nboot = 1e3
 theme_set(theme_mod())
 options(mc.cores = parallel::detectCores()-1)
 rstan_options(auto_write = TRUE)

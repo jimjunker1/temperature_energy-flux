@@ -79,6 +79,8 @@ the_plan <-
   lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
   #
   random_skew_fig = plot_random_skew(skew_analysis, random_rankings),
+  # 
+  temperature_skew_fig = plot_skew_temperatur(temperature_stats),
   
   
   # target_name = target(

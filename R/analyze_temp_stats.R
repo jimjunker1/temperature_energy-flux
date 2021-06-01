@@ -10,7 +10,7 @@
 analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boots"]],
                                stream_gini_df = gini_analysis[["stream_gini_df"]],
                                diet_similarity_mat = diet_similarity[['among_modeled_overlap']],
-                               skew_df = skew_analysis,
+                               skew_analysis = skew_analysis,
                                n_boot = 1e3) {
   
   stream_temps = stream_temp_labels %>% data.frame %>%
@@ -115,29 +115,37 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   # random vs non-random structure of energy fluxes with temperature. 
   
   set.seed(123)
-  pb_probs_df = skew_analysis[['pb_skew_probs']] %>% named_group_split(site) %>%
+  pb_probs_df = skew_analysis[['pb_skew_probs']] %>% bind_rows(.id = 'site') %>%
+    pivot_longer(-site, names_to = 'boot', values_to = 'pb_skew_prob') %>% select(-boot) %>%
+    named_group_split(site) %>%
     map(~.x %>% slice_sample(n = n_boot, replace = TRUE) %>%
           dplyr::mutate(n_rep = 1:n())) %>% bind_rows %>%
     left_join(stream_temps %>% dplyr::rename(site = 'site_id'))
   
   pb_probs_temp_boots = pb_probs_df %>%
     group_by(n_rep) %>%
-    do(model = lm(pb_y_skew ~ tempC, data = .))
+    do(model = lm(pb_skew_prob ~ tempC, data = .))
   
-  pb_skew_temp_coefs = pb_skew_temp_boots %>%
+  pb_probs_temp_coefs = pb_probs_temp_boots %>%
     purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
   
+  pb_probs_concave_boots = pb_probs_df %>%
+    group_by(n_rep) %>%
+    do(model = lm(pb_skew_prob ~ poly(tempC, 2), data = .))
+  
   set.seed(123)
-  M_skew_df = skew_analysis[['M_skew_boots']] %>% named_group_split(site) %>%
+  M_skew_df = skew_analysis[['M_skew_probs']] %>% bind_rows(.id = "site") %>%
+    pivot_longer(-site, names_to = 'boot', values_to = 'M_skew_prob') %>% select(-boot) %>%
+    named_group_split(site) %>%
     map(~.x %>% slice_sample(n = n_boot, replace = TRUE) %>%
           dplyr::mutate(n_rep = 1:n())) %>% bind_rows %>%
     left_join(stream_temps %>% dplyr::rename(site = 'site_id'))
   
-  M_skew_temp_boots = M_skew_df %>%
+  M_probs_temp_boots = M_skew_df %>%
     group_by(n_rep) %>%
-    do(model = lm(M_mg_ind_skew ~ tempC, data = .))
+    do(model = lm(M_skew_prob ~ tempC, data = .))
   
-  M_skew_temp_coefs = M_skew_temp_boots %>%
+  M_probs_temp_coefs = M_probs_temp_boots %>%
     purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
   
   return(list(pb_temp_coefs = pb_temp_coefs, M_temp_coefs = M_temp_coefs, n_boot = n_boot, 

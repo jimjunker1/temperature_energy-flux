@@ -80,7 +80,7 @@ the_plan <-
   #
   random_skew_fig = plot_random_skew(skew_analysis, random_rankings),
   # 
-  temperature_skew_fig = plot_skew_temperatur(temperature_stats),
+  # temperature_skew_fig = plot_skew_temperature(temperature_stats),
   
   
   # target_name = target(

@@ -6,7 +6,7 @@
                     "RCurl","plyr","tidyverse","furrr", "fnmate", "moments",
                     "dflow","rmarkdown","tictoc","chron","lubridate","httr","TTR", 
                     "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown",
-                    "viridis", "broom","bbmle","ggthemes", "ggeffects",
+                    "viridis", "broom","bbmle","ggthemes", "ggeffects", "ggpubr",
                     "fluxweb","igraph","ggraph","magick","cowplot","rriskDistributions",
                     "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp", "rsample")
   p_load(char = package.list, install = TRUE, character.only = TRUE)
@@ -72,7 +72,7 @@
 source("./R/fluxweb_mod_function.R")
 source("./R/Lorenz.R")
 source("./R/Evenness.R")
-# nboot = 1e3
+nboot = 1e3
 theme_set(theme_mod())
 options(mc.cores = parallel::detectCores()-1)
 rstan_options(auto_write = TRUE)

@@ -75,7 +75,7 @@ random_rankings %>%
   theme(legend.position = 'none') +
   facet_wrap(~site, ncol = , scales = 'free_y') -> M_skew_plot
 
-grid.arrange(M_skew_plot = M_skew_plot, pb_skew_plot = pb_skew_plot)
+ return(list(M_skew_plot = M_skew_plot, pb_skew_plot = pb_skew_plot))
   
 }
 

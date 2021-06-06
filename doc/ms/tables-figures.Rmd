@@ -91,6 +91,15 @@ grid.draw(random_skew_fig)
 ```
 
 \newpage
+
+Figure 5. Non-random organization of community energy fluxes in relation to population biomass turnover (*P:B*) with mean annual temperature ($^\circ$C). Non-random organization is measured by the proportion of randomly generated skew statistics, $Sk_{flux}$, of equal or greater value. Observing an empirical value of $Sk_{flux}$ with a low probability of occurrence by random chance suggests non-random organization of community energy fluxes.
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+drake::loadd(temperature_skew_fig)
+grid.draw(pb_probs_plot)
+```
+
+\newpage
 Figure S1. Modeled diet proportions among streams
 
 ```{r diets, echo=FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450}

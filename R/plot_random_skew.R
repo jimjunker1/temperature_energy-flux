@@ -53,8 +53,8 @@ random_rankings %>%
   geom_histogram(aes(color = site, y = ..density..), fill = NA, bins = 50)+
   scale_x_continuous(name = expression("Skew statistic"~italic(Sk)))+
   geom_histogram(data = skew_boots, aes(x = pb_y_skew, y = ..density..,color = site, fill = site), linetype = 'dashed', inherit.aes = FALSE, bins = 50, alpha = 0.5)+
-  scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels)+
-  scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels)+
+  scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
+  scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
   guides(linetype = FALSE)+
   theme_tufte(ticks = TRUE) +
   geom_rangeframe(sides = "lb")+

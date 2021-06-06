@@ -11,7 +11,7 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
                                stream_gini_df = gini_analysis[["stream_gini_df"]],
                                diet_similarity_mat = diet_similarity[['among_modeled_overlap']],
                                skew_analysis = skew_analysis,
-                               n_boot = 1e3) {
+                               n_boot = 1e2) {
   
   stream_temps = stream_temp_labels %>% data.frame %>%
     rownames_to_column('site_id') %>% setNames(., c('site_id', 'tempC')) %>%
@@ -128,11 +128,38 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   
   pb_probs_temp_coefs = pb_probs_temp_boots %>%
     purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
-  
+
+  # fit a concave polynomial model to probability data
   pb_probs_concave_boots = pb_probs_df %>%
     group_by(n_rep) %>%
     do(model = lm(pb_skew_prob ~ poly(tempC, 2), data = .))
   
+  pb_probs_concave_coefs = pb_probs_concave_boots %>%
+    purrr::pmap(~..2 %>% pluck('coefficients'))
+  
+  pb_probs_concave_stats = pb_probs_concave_boots %>%
+    purrr::pmap(~..2 %>% broom::glance())
+ 
+  new_data = data.frame(tempC = seq(min(stream_temps$tempC),max(stream_temps$tempC)+0.2, 0.5))
+  
+  pb_probs_concave_pred = pb_probs_concave_boots %>%
+    purrr::pmap(~..2 %>% predict(newdata = new_data) %>% data.frame(.fitted = .) %>% dplyr::mutate(tempC = unlist(new_data, use.names = FALSE))) 
+  
+  # get average model from bootstrapped models
+  
+  pb_probs_concave_med = pb_probs_df %>%
+    group_split(n_rep) %>%
+    map(~lm(pb_skew_prob ~ poly(tempC, 2), data = .)) %>%
+    MuMIn::model.avg(.)  %>%
+    predict(newdata = new_data) %>% data.frame(.fitted = .) %>% dplyr::mutate(tempC = unlist(new_data, use.names = FALSE))
+  
+  # pb_probs_concave_med = pb_probs_concave_coefs %>%
+  #   bind_rows %>%
+  #   dplyr::summarise(across(everything(), ~median(.x , na.rm = TRUE))) %>%
+  #   setNames(.,c("intercept", "b1", "b2")) %>%
+  #   dplyr::mutate(.[[1]] + .[[2]] * unlist(new_data, use.names = FALSE) +  .[[3]]*(unlist(new_data, use.names = FALSE))^2) %>%
+  #   unlist %>% data.frame(tempC = new_data, .fitted = .)
+##
   set.seed(123)
   M_skew_df = skew_analysis[['M_skew_probs']] %>% bind_rows(.id = "site") %>%
     pivot_longer(-site, names_to = 'boot', values_to = 'M_skew_prob') %>% select(-boot) %>%
@@ -150,5 +177,7 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   
   return(list(pb_temp_coefs = pb_temp_coefs, M_temp_coefs = M_temp_coefs, n_boot = n_boot, 
               distance_similarity = distance_similarity, M_skew_temp_coefs = M_skew_temp_coefs,
-              pb_skew_temp_coefs = pb_skew_temp_coefs))
+              pb_skew_temp_coefs = pb_skew_temp_coefs, pb_probs_concave_stats = pb_probs_concave_stats,
+              pb_probs_df = pb_probs_df, pb_probs_concave_pred = pb_probs_concave_pred,
+              pb_probs_concave_med = pb_probs_concave_med))
 }

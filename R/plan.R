@@ -60,7 +60,7 @@ the_plan <-
   diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]], modeled_diets[["diet_predictions"]]),
   # temperature trait relationships
   temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']], gini_analysis[['stream_gini_df']],
-                                         diet_similarity[['among_modeled_overlap']], skew_analysis, n_boot = 1e5),
+                                         diet_similarity[['among_modeled_overlap']], skew_analysis, n_boot = 1e4),
   
 
    ### figures
@@ -80,7 +80,7 @@ the_plan <-
   #
   random_skew_fig = plot_random_skew(skew_analysis, random_rankings),
   # 
-  # temperature_skew_fig = plot_skew_temperature(temperature_stats),
+  temperature_skew_fig = plot_skew_temperature(temperature_stats, n_id = 2e3),
   
   
   # target_name = target(

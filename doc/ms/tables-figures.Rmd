@@ -28,10 +28,12 @@ Table 1.
 
 ```{r GINI table, echo = FALSE, warning=FALSE, message=FALSE}
 drake::loadd(gini_analysis)
-gini_analysis[["stream_gini_summary"]] %>% dplyr::mutate(site = factor(site, levels = names(stream_order_list))) %>%
+gini_analysis[["stream_gini_summary"]] %>% 
    dplyr::mutate(across(where(is.numeric),.fns = ~signif(.,2))) %>% 
    dplyr::mutate("Non-normalized Gini" = paste0(`Non-normalized Gini_mean`," ( ",`Non-normalized Gini_quant2.5`," - ", `Non-normalized Gini_quant97.5`," )"),
-                 "Normalized Gini" = paste0(`Normalized Gini_mean`," ( ", `Normalized Gini_quant2.5`," - ", `Normalized Gini_quant97.5`," )")) %>% select(site, `Non-normalized Gini`,`Normalized Gini`) %>% knitr::kable(align = "lrr")
+                 "Normalized Gini" = paste0(`Normalized Gini_mean`," ( ", `Normalized Gini_quant2.5`," - ", `Normalized Gini_quant97.5`," )")) %>% select(site, `Non-normalized Gini`,`Normalized Gini`) %>%
+   dplyr::mutate(site = factor(site, levels = names(stream_order_list))) %>%
+   knitr::kable(align = "lrr")
 
 ```
 
@@ -86,7 +88,7 @@ Figure 4. Bootstrapped distribution of skew statistics from OM fluxes with body 
 
 ```{r skew distribution, echo = FALSE, warning=FALSE, message=FALSE}
 drake::loadd(random_skew_fig)
-grid.draw(random_skew_fig)
+grid.arrange(random_skew_fig[[1]], random_skew_fig[[2]], ncol = 1)
 
 ```
 
@@ -96,7 +98,7 @@ Figure 5. Non-random organization of community energy fluxes in relation to popu
 
 ```{r echo = FALSE, warning=FALSE, message=FALSE}
 drake::loadd(temperature_skew_fig)
-grid.draw(pb_probs_plot)
+temperature_skew_fig
 ```
 
 \newpage

@@ -40,13 +40,14 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
     rand_skew = rand_skew[,grepl("skew",colnames(rand_skew))]
     skew = unlist(emp_skew[,grepl(skew_var, colnames(emp_skew))])
     extreme_vec = sapply(skew, FUN = function(x){
-      if(x > 0){
-        y = sum(rand_skew >= x, na.rm = TRUE)/rand_tot
-      } else if( x < 0){
-        y = sum(rand_skew <= x, na.rm = TRUE)/rand_tot
-      } else{
-        y = sum(rand_skew ==0, na.rm =TRUE)/rand_tot
-      }
+      y = sum(rand_skew >= x, na.rm = TRUE)/rand_tot
+      # if(x > 0){
+      #   y = sum(rand_skew >= x, na.rm = TRUE)/rand_tot
+      # } else if( x < 0){
+      #   y = sum(rand_skew <= x, na.rm = TRUE)/rand_tot
+      # } else{
+      #   y = sum(rand_skew ==0, na.rm =TRUE)/rand_tot
+      # }
       y
     })
     extreme_vec

@@ -86,6 +86,9 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
     purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
   
   # estimate the relationship with production skew and temperature
+  
+  new_data = data.frame(tempC = seq((min(stream_temps$tempC)-0.5),(max(stream_temps$tempC)+0.5), 0.5))
+  
   set.seed(123)
   pb_skew_df = skew_analysis[['pb_skew_boots']] %>% named_group_split(site) %>%
     map(~.x %>% slice_sample(n = n_boot, replace = TRUE) %>%
@@ -95,6 +98,10 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   pb_skew_temp_boots = pb_skew_df %>%
     group_by(n_rep) %>%
     do(model = lm(pb_y_skew ~ tempC, data = .))
+  
+  pb_skew_temp_pred = pb_skew_temp_boots %>%
+  purrr::pmap(~..2 %>% predict(newdata = new_data) %>% data.frame(.fitted = .) %>% dplyr::mutate(tempC = unlist(new_data, use.names = FALSE))) 
+  
   
   pb_skew_temp_coefs = pb_skew_temp_boots %>%
     purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
@@ -108,6 +115,9 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   M_skew_temp_boots = M_skew_df %>%
     group_by(n_rep) %>%
     do(model = lm(M_mg_ind_skew ~ tempC, data = .))
+  
+  m_skew_temp_pred = M_skew_temp_boots %>%
+    purrr::pmap(~..2 %>% predict(newdata = new_data) %>% data.frame(.fitted = .) %>% dplyr::mutate(tempC = unlist(new_data, use.names = FALSE))) 
   
   M_skew_temp_coefs = M_skew_temp_boots %>%
     purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
@@ -179,5 +189,7 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
               distance_similarity = distance_similarity, M_skew_temp_coefs = M_skew_temp_coefs,
               pb_skew_temp_coefs = pb_skew_temp_coefs, pb_probs_concave_stats = pb_probs_concave_stats,
               pb_probs_df = pb_probs_df, pb_probs_concave_pred = pb_probs_concave_pred,
-              pb_probs_concave_med = pb_probs_concave_med))
+              pb_probs_concave_med = pb_probs_concave_med, pb_skew_df = pb_skew_df, 
+              m_skew_df = M_skew_df, m_skew_temp_pred = m_skew_temp_pred,
+              pb_skew_temp_pred = pb_skew_temp_pred))
 }

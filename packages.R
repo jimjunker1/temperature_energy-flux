@@ -5,7 +5,7 @@
   package.list <- c("conflicted", "dotenv", "drake","data.table","gtools",
                     "RCurl","plyr","tidyverse","furrr", "fnmate", "moments",
                     "dflow","rmarkdown","tictoc","chron","lubridate","httr","TTR", 
-                    "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown",
+                    "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown", "MuMIn",
                     "viridis", "broom","bbmle","ggthemes", "ggeffects", "ggpubr",
                     "fluxweb","igraph","ggraph","magick","cowplot","rriskDistributions",
                     "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp", "rsample")

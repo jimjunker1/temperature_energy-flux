@@ -28,6 +28,6 @@ plot_trait_histogram <- function(spp_rankings = spp_rankings_summary) {
     scale_fill_manual(values = rev(ocecolors[['temperature']][oce_temp_pos]), labels = rev(stream_temp_labels)) +
     theme(axis.title.x = element_blank(), legend.title = element_blank(),legend.position = "none"))
   
-  return(grid.arrange(pb_boxplot, M_boxplot, bio_boxplot, ncol = 3))
+  return(grid.arrange(M_boxplot, pb_boxplot, bio_boxplot, ncol = 3))
 
 }

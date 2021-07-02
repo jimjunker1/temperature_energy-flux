@@ -104,10 +104,10 @@ the_plan <-
   #   }
   # )
   
-  target_name = target(
-    command = {
-      rmarkdown::render(knitr_in("doc/./coherence_ms/coherence_ms.Rmd"))
-      file_out("doc/./coherence_ms/coherence_ms.docx")
-    }
-  )
+  # target_name = target(
+  #   command = {
+  #     rmarkdown::render(knitr_in("doc/./coherence_ms/coherence_ms.Rmd"))
+  #     file_out("doc/./coherence_ms/coherence_ms.docx")
+  #   }
+  # )
 )

@@ -1,6 +1,6 @@
 ---
 title: ""
-author: "Report Author"
+author: "JR Junker"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
    word_document:
@@ -64,7 +64,7 @@ annual_spp_flux_fig
 
 \newpage 
 
-Figure 3. Histograms of species trait distributions of (a) log~10~ annual production:biomass ratio (y^-1^), (b) log~10~ mean body mass (mg ind^-1^), and (c) log~10~ annual mean population biomass (mg m^-2^).
+Figure 2. Histograms of species trait distributions of (a) log~10~ mean body mass (mg ind^-1^), (b) log~10~ annual production:biomass ratio (y^-1^), and (c) log~10~ annual mean population biomass (mg m^-2^).
 
 ```{r trait hist, echo=FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450}
 drake::loadd(spp_trait_histograms)
@@ -73,22 +73,22 @@ grid.draw(spp_trait_histograms)
 
 \newpage
 
-Figure 4. Relative cumulative fluxes among species in relation to ranked order of (a) annual production:biomass ratio (y^-1^) and (b) mean body size (mg ind^-1^).
+Figure 3. Relative cumulative fluxes among species in relation to ranked order of (a) mean body size (mg ind^-1^) and (b) annual production:biomass ratio (y^-1^).
 
 ```{r lorenz analysis, echo =FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450}
 drake::loadd(lorenz_trait_fig)
-grid.arrange(lorenz_trait_fig[["pb_lorenz_flux_plot"]], lorenz_trait_fig[["M_lorenz_flux_plot"]], ncol = 2, bottom = textGrob("Cumulative relative species", vjust = 1, gp = gpar(fontfamily = 'serif')),
+grid.arrange(lorenz_trait_fig[["M_lorenz_flux_plot"]], lorenz_trait_fig[["pb_lorenz_flux_plot"]], ncol = 2, bottom = textGrob("Cumulative relative species", vjust = 1, gp = gpar(fontfamily = 'serif')),
                          left = textGrob("Cumulative relative flux", rot = 90, vjust = 1, gp = gpar(fontfamily = 'serif')))
 
 ```
 
 \newpage
 
-Figure 4. Bootstrapped distribution of skew statistics from OM fluxes with body size, *M*, and (b) population annual production:biomass ratio relative to the distribution of skew statistics of 100,000 random orderings.
+Figure 4. Fluxes of organic matter were skewed along gradients of the population traits (a) mean individual body size, *M*, and (b) annual population production:biomass, *P:B* ratiopopulation traits. Percentile Density of empirical skewness of OM fluxes in relation to .  relative to the distribution of skew statistics of 100,000 random orderings.
 
 ```{r skew distribution, echo = FALSE, warning=FALSE, message=FALSE}
 drake::loadd(random_skew_fig)
-grid.arrange(random_skew_fig[[1]], random_skew_fig[[2]], ncol = 1)
+grid.arrange(random_skew_fig[["M_perc_plot"]], random_skew_fig[["pb_perc_plot"]], ncol = 1, left = text_grob(""))
 
 ```
 
@@ -126,3 +126,8 @@ Figure S3. Cumulative plot of relative community flux by species in relation to 
 ```{r biomass flux, echo=FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450}
 lorenz_trait_fig[["bio_lorenz_flux_plot"]]
 ```
+
+\newpage
+
+
+Figure S4. 

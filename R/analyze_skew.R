@@ -35,7 +35,7 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
   }
   
   skew_probs = function(emp_skew, rand_skew, skew_var = NULL,...){
-    if(is.null(var)) stop("Error: Must define the skew variable.")
+    if(is.null(skew_var)) stop("Error: Must define the skew variable.")
     rand_tot = nrow(rand_skew)
     rand_skew = rand_skew[,grepl("skew",colnames(rand_skew))]
     skew = unlist(emp_skew[,grepl(skew_var, colnames(emp_skew))])
@@ -53,6 +53,13 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
     extreme_vec
   }
   
+  skew_perc = function(emp_skew, rand_skew, skew_var = NULL,...){
+    if(is.null(skew_var)) stop("Error: Must define the skew variable.")
+    percentile = ecdf(unlist(rand_skew[,grepl("skew",colnames(rand_skew))]))
+    skew = unlist(emp_skew[,grepl(skew_var, colnames(emp_skew))])
+    skew_percs= sapply(skew, percentile)
+    return(skew_percs)
+  }
   ## ++++ End Helper functions ++++ ##
    # debugonce(skew_est)
  
@@ -80,7 +87,11 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
   # debugonce(skew_probs)
   PB_skew_probs = future_map2(stream_PB_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "pb_y_skew"))
   M_skew_probs = future_map2(stream_M_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "M_mg_ind_skew"))
-
+  
+  debugonce(skew_perc)
+  PB_skew_percs = future_map2(stream_PB_boots, stream_rand_boots, ~skew_perc(emp_skew = .x, rand_skew = .y, skew_var = "pb_y_skew"))
+  M_skew_percs = future_map2(stream_M_boots, stream_rand_boots, ~skew_perc(emp_skew = .x, rand_skew = .y, skew_var = "M_mg_ind_skew"))
+  
   PB_skew_summ = PB_skew_boots %>%
     group_by(site) %>%
     dplyr::summarise(across(matches('skew'), list(mean = ~mean(.x, na.rm = TRUE),
@@ -117,5 +128,7 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
                                                               quant75 = ~quantile(.x, 0.75, na.rm = TRUE),
                                                               quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE)))))
   
-  return(list(pb_skew_boots = PB_skew_boots, M_skew_boots = M_skew_boots, pb_skew_probs = PB_skew_probs, M_skew_probs = M_skew_probs, pb_skew_summ = PB_skew_summ, M_skew_summ = M_skew_summ))
+  return(list(pb_skew_boots = PB_skew_boots, M_skew_boots = M_skew_boots, pb_skew_probs = PB_skew_probs,
+              M_skew_probs = M_skew_probs, pb_skew_summ = PB_skew_summ, M_skew_summ = M_skew_summ,
+              pb_skew_percs = PB_skew_percs, M_skew_percs = M_skew_percs))
 }

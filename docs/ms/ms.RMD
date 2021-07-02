@@ -149,9 +149,9 @@ within the *rriskDistributions* package [@belgorodski2017].
 
 ## Quantifying the distribution of food web fluxes
 
-### Evenness Among consumers
+### Evenness of production among consumers
 
-To visualize and quantify how evenly OM fluxes were distributed among consumers within a stream, we constructed Lorenz curves [@lorenz1905] on ordered relative consumption fluxes,
+To visualize and quantify how evenly OM fluxes were distributed throughout consumes within a stream, we constructed Lorenz curves [@lorenz1905] on ordered relative consumption fluxes,
 such that in a community with $S$ species and the relative consumption of species *i*, $p_i$, is ordered $p_1 \leq p_2 \leq ... p_S$. The Lorenz curve plots how a value, in this
 case OM flux, accumulates with increasing cumulative proportion of species. In a community with perfectly equal distribution of OM consumption among species, the Lorenz curve is
 simply a straight diagonal line. Deviation from perfect equality was calculated as the Gini coefficient [@gini1921], normalized for differences in $S$ among streams, $G^*$
@@ -159,7 +159,7 @@ simply a straight diagonal line. Deviation from perfect equality was calculated 
 
 ### Distribution along species' trait axes
 
-We were interested in how OM fluxes were distributed (randomly vs. non-randomly) in relation to species traits (i.e., body size, $P:B$ ratio, population biomass) across the temperature gradient. We used a permutation analyses to test for non-random patterns in OM flux with species traits. First, we ordered species based on within-stream ranking of annual population traits (i.e, $M$, $P:B$) and measured the asymmetry in the distribution of annual OM flux with species traits. To determine the probability of observing the empirical asymmetry we constructed a random distribution of asymmetry values. The number of unique orderings of species increases to computationally intractable numbers very quickly (e.g., $S!$), therefore chose to permute estimated this by randomly ordering species 10,000,000 times and calculating the skew in the cumulative distribution of annual OM fluxes. We then use this random distribution to estimate the probability of observing 
+
 
 
 ## Statistical Analyses

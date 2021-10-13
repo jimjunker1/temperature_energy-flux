@@ -14,10 +14,13 @@
   remotes::install_github("jimjunker1/junkR")
   library(junkR)
   conflict_prefer('count', 'dplyr')
+  conflict_prefer('mutate', 'dplyr')
   remotes::install_github("milesmcbain/dflow")
   # remotes::install_github("MilesMcBain/breakerofchains")
   library(dflow)
   rm("package.list" )
+  
+  source("https://gist.githubusercontent.com/jimjunker1/0ec857c43b1e3a781363c1b1ea7e12ad/raw/4dd2d1078a00500963822d29b2e58ebf39831fb3/geom_flat_violin.R")
   # len <<- function(data)
   # {
   #   result<<-ifelse(is.null(nrow(data)),length(data),nrow(data))

@@ -1,8 +1,14 @@
 ---
 title: "Manuscript title here"
 author: 
-- name: James R Junker
-  affiliation: Dept. of Ecology, Montana State University, Bozeman, MT USA
+- name: James R. Junker^[Dept. of Ecology, Montana State University, Bozeman, MT USA]
+- name: Wyatt F. Cross
+- name: James M. Hood
+- name: Jonathan P. Benstead
+- name: Alex D. Huryn
+- name: Daniel Nelson
+- name: Jon S. Olafsson
+- name: Gisli M. Gislason
 output:
    word_document:
      reference_docx: docx_template.docx
@@ -23,8 +29,10 @@ csl: ecology.csl
 ---
 
 ```{r import general objects, echo=FALSE, message=FALSE, warning=FALSE}
-
+knitr::opts_chunk$set(echo = FALSE)
 source("./packages.R")
+library(knitr)
+
 drake::loadd(temperature_stats)
 n_boot = temperature_stats[['n_boot']]
 
@@ -40,30 +48,21 @@ n_boot = temperature_stats[['n_boot']]
 
 # Abstract
 
-Energy fluxes through invertebrate food webs restructured in response to temperature. Specifically, communities in warmer streams were composed of smaller-bodied and higher-turnover populations on average. Additionally, energy fluxes of warmer streams were unequally skewed towards small-bodied, high-turnover populations *within* the community, suggesting higher temperatures restructured energy fluxes in both an absolute and relative sense/both across and within communities.
+Energy fluxes through invertebrate food webs restructured in response to temperature. Specifically, communities in warmer streams were composed of smaller-bodied and higher-turnover populations on average. Additionally, energy fluxes of warmer streams were unequally skewed towards small-bodied, high-turnover populations *within* the community, suggesting higher temperatures restructured energy fluxes in both an absolute and relative sense across and within communities.
 
 \newpage
-
-
-
 
 # Introduction
 
 <!--- warming and effects in food webs --->
-\setlength\parindent{24pt}
 Temperature is an important abiotic variable with increasing relevance as warming global temperatures alter the diversity, structure, and functioning of Earth's ecosystems
-[@walther2002]. Temperature's effect on ecosystems manifest through complex direct and indirect pathways such as shifting species ranges [][] and subsequent changes to local and
-regional communities [], species adaptations [@gibert2017], and through effects on individual metabolic rates [@brown2004; @gillooly2001]. While a growing body of theoretical and
-empirical study has enhanced our knowledge of temperature-mediated changes to ecosystems [@oconnor2009], general patterns are uncertain and empirical studies often idiosyncratic [@zhang2017; @nelson2017],
-especially at higher levels of organizations such as communities and food webs [@walther2002; @woodward2010]. Yet, identifying general effects of temperature is a necessary step
-towards understanding how future warming may alter the functioning of ecosystems and the services they provide.\par
+[@walther2002]. Temperature's effect on ecosystems manifest through complex direct and indirect pathways such as shifting species ranges and subsequent changes to local and regional communities [@root2003], species adaptations [@gibert2017], and through effects on individual metabolic rates [@brown2004; @gillooly2001]. While a growing body of theoretical and
+empirical study has enhanced our knowledge of temperature-mediated changes to ecosystems [\ e.g., @oconnor2009], general patterns are uncertain and empirical studies often idiosyncratic [@zhang2017; @nelson2017], especially at higher levels of organizations such as communities and food webs [@walther2002; @woodward2010]. Yet, identifying general effects of temperature is a necessary step towards understanding how future warming may alter the functioning of ecosystems and the services they provide.
 
 <!--- Speeding up of food web: Species levels--->
-\setlength\parindent{24pt}
-Temperature has the potential to alter the provision and maintenance of ecosystem services by modifying the interactions among species [@brose2012; @woodward2010] that underpin ecosystem functions [@deruiter1995; @thompson2012]. The signature of temperature on the stability and dynamics of food webs is present across global climate gradients [@baiser2019] where its direct and indirect effects alter the magnitudes and relative distributions among species and trophic levels [@may1972; @mccann1998; @barnes2018]. Direct changes through species richness effects [@gibert2019]. Indirect through the distribution of consumer and prey species and it effects on the acquisition and allocation of resources among species [@zhang2017] --macroecology of food web dynamics and stability are controlled by the .\par
+Temperature has the potential to alter the provision and maintenance of ecosystem services by modifying the network of interactions among species [@brose2012; @woodward2010] that underpin ecosystem functions [@deruiter1995; @thompson2012]. The signature of temperature on the stability and dynamics of food webs is present across global climate gradients [@baiser2019] where its direct and indirect effects alter the magnitudes and relative distribution of biomass and interactions among species and trophic levels [@may1972; @mccann1998; @barnes2018; @gibert2019] and the acquisition and allocation of resources among species [@zhang2017]. Importantly,  --macroecology of food web dynamics and stability are controlled by the
 
-\setlength\parindent{24pt}
-Temperature can directly alter the distribution of species interactions by asymmetric responses in organismal traits among species [e.g., attack rate, handling time, growth rates,
+Temperature effects individuals by altering rates of metabolism [@gillooly2001, @brown2004] and biological activity among species [e.g., attack rate, handling time, growth rates,
 etc.; @dell2014].
 
 <!--- Connect traits to the 'speed' of ecosystem energy fluxes--->
@@ -74,8 +73,7 @@ acquisition of resources by consumer Generally, temperature is predicted to have
 @oconnor2011]
 
 Here, we measured the patterning and distribution of organic matter fluxes within invertebrate food webs across a natural stream temperature gradient (\~5 - 28$^\circ$C). Previous research in these streams has shown a strong positive effect of temperature on primary production both among streams [@demars2011; @padfield2017] and within streams seasonally
-[@ogorman2012; @hood2018]. Consumers rely largely on autochthonous resource [@ogorman2012; @nelson2020] and therefore the dynamics of primary production have a strong control on consumer energy demand [@junker2020], as such, we predicted total annual OM fluxes to consumers to scale with among stream patterns in primary production and consumer energy demand, and therefore, increase with temperature across streams. We, further expected that increasing temperature would reduce consumer species richness [@ogorman2019], thereby altering how OM fluxes are distributed within and across communities. The distribution of OM fluxes to consumers will shift towards relatively faster, higher turnover consumer at higher temperatures, 'speeding up' consumer dynamics both through direct effects on consumer turnover and through a decrease in mean body size. Further, we predict increasing temperatures 
-
+[@ogorman2012; @hood2018]. Consumers rely largely on autochthonous resources [@ogorman2012; @nelson2020] and therefore the dynamics of primary production have a strong control on consumer energy demand [@junker2020]. As such, we predicted total annual OM fluxes to consumers to scale with among-stream patterns in resource availability and consumer energy demand and increase with temperature across streams. We, further expected that increasing temperature would reduce consumer species richness [@ogorman2019], thereby altering how OM fluxes are distributed within and across communities. The distribution of OM fluxes to consumers will shift towards relatively faster, higher turnover consumer at higher temperatures, 'speeding up' consumer dynamics both through direct effects on consumer turnover and through a decrease in mean body size. 
 # Methods
 
 We studied six streams within the Hengill geothermal field of southwestern Iceland (64$^\circ$ 03'N 021$^\circ$ 18'W) that varied in mean annual temperature. Hengill is
@@ -109,11 +107,11 @@ calculated by the changes in mean body size (*W*) over a given time interval (*t
 
 $$g = log_e ( W_{t+\Delta t} / W_t) / \Delta t$$
 
-Variability in growth rates was estimated by bootstrapping through repeated resampling of individual lengths with replacement (*n* = 500). For taxa which exhibit synchronous growth
+Variability in growth rates was estimated by bootstrapping through repeated resampling of individual lengths with replacement (*n* = 1000). For taxa which exhibit synchronous growth
 and development (e.g., Simuliidae spp., some Chironomidae spp., etc.), we examined temporal changes in length-frequency distributions and calculated growth rates and uncertainty
 using a bootstrap technique similar to that described in Benke and Huryn [-@benke2017]. Individual Lengths were converted to mg AFDM using published length-mass regression cited
 above and size-frequency histograms were visually inspected for directional changes in body size through time. For each date, size-frequency distributions were resampled with
-replacement (*n* = 500) and growth rates estimated from equation 1. We prevented the calculation of negative growth rates by requiring $W_{t + \Delta t}$ \> $W_t$. To estimate
+replacement (*n* = 1000) and growth rates estimated from equation 1. We prevented the calculation of negative growth rates by requiring $W_{t + \Delta t}$ \> $W_t$. To estimate
 growth rates of taxa for which growth could not be estimated empirically, we developed stream-specific growth rate models by constructing multivariate linear regressions of
 empirical growth data against body size and temperature within each stream. To estimate uncertainty in production of each taxon, we used a bootstrapping technique that resampled
 measured growth rates, in addition to abundance and size distributions from individual samples. For each iteration (*n* = 1000), size-specific growth rates were multiplied by mean
@@ -131,12 +129,12 @@ onto gridded nitrocellulose membrane filters (Metricel GN-6, 25 mm, 0.45 $\mu$m 
 microscope slide, cleared with Type B immersion old, and covered with a cover slip. We took 5--10 random photographs under 200--400x magnification, depending on the density of
 particles, using a digital camera mounted on a compound microscope. From these photographs we identified all particles within each field and measured the relative area of particles
 using image analysis software [@schindelin2012]. We identified particles as diatoms, green and filamentous algae, cyanobacteria, amorphous detritus, vascular and non-vascular
-plants (bryophytes), and animal material. We calculated the proportion of each food category in the gut by dividing their summed area by the total area of all particles. Gut
+plants (e.g., bryophytes), and animal material. We calculated the proportion of each food category in the gut by dividing their summed area by the total area of all particles. Gut
 contents of many predators were empty or contained unidentifiable, macerated prey. For these taxa, we assumed 100% animal material.
 
-| To estimate variability in diet compositions and to impute missing values for non-dominant, yet present, taxa, we modeled the diet proportions within each stream using a
-hierarchical multivariate model [@fordyce2011, @coblentz2017]. Here, the diet of a consumer population, *i*, is a multinomial vector,$\overrightarrow{y_i}$, of
-$$\overrightarrow{y_i} \sim Multinomial(\overrightarrow{p_i}, n_i)$$ $$\overrightarrow{p_i} \sim Dirichlet(\overrightarrow{q_i} \times  \alpha) $$ where, $\overrightarrow{p_i}$, is
+To estimate variability in diet compositions and to impute missing values for non-dominant, yet present, taxa, we modeled the diet proportions within each stream using a
+hierarchical multivariate model [@fordyce2011, @coblentz2017]. Here, the diet of a consumer population, *i*, in stream, *j*, is a multinomial vector,$\overrightarrow{y_{ij}}$, of
+$$\overrightarrow{y_{ij}} \sim Multinomial(\overrightarrow{p_{ij}}, n_{ij})$$ $$\overrightarrow{p_i} \sim Dirichlet(\overrightarrow{q_i} \times  \alpha) $$ where, $\overrightarrow{p_i}$, is
 a vector of consumer diet proportions, $\overrightarrow{q_i}$ is a vector of the population's diet proportions and $\alpha$ is a concentration parameter of the Dirichlet process.
 We used uniform priors for $\overrightarrow{q_i}$ and $\alpha$, $$\overrightarrow{q_i} \sim Dirichlet(\overrightarrow{\textbf{1}})$$ $$\alpha \sim Uniform(0,\textit{c})$$ where,
 $\overrightarrow{\textbf{1}}$ is a vector of ones the same length of basal resource types and $\textit{c}$ is the presumed maximum value the concentration value. **add in
@@ -144,7 +142,7 @@ site-level model parameter and model fitting language** . Models were fit in Sta
 from the hierarchical model by resampling from posterior distributions. Importantly, this process allowed to maintain the hierarchical structure of the data when imputing missing
 values.
 
-| From modeled diet compositions, we estimated trophic redundancy within and across stream food webs by calculating proportional similarities [*PS*; @whittaker1952] among modeled diet estimates (proportional similarity estimates from empirical diets give similar results to modeled estimates; Supporting Materials). Proportional similarities were calculated as:
+From modeled diet compositions, we estimated trophic redundancy within and across stream food webs by calculating proportional similarities [*PS*; @whittaker1952] among modeled diet estimates. Proportional similarities were calculated as:
 
 $$ PS = 1 - 0.5 \sum_{j=1}^S|p_{x,i} - p_{y,i}|$$
 
@@ -170,10 +168,7 @@ within the *rriskDistributions* package [@belgorodski2017].
 
 ### Evenness Among consumers
 
-To visualize and quantify how evenly OM fluxes were distributed among consumers within a stream, we constructed Lorenz curves [@lorenz1905] on ordered relative consumption fluxes, such that in a community with $S$ species and the relative consumption of species *i*, $p_i$, is ordered $p_1 \leq p_2 \leq ... p_S$. The Lorenz curve plots how a value, in this
-case OM flux, accumulates with increasing cumulative proportion of species. In a community with perfectly equal distribution of OM consumption among species, the Lorenz curve is
-simply a straight diagonal line. Deviation from perfect equality was calculated as the Gini coefficient [@gini1921], normalized for differences in $S$ among streams, $G^*$
-[@solomon1975; @chao2019]: $$ G^* = (2 \sum_{i = 1}^S ip_i -2)/(S-1)$$ 
+To visualize and quantify how evenly OM fluxes were distributed among consumers within a stream, we constructed Lorenz curves [@lorenz1905] on ordered relative consumption fluxes, such that in a community with $S$ species and the relative consumption of species *i*, $p_i$, is ordered $p_1 \leq p_2 \leq ... p_S$. The Lorenz curve plots how a value, in this case OM flux, accumulates with increasing cumulative proportion of species. In a community with perfectly equal distribution of OM consumption among species, the Lorenz curve is simply a straight diagonal line. Deviation from perfect equality was calculated as the Gini coefficient [@gini1921], normalized for differences in $S$ among streams, $G^*$ [@solomon1975; @chao2019]: $$ G^* = (2 \sum_{i = 1}^S ip_i -2)/(S-1)$$ 
 
 ### Distribution along species' trait axes
 
@@ -181,7 +176,11 @@ We were interested in the question of how temperature may select for certain spe
 
 $$Sk_{flux} = f_{Q0.75} - 2f_{Q0.5} + f_{Q0.25}/ f_{Q0.75}-f_{Q0.25}$$
 
-where, $f_{Qx}$, is the cumulative flux at some quantile, $Qx$, of the community trait distribution. To determine if this outcome was due to random ordering, we first had to account for statistical constraints that restrict the range of possible outcomes [i.e., feasible set; @haegeman2008;], given the number of species and the relative distribution of energy fluxes within a community. The number of unique orderings of species increases to computationally intractable numbers very quickly (e.g., $S!$, 10 species ~3.6e^6^ unique orderings). Therefore, we chose to permute a portion of each stream community's feasible set by randomly ordering species and calculating the skewness in the cumulative distribution of annual OM fluxes 100,000 times. The number of random orderings was chosen as a balance between characterizing the relative distribution of skewness values within each feasible set and computational and time constrains. This permuted set allowed us to calculate the likelihood of observing the empirical skewness, $Sk_{flux}$, in each stream. Further, we estimated the 
+where, $f_{Qx}$, is the cumulative flux at some quantile, $Qx$, of the community trait distribution. To determine if this outcome was due to random ordering, we first had to account for statistical constraints that restrict the range of possible outcomes [\ i.e., feasible set, @haegeman2008; @diaz], given the number of species and the relative distribution of energy fluxes within a community. The number of unique orderings of species increases to computationally intractable numbers very quickly (e.g., $S!$, 10 species ~3.6e^6^ unique orderings). Therefore, we chose to permute a portion of each stream community's feasible set by randomly ordering species and calculating the skewness in the cumulative distribution of annual OM fluxes 100,000 times. The number of random orderings was chosen as a balance between characterizing the relative distribution of skewness values within each feasible set and computational and time constrains. This permuted set allowed us to calculate the probability of observing the empirical skewness, $Sk_{flux}$, in each stream compared to a random ordering given the distribution of relative energy flux.
+
+### Speed of seasonal energy flux
+
+Lastly, to  we quantified the cumulative 
 
 ## Statistical Analyses
 
@@ -265,6 +264,19 @@ gini_summary = gini_analysis[["stream_gini_summary"]] %>% set_names(make.names(n
 
 Generally, OM fluxes were distributed unevenly among consumers, however, the extent varied among streams (Figure 1; Figure S1). Gini inequality coefficients ranged from `r gini_summary %>% select('Non.normalized.Gini_mean') %>% min %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_min(Non.normalized.Gini_mean) %>% select(Non.normalized.Gini_quant2.5) %>% round(2)` -- `r gini_summary %>% data.frame %>% dplyr::slice_min(Non.normalized.Gini_mean) %>%  select('Non.normalized.Gini_quant97.5') %>% round(2)`] to `r gini_summary %>% data.frame %>% dplyr::slice_max(Non.normalized.Gini_mean) %>%  select('Non.normalized.Gini_mean') %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_max(Non.normalized.Gini_mean) %>% select('Non.normalized.Gini_quant2.5') %>% round(2)` -- `r gini_summary %>% data.frame %>% dplyr::slice_max(Non.normalized.Gini_mean) %>% select('Non.normalized.Gini_quant97.5') %>% round(2)`]; Table 1). Differences in inequality were partly attributed to variation in consumer species richness among streams which ranged from `r spp_richness %>% select(taxon_n) %>% min` to `r spp_richness %>% select(taxon_n) %>% max` consumers. Yet, even after accounting for differences in consumer richness,patterns of material fluxes were still unevenly distributed among consumers (Normalized Gini coefficient: `r gini_summary %>% select('Normalized.Gini_mean') %>% min %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_min(Normalized.Gini_mean) %>% select(Normalized.Gini_quant2.5) %>% round(2)` -- `r gini_summary %>% data.frame %>% dplyr::slice_min(Normalized.Gini_mean) %>%  select('Normalized.Gini_quant97.5') %>% round(2)`] to `r gini_summary %>% data.frame %>% dplyr::slice_max(Normalized.Gini_mean) %>%  select('Normalized.Gini_mean') %>% round(2)` [`r gini_summary %>% data.frame %>% dplyr::slice_max(Normalized.Gini_mean) %>% select('Normalized.Gini_quant2.5') %>% round(2)` -- `r gini_summary %>% data.frame %>% dplyr::slice_max(Normalized.Gini_mean) %>% select('Normalized.Gini_quant97.5') %>% round(2)`]; Table 1).
 
+```{r GINI table, echo = FALSE, warning=FALSE, message=FALSE}
+drake::loadd(gini_analysis)
+tab1_caption = "Table 1. Evenness of energy fluxes among consumers within a stream community measured by the Gini index, both raw (\\'non-normalized\\') and \\'normalized\\' for consumer richness"
+gini_analysis[["stream_gini_summary"]] %>% 
+   dplyr::mutate(across(where(is.numeric),.fns = ~signif(.,2))) %>% 
+   dplyr::mutate("Non-normalized Gini" = paste0(`Non-normalized Gini_mean`," ( ",`Non-normalized Gini_quant2.5`," - ", `Non-normalized Gini_quant97.5`," )"),
+                 "Normalized Gini" = paste0(`Normalized Gini_mean`," ( ", `Normalized Gini_quant2.5`," - ", `Normalized Gini_quant97.5`," )")) %>% select(site, `Non-normalized Gini`,`Normalized Gini`) %>%
+   dplyr::mutate(site = factor(site, levels = names(stream_order_list))) %>%
+   knitr::kable(align = "lrr", caption = tab1_caption)
+
+```
+
+
 ```{r spp flux summaries, echo = FALSE, warning=FALSE, message=FALSE}
 drake::loadd(spp_rankings_summary)
 spp_flux_summary = spp_rankings_summary[["prod_spp_rank"]]
@@ -295,7 +307,12 @@ perc_dom_max = spp_dominance %>% dplyr::slice(which.max(dom_spp))
 
 ```
 
-Variation in the relative distribution of OM fluxes among consumers corresponded to different patterns of dominance across streams (Figure 1a). For example, in an absolute sense, ~85% of total flux was contributed by `r n_dom_min$n_dom` to `r n_dom_max$n_dom` species (`r round(n_dom_min$dom_flux,2)`% to `r round(n_dom_max$dom_flux,2)`% of flux, respectively). Relatively, this flux was attributed by `r round(perc_dom_min$dom_spp*100,0)`% to `r round(perc_dom_max$dom_spp*100,0)`% of the species assemblages within streams. Differences in dominance were unrelated to temperature, however, species dominance in relation to population traits exhibited important differences along the temperature gradient.   
+Variation in the relative distribution of OM fluxes among consumers corresponded to different patterns of dominance across streams (Figure 1). For example, in an absolute sense, ~85% of total flux was contributed by `r n_dom_min$n_dom` to `r n_dom_max$n_dom` species (`r round(n_dom_min$dom_flux,2)`% to `r round(n_dom_max$dom_flux,2)`% of flux, respectively). Relatively, this flux was attributed by `r round(perc_dom_min$dom_spp*100,0)`% to `r round(perc_dom_max$dom_spp*100,0)`% of the species assemblages within streams. Differences in dominance were unrelated to temperature, however, species dominance in relation to population traits exhibited important differences along the temperature gradient. 
+
+```{r figure 1., echo = FALSE, warning = FALSE, message = FALSE, fig.width=5, fig.height=5, dpi = 450}
+drake::loadd(annual_spp_flux_fig)
+annual_spp_flux_fig
+```
 
 ## OM fluxes along species trait distributions among sites and taxa
 
@@ -333,24 +350,50 @@ pb_skew_summ = skew_analysis[["pb_skew_summ"]]
 m_skew_summ = skew_analysis[["M_skew_summ"]]
 ```
 
-The fluxes of OM were distributed differently across body sizes and turnover rates (*P:B*) among and within streams. Across streams, mean body size of taxa ranged from `r m_summ %>% slice_min(M_mg_ind_mean) %>% select(M_mg_ind_mean) %>% round(2)` to `r m_summ %>% slice_max(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` and mean annual P:B ranged from `r pb_summ %>% slice_min(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` to `r pb_summ %>% slice_max(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` (Figure 2). Both, *M* and *P:B* showed associations with mean annual stream temperature that were negative and positive, respectively. Generally, mean *M* of the community decreased `r M_temp_coef_mean`% (95% PI, `r M_temp_coef_quant2.5`% -- `r M_temp_coef_quant97.5`%) for each increase in 1$^\circ$C. In contrast, mean population *P:B* of the community increased `r pb_temp_coef_mean`% (95% PI, `r pb_temp_coef_quant2.5`% -- `r pb_temp_coef_quant97.5`%) for each 1$^\circ$C in mean annual stream temperature. Energy fluxes within consumer communities were skewed towards larger body sizes (positive skew), towards smaller body sizes (negative skew), or neutrally in regards to body size  among streams, with skew estimates with body size (*M*) ranging from `r m_skew_summ %>% slice_min(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` to `r m_skew_summ %>% slice_max(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean) %>% round(2)` (Figure 3). Similarly, skew in fluxes towards high turnover taxa varied among streams ranging from `r pb_skew_summ %>% slice_min(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` to `r pb_skew_summ %>% slice_max(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` (Figure 3).
+The fluxes of OM were distributed differently across body sizes and turnover rates (*P:B*) among and within streams. Across streams, mean body size of taxa ranged from `r m_summ %>% slice_min(M_mg_ind_mean) %>% select(M_mg_ind_mean) %>% round(2)` to `r m_summ %>% slice_max(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` mg ind^1^ and mean annual P:B ranged from `r pb_summ %>% slice_min(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` to `r pb_summ %>% slice_max(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` (Figure 2). Both, *M* and *P:B* showed associations with mean annual stream temperature that were negative and positive, respectively. Generally, mean *M* of the community decreased `r M_temp_coef_mean`% (95% PI, `r M_temp_coef_quant2.5`% -- `r M_temp_coef_quant97.5`%) for each increase in 1$^\circ$C. In contrast, mean population *P:B* of the community increased `r pb_temp_coef_mean`% (95% PI, `r pb_temp_coef_quant2.5`% -- `r pb_temp_coef_quant97.5`%) for each 1$^\circ$C in mean annual stream temperature. Energy fluxes within consumer communities were skewed towards larger body sizes (positive skew), towards smaller body sizes (negative skew), or neutrally in regards to body size  among streams, with skew estimates with body size (*M*) ranging from `r m_skew_summ %>% slice_min(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` to `r m_skew_summ %>% slice_max(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean) %>% round(2)` (Figure 3, Table 2). Similarly, skew in fluxes towards high turnover taxa varied among streams ranging from `r pb_skew_summ %>% slice_min(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` to `r pb_skew_summ %>% slice_max(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` (Figure 3, Table 2).
 
-The skew of energy fluxes towards populations with smaller/larger body sizes or higher/lower turnover showed weak, yet systematic variation with stream temperature (Figure 5). Skew towards larger body sizes was negatively associated with stream temperature. The mean effect size of increasing temperature was to shift the skewness coefficient, $Sk_{flux}$, `r M_skew_temp_coef_mean` units (`r M_skew_temp_coef_quant2.5` -- `r M_skew_temp_coef_quant97.5` 95% PI) for every 1 $^\circ$C increase. The estimated effect of temperature on $Sk_{flux}$ towards higher body size populations exhibited a bimodal distribution around zero (Figure SXa), but `r round((sum(M_skew_temp_coefs < 0)/n_boot)*100,1)`% of values fell below zero (Figure 5a). Similarly, energy fluxes through the community skewed increasingly toward higher turnover (*P:B*)organisms with increasing temperature. The increase in $Sk_{flux}$ towards higher *P:B* populations was `r pb_skew_temp_coef_mean` (`r pb_skew_temp_coef_quant2.5` -- `r pb_skew_temp_coef_quant97.5` 95% PI; Figure 5b). 
+```{r trait hist, echo=FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450}
+drake::loadd(spp_trait_histograms)
+grid.draw(spp_trait_histograms)
+```
+
+The skew of energy fluxes towards populations with smaller/larger body sizes or higher/lower turnover showed weak, yet systematic variation with stream temperature (Figure 5). Skew towards larger body sizes was negatively associated with stream temperature. The mean effect size of increasing temperature was to shift the skewness coefficient, $Sk_{flux}$, `r M_skew_temp_coef_mean` units (`r M_skew_temp_coef_quant2.5` -- `r M_skew_temp_coef_quant97.5` 95% PI) for every 1 $^\circ$C increase. The estimated effect of temperature on $Sk_{flux}$ towards higher body size populations exhibited a bimodal distribution around zero (Figure SXa), but `r round((sum(M_skew_temp_coefs < 0)/n_boot)*100,1)`% of values fell below zero (Figure 4). Similarly, energy fluxes through the community skewed increasingly toward higher turnover (*P:B*)organisms with increasing temperature. The increase in $Sk_{flux}$ towards higher *P:B* populations was `r pb_skew_temp_coef_mean` (`r pb_skew_temp_coef_quant2.5` -- `r pb_skew_temp_coef_quant97.5` 95% PI; Figure 4). 
+
+```{r lorenz analysis, echo =FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450}
+drake::loadd(lorenz_trait_fig)
+grid.arrange(lorenz_trait_fig[["M_lorenz_flux_plot"]], lorenz_trait_fig[["pb_lorenz_flux_plot"]], ncol = 2, bottom = textGrob("Cumulative relative species", vjust = 1, gp = gpar(fontfamily = 'serif')),
+                         left = textGrob("Cumulative relative flux", rot = 90, vjust = 1, gp = gpar(fontfamily = 'serif')))
+
+```
 
 We compared the empirical $Sk_{flux}$ measurement within streams to a random ordering to detect random vs. non-random structure in community energy fluxes. The probability of observing a similar or more extreme skew of within stream OM fluxes in relation to species body size ranged from `r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_mean")) %>% round(2)` (`r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_quant2.5")) %>% round(2)` -- `r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_quant97.5")) %>% round(2)`) to `r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_mean")) %>% round(2)` (`r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_quant2.5")) %>% round(2)` -- `r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_quant97.5")) %>% round(2)`). Similarly, the probability of a more extremely skewed distribution in relation to population biomass turnover ranged from `r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_mean")) %>% round(2)` (`r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant2.5")) %>% round(2)` -- `r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant97.5")) %>% round(2)`) to `r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_mean")) %>% round(2)` (`r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant2.5")) %>% round(2)` -- `r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant97.5")) %>% round(2)`). The probability that energy fluxes were organized randomly or non-randomly in regards to body size showed no clear association with temperature (Figure S5), however, there was a trend towards community energy fluxes becoming more organized (less "randomly" structured) in relation to biomass turnover with increasing temperatures (Figure XX). This relationship exhibited a concave up relationship with temperature, showing a clear trend toward less-random organization from cool to mid-range temperatures and returning towards a more likely random organization at the warmest stream.
 
+```{r skew statistics, echo=FALSE, warning=FALSE, message=FALSE}
+
+```
+
+```{r skew distribution, echo = FALSE, warning=FALSE, message=FALSE, fig.cap="Figure 4. "}
+drake::loadd(random_skew_fig)
+grid.arrange(random_skew_fig[["M_perc_plot"]], random_skew_fig[["pb_perc_plot"]], ncol = 1, left = text_grob(""))
+
+```
+
+```{r skew prob temp, echo = FALSE, warning=FALSE, message=FALSE}
+drake::loadd(temperature_skew_fig)
+temperature_skew_fig
+```
 # Discussion
 
 Rising global temperatures are altering the pathways of energy flow across and within ecosystems with potential consequences for the services they provide. Here, we document shifting energy flow pathways across a wide natural temperature gradient to show that while increasing mean annual temperatures led to expected reductions in mean community body size and increases in mean biomass turnover rates across stream consumer communities, increasing temperatures also systematically skewed energy fluxes *within* communities. Here, energy fluxes were skewed towards smaller, quick turnover populations at warmer temperatures and showed increasingly non-random organization moving from cooler to warmer temperatures. but this trend reversed at the warmest temperatures. The tendency for energy fluxes to be dominated by relatively higher turnover populations at warmer temperatures and this organization to be increasingly non-random, suggests warming may speed up energy fluxes through ecosystems in both an absolute and relative sense.
 
 Increasing global temperatures
 
-[@diaz2021] SAD are more uneven than their statistical background
+[@diaz] SAD are more uneven than their statistical background
 
 
 
 # Acknowledgements
 
-Jeff Wesner and Abe Kanz for code sharing and discussions on modeling diet proportions.
+We are grateful to Sigurður Guðjonsson, Guðni Guðbergsson, and the staff at the Veiðimlastofnun for providing laboratory space and logistical support. We are also grateful to Sveinbj€orn Steinþorsson at the University of Iceland for super-jeep transport to our field sites during the winter. Jeff Wesner and Abe Kanz for code sharing and discussions on modeling diet proportions.
 
 # References

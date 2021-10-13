@@ -88,7 +88,7 @@ analyze_skew <- function(lorenz_analysis, random_rankings) {
   PB_skew_probs = future_map2(stream_PB_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "pb_y_skew"))
   M_skew_probs = future_map2(stream_M_boots, stream_rand_boots, ~skew_probs(emp_skew = .x, rand_skew = .y, skew_var = "M_mg_ind_skew"))
   
-  debugonce(skew_perc)
+  # debugonce(skew_perc)
   PB_skew_percs = future_map2(stream_PB_boots, stream_rand_boots, ~skew_perc(emp_skew = .x, rand_skew = .y, skew_var = "pb_y_skew"))
   M_skew_percs = future_map2(stream_M_boots, stream_rand_boots, ~skew_perc(emp_skew = .x, rand_skew = .y, skew_var = "M_mg_ind_skew"))
   

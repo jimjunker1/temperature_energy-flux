@@ -15,7 +15,7 @@ plot_trait_histogram <- function(spp_rankings = spp_rankings_summary) {
                             geom_flat_violin(position = position_nudge(x = 0.2, y = 0), alpha = 0.8)+
                             geom_point(aes(y = log10(pb_y_mean), color = site), 
                                        position = position_jitter(width = 0.1),
-                                       size = 0.8, alpha = 0.8)+
+                                       size = 0.8, alpha = 0.6)+
                             geom_boxplot(width = 0.1, outlier.shape = NA, alpha = 0.5, show.legend =FALSE)+
                             scale_y_continuous(name = expression(log[10]*"("*italic("P:B")*","~y^{-1}*")"))+
                             scale_x_discrete(labels = rev(stream_temp_labels))+
@@ -30,7 +30,7 @@ plot_trait_histogram <- function(spp_rankings = spp_rankings_summary) {
                            geom_flat_violin(position = position_nudge(x =0.2, y = 0), alpha = 0.8) +
                            geom_point(aes(y = log10(M_mg_ind_mean), color = site), 
                                           position = position_jitter(width = 0.1),
-                                          size = 0.8, alpha = 0.8) +
+                                          size = 0.8, alpha = 0.6) +
                            geom_boxplot(width = 0.1, outlier.shape = NA, alpha = 0.5)+
                            scale_y_continuous(name = expression(log[10]*"("*italic("M")*","~mg^{-ind}*")"))+
                            guides(fill = 'none', color = 'none')+
@@ -44,7 +44,7 @@ plot_trait_histogram <- function(spp_rankings = spp_rankings_summary) {
                              geom_flat_violin(position = position_nudge(x =0.2, y = 0), alpha = 0.8) +
                              geom_point(aes(y = log10(bio_mg_m_mean), color = site), 
                                         position = position_jitter(width = 0.1),
-                                        size = 0.8, alpha = 0.8) +
+                                        size = 0.8, alpha = 0.6) +
                              geom_boxplot(width = 0.1, outlier.shape = NA, alpha = 0.5)+
                              scale_y_continuous(name = expression(log[10]*"("*italic("B")*", mg"~m^{-2}*")"))+
                              scale_x_discrete(labels = rev(stream_temp_labels))+

@@ -58,6 +58,8 @@ the_plan <-
   # NMDS_analysis = 
   #diet overlap
   diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]], modeled_diets[["diet_predictions"]]),
+  # trait interrelationships
+  trait_stats = analyze_trait_stats(skew_analysis),
   # temperature trait relationships
   temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']], gini_analysis[['stream_gini_df']],
                                          diet_similarity[['among_modeled_overlap']], skew_analysis, n_boot = 1e4),

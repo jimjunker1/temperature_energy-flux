@@ -62,7 +62,8 @@ the_plan <-
   trait_stats = analyze_trait_stats(skew_analysis),
   # temperature trait relationships
   temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']], gini_analysis[['stream_gini_df']],
-                                         diet_similarity[['among_modeled_overlap']], skew_analysis, n_boot = 1e4),
+                                         diet_similarity[['among_modeled_overlap']], skew_analysis, n_boot = 1e3),
+  conflicted:::conflicts_register(),
   
 
    ### figures

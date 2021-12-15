@@ -5,8 +5,8 @@
   package.list <- c("conflicted", "dotenv", "drake","data.table","gtools",
                     "RCurl","plyr","tidyverse","furrr", "fnmate", "moments",
                     "dflow","rmarkdown","tictoc","chron","lubridate","httr","TTR", 
-                    "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown", "MuMIn",
-                    "viridis", "broom","bbmle","ggthemes", "ggeffects", "ggpubr",
+                    "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown", "MuMIn","zoib",
+                    "viridis", "broom","bbmle","ggthemes", "ggeffects", "ggpubr","betareg",
                     "fluxweb","igraph","ggraph","magick","cowplot","rriskDistributions",
                     "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp", "rsample")
   p_load(char = package.list, install = TRUE, character.only = TRUE)
@@ -15,6 +15,7 @@
   library(junkR)
   conflict_prefer('count', 'dplyr')
   conflict_prefer('mutate', 'dplyr')
+  conflict_prefer('traceplot', 'coda')
   remotes::install_github("milesmcbain/dflow")
   # remotes::install_github("MilesMcBain/breakerofchains")
   library(dflow)

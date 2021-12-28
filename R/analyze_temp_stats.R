@@ -322,7 +322,9 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   #             pb_skew_temp_pred = pb_skew_temp_pred, m_probs_temp_coefs = M_probs_temp_coefs,
   #             pb_probs_temp_coefs = pb_probs_temp_coefs))
   return(list(pb_temp_coefs = pb_temp_coefs, M_temp_coefs = M_temp_coefs, n_boot = n_boot, 
-              distance_similarity = distance_similarity, pb_probs_df = pb_probs_df, 
+              distance_similarity = distance_similarity, M_skew_temp_coefs = M_skew_temp_coefs,
+              pb_skew_temp_coefs = pb_skew_temp_coefs, 
+              pb_probs_df = pb_probs_df, 
               pb_skew_df = pb_skew_df, m_probs_df = M_probs_df, 
               m_skew_df = M_skew_df, m_skew_temp_pred = m_skew_temp_pred,
               pb_probs_temp_pred= pb_probs_temp_pred,

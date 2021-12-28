@@ -7,7 +7,7 @@
 plot_trait_histogram <- function(spp_rankings = spp_rankings_summary) {
   
   prod_df = spp_rankings[['prod_spp_rank']] %>% dplyr::filter(prod_mg_m_y_mean > 0 | is.na(prod_mg_m_y_mean)) %>% dplyr::mutate(site = factor(site, levels = rev(stream_order)))
-  pb_df = spp_rankings[['PB_spp_rank']] %>%  dplyr::filter(pb_y_mean >0 | is.na(pb_y_mean)) %>% dplyr::mutate(site = factor(site, levels = rev(stream_order)))
+  pb_df = spp_rankings[['PB_spp_rank']] %>%  dplyr::filter(pb_y_mean >0.001 | is.na(pb_y_mean)) %>% dplyr::mutate(site = factor(site, levels = rev(stream_order)))
   bio_df = spp_rankings[['bio_spp_rank']] %>% dplyr::filter(bio_mg_m_mean >0 | is.na(bio_mg_m_mean)) %>% dplyr::mutate(site = factor(site, levels = rev(stream_order)))
   M_df = spp_rankings[['M_spp_rank']] %>% dplyr::filter(M_mg_ind_mean >0 | is.na(M_mg_ind_mean)) %>% dplyr::mutate(site = factor(site, levels = rev(stream_order)))
   

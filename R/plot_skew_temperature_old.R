@@ -4,7 +4,7 @@
 ##'
 ##' @title
 ##' @param temperature_stats
-plot_skew_temperature <- function(temperature_stats, n_id = 2e2) {
+plot_skew_temperature_old <- function(temperature_stats, n_id = 2e2) {
   
   n_draws = sample(1:6000, n_id, replace = FALSE)
   

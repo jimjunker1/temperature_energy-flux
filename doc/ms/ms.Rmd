@@ -89,7 +89,7 @@ Temperature has the potential to alter the provision and maintenance of ecosyste
 
 In fact, reduced organismal body size with warming is considered a 'universal' response of climate change.... 
 
-Here, we measured the patterning and distribution of organic matter fluxes within invertebrate food webs across a natural stream temperature gradient (\~5 - 28$^\circ$C). Previous research in these streams has shown a strong positive effect of temperature on primary production both among streams [@demars2011; @padfield2017] and within streams seasonally
+Here, we measured the patterning and distribution of organic matter fluxes within invertebrate food webs across a natural stream temperature gradient (\~5--28$^\circ$C). Previous research in these streams has shown a strong positive effect of temperature on primary production both among streams [@demars2011; @padfield2017] and within streams seasonally
 [@ogorman2012; @hood2018]. Consumers rely largely on autochthonous resources [@ogorman2012; @nelson2020] and therefore the dynamics of primary production have a strong control on consumer energy demand [@junker2020]. As such, we predicted total annual OM fluxes to consumers to scale with among-stream patterns in resource availability and consumer energy demand and increase with temperature across streams. We further expected that increasing temperature would reduce consumer species richness [@ogorman2019], thereby altering how OM fluxes are distributed within and across communities. The distribution of OM fluxes to consumers will shift towards relatively faster, higher turnover consumer at higher temperatures, 'speeding up' consumer dynamics both through direct effects on consumer turnover and through a decrease in mean body size. 
 
 # Methods
@@ -116,7 +116,7 @@ taxonomic keys [@peterson1977; @merritt2008; @andersen2013]. Taxon-specific abun
 
 ## Secondary Production
 
-Daily secondary production of invertebrate taxa was calculated using the instantaneous growth rate method [IGR; @benke2017]. Growth rates were determined using taxon appropriate
+Daily secondary production of invertebrate taxa was calculated using the instantaneous growth rate method [IGR, @benke2017]. Growth rates were determined using taxon appropriate
 approaches described in [@junker2020]. Briefly, growth rates of common taxa (e.g., Chironomidae spp., *Radix balthica*, etc.) were determined using *in situ* chambers [@huryn1986].
 Multiple individuals (*n* = 5--15) within small size categories (\~1 mm length range) were photographed next to a field micrometer, placed into the stream within pre-conditioned
 chambers for 7--15 days, after which they were again photographed. Individual lengths were measured from field pictures using image analysis software [@schindelin2012], and body
@@ -168,7 +168,7 @@ where, *p~x,i~* is the proportion of food resource *i* in the diet of taxon *x*,
 
 ## Organic Matter Consumption Estimates
 
-Consumption fluxes (g m^-2^ t^-1^) were calculated using the trophic basis of production method (TBP; [@benke1980]. Taxon-specific secondary production estimates were combined with
+Consumption fluxes (g m^-2^ t^-1^) were calculated using the trophic basis of production method [TBP, @benke1980]. Taxon-specific secondary production estimates were combined with
 diet proportions, diet-specific assimilation efficiencies, *AE~i~*, and assumed net production efficiencies, *NPE*, to estimate consumption of organic matter. For each food
 category, *i*, diet proportions were multiplied by the gross growth efficiency ($GGE_{i} = AE_{i} * NPE$) to calculate the relative production attributable to each food
 category. The relative production from each food type was then multiplied by the interval-level production and finally divided by $GGE_{i}$ to estimate consumption of organic
@@ -199,8 +199,8 @@ where, $f_{Qx}$, is the cumulative flux at some quantile, $Qx$, of the community
 ## Statistical Analyses
 
 Relationships between mean annual temperature ($^\circ$C) and mean community *M* and *P:B* were assessed with bootstrapped linear regressions. Here, `r temperature_stats[['n_boot']]` values of mean *M* or *P:B* were resampled with replacement from each stream. For each resampling event, a linear model was fit between *log~e~*-transformed *M* or *P:B* and mean annual temperature. Response variables *M* and *P:B* were transformed to meet the assumption of normally distributed residual variation. We similarly used a bootstrapped beta regression approach to test for relationships between annual stream temperature and the skewness of fluxes, $Sk_{flux}$, with *M* and *P:B*. Skewness coefficients exist in the range [-1, 1], therefore we applied a simple transformation, 
-$$ (Sk_{flux} - 1)/2 $$ 
-to standardize the values between 0 and 1 to meet the assumptions of the model. Coefficients were back-transformed to estimate effect sizes. To detect changes in 'random' vs. non-random assembly, we  again used beta regression on estimates of the probability of seeing the empirical $Sk_{flux}$ value or one more extreme based on random ordering of species in the permuted feasible set. Here, values can take the range between 0 and 1 so no transformation was necessary. Because we observed many values near 0 and 1, we implemented a zero-one inflated beta regression in the *zoib* package in R [@]
+$$ (Sk_{flux} + 1)/2 $$ 
+to standardize the values between 0 and 1 to meet the assumptions of the model. Coefficients were back-transformed to estimate effect sizes. To detect changes in 'random' vs. non-random assembly, we  again used beta regression on estimates of the probability of seeing the empirical $Sk_{flux}$ value or one more extreme based on random ordering of species in the permuted feasible set. Here, values can take the range between 0 and 1 so no transformation was necessary. As necessary, when we observed many values near 0 and 1, we implemented a zero-one inflated beta regressions in brms [@burkner2017] to test if the probability of observing the empirical $Sk_{flux}$ was associated with mean annual temperature across streams.
 
 # Results
 
@@ -230,7 +230,7 @@ max_flux = annual_comm_flux_summary %>% dplyr::slice(which.max(flux_mg_m_y_mean)
 ```
 ## Community OM fluxes
 
-Annual community energy demand mirrored patterns of secondary production previously reported [@junker2020]. Community energy demand varied ~`r round((max_demand$flux_mg_m_y_mean/min_demand$flux_mg_m_y_mean),1)`-fold across streams (`r round((min_demand$flux_mg_m_y_mean/1000), 3)`[`r round((min_demand$flux_mg_m_y_quant2.5/1000),3)` -- `r round((min_demand$flux_mg_m_y_quant97.5/1000),3)`] to `r round((max_demand$flux_mg_m_y_mean/1000),1)` [`r round((max_demand$flux_mg_m_y_quant2.5/1000),1)` -- `r round((max_demand$flux_mg_m_y_quant97.5/1000),1)`]; g AFDM $m^{-2} y^{-1}$ mean [95% percentile interval (PI)]) and was positively related to temperature. Total OM flux through the consumer community was strongly associated with community energy demand and varied from `r round((min_flux$flux_mg_m_y_mean/1000),1)` [`r round((min_flux$flux_mg_m_y_quant2.5/1000),1)`--`r round((min_flux$flux_mg_m_y_quant97.5/1000),1)`] to `r round((max_flux$flux_mg_m_y_mean/1000),1)` [`r round((max_flux$flux_mg_m_y_quant2.5/1000),1)`--`r round((max_flux$flux_mg_m_y_quant97.5/1000),1)`] g AFDM $m^{-2} y^{-1}$.
+Annual community energy demand mirrored patterns of secondary production previously reported [@junker2020]. Community energy demand varied ~`r round((max_demand$flux_mg_m_y_mean/min_demand$flux_mg_m_y_mean),1)`-fold across streams (`r round((min_demand$flux_mg_m_y_mean/1000), 3)`; `r round((min_demand$flux_mg_m_y_quant2.5/1000),3)` -- `r round((min_demand$flux_mg_m_y_quant97.5/1000),3)` to `r round((max_demand$flux_mg_m_y_mean/1000),1)`; `r round((max_demand$flux_mg_m_y_quant2.5/1000),1)` -- `r round((max_demand$flux_mg_m_y_quant97.5/1000),1)` g AFDM $m^{-2} y^{-1}$ mean; 95% percentile interval (PI)) and was positively related to temperature. Total OM flux through the consumer community was strongly associated with community energy demand and varied from `r round((min_flux$flux_mg_m_y_mean/1000),1)`; `r round((min_flux$flux_mg_m_y_quant2.5/1000),1)`--`r round((min_flux$flux_mg_m_y_quant97.5/1000),1)` to `r round((max_flux$flux_mg_m_y_mean/1000),1)`; `r round((max_flux$flux_mg_m_y_quant2.5/1000),1)`--`r round((max_flux$flux_mg_m_y_quant97.5/1000),1)` g AFDM $m^{-2} y^{-1}$.
 
 ```{r diet import, echo = FALSE, include = TRUE, message=FALSE, warning = FALSE}
 drake::loadd(modeled_diets)
@@ -266,7 +266,7 @@ among_overlap_quant97.5 = quantile(diet_similarity[['among_overlap_mean']], 0.97
 
 ```
 
-Patterns of OM flux among streams were most closely tied to total consumer energy demands as consumer diets exhibited high similarity among streams (Supporting Materials, Figure SX). Diets composition among all streams were dominated by diatoms (`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('mean')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant2.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`--`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant97.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`]), amorphous detritus (`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('mean')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant2.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`--`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant97.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`]), and green algae (`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('mean')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant2.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`--`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant97.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`]). Within streams, diet similarity ranged from `r min_within_overlap %>% dplyr::select(meanoverlap_mean) %>% round(2)` (`r round(min_within_overlap$meanoverlap_quant2.5,2)` -- `r round(min_within_overlap$meanoverlap_quant97.5,2)`) to `r max_within_overlap %>% dplyr::select(meanoverlap_mean) %>% round(2)` (`r round(max_within_overlap$meanoverlap_quant2.5,2)` -- `r round(max_within_overlap$meanoverlap_quant97.5,2)`) among all consumer taxa. Among streams, diet overlap was similarly high and mean overlap among all streams was `r round(among_overlap_mean,2)`% (`r round(among_overlap_quant2.5,2)` -- `r round(among_overlap_quant97.5,2)` 95% PI). Diet similarity of pairwise comparisons among streams showed little differences in diet among streams and no clear relationship with temperature.
+Patterns of OM flux among streams were most closely tied to total consumer energy demands as consumer diets exhibited high similarity among streams (Supporting Materials, Figure S1). Diets composition among all streams were dominated by diatoms (`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('mean')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant2.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`--`r diet_predictions_item %>% dplyr::filter(diet_item == "diatom") %>% select(contains('quant97.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`]), amorphous detritus (`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('mean')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant2.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`--`r diet_predictions_item %>% dplyr::filter(diet_item == "amorphous_detritus") %>% select(contains('quant97.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`]), and green algae (`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('mean')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`% [`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant2.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`--`r diet_predictions_item %>% dplyr::filter(diet_item == "green_algae") %>% select(contains('quant97.5')) %>% dplyr::mutate(across(.fns = ~.x*100)) %>% round(1)`]). Within streams, diet similarity ranged from `r min_within_overlap %>% dplyr::select(meanoverlap_mean) %>% round(2)` (`r round(min_within_overlap$meanoverlap_quant2.5,2)` -- `r round(min_within_overlap$meanoverlap_quant97.5,2)`) to `r max_within_overlap %>% dplyr::select(meanoverlap_mean) %>% round(2)` (`r round(max_within_overlap$meanoverlap_quant2.5,2)` -- `r round(max_within_overlap$meanoverlap_quant97.5,2)`) among all consumer taxa. Among streams, diet overlap was similarly high and mean overlap among all streams was `r round(among_overlap_mean,2)`% (`r round(among_overlap_quant2.5,2)` -- `r round(among_overlap_quant97.5,2)` 95% PI). Diet similarity of pairwise comparisons among streams showed little differences in diet among streams and no clear relationship with temperature.
 
 ## Evenness of OM fluxes within streams 
 
@@ -325,7 +325,7 @@ perc_dom_max = spp_dominance %>% dplyr::slice(which.max(dom_spp))
 
 Variation in the relative distribution of OM fluxes among consumers corresponded to different patterns of dominance across streams (Figure 1). For example, in an absolute sense, ~85% of total flux was contributed by `r n_dom_min$n_dom` to `r n_dom_max$n_dom` species. Relatively, this flux was attributed by `r round(perc_dom_min$dom_spp*100,0)`% to `r round(perc_dom_max$dom_spp*100,0)`% of the species assemblages within streams. Differences in dominance were unrelated to temperature, however, species dominance in relation to population traits exhibited important differences along the temperature gradient. 
 
-```{r figure 1., echo = FALSE, warning = FALSE, message = FALSE, fig.width=5, fig.height=5, dpi = 450, fig.cap="Figure 1."}
+```{r figure 1., echo = FALSE, warning = FALSE, message = FALSE, fig.width=5, fig.height=5, dpi = 450, fig.cap="Figure 1. Rank ordering of annual population energy flux log~e~(mg m^-2^ y^-1^) in consumer communities across the temperature gradient."}
 drake::loadd(annual_spp_flux_fig)
 annual_spp_flux_fig
 ```
@@ -348,14 +348,17 @@ pb_temp_coef_mean = round((exp(mean(pb_temp_coefs, na.rm = TRUE))-1)*100,1)
 pb_temp_coef_quant2.5 = round((exp(quantile(pb_temp_coefs, 0.025, na.rm = TRUE))-1)*100,1)
 pb_temp_coef_quant97.5 = round((exp(quantile(pb_temp_coefs, 0.975, na.rm = TRUE))-1)*100,1)
 
+backtransform_skew = function(x,...){
+  x * 2 - 1
+}
 # analyze skewness with temperature
-M_skew_temp_coefs = temperature_stats[["M_skew_temp_coefs"]]
+M_skew_temp_coefs = backtransform_skew(plogis(temperature_stats[["M_skew_temp_coefs"]]$b_tempC_stand))
 M_skew_temp_coef_mean = round(mean(M_skew_temp_coefs, na.rm = TRUE), 2)
 M_skew_temp_coef_median = round(mean(M_skew_temp_coefs, na.rm = TRUE), 2)
 M_skew_temp_coef_quant2.5 = round(quantile(M_skew_temp_coefs, 0.025, na.rm = TRUE),2)
 M_skew_temp_coef_quant97.5 = round(quantile(M_skew_temp_coefs, 0.975, na.rm = TRUE),2)
 
-pb_skew_temp_coefs = temperature_stats[["pb_skew_temp_coefs"]]
+pb_skew_temp_coefs = backtransform_skew(plogis(temperature_stats[["pb_skew_temp_coefs"]]$b_tempC_stand))
 pb_skew_temp_coef_mean = round(mean(pb_skew_temp_coefs, na.rm = TRUE),2)
 pb_skew_temp_coef_quant2.5 = round(quantile(pb_skew_temp_coefs, 0.025, na.rm = TRUE),2)
 pb_skew_temp_coef_quant97.5 = round(quantile(pb_skew_temp_coefs, 0.975, na.rm = TRUE),2)
@@ -365,6 +368,7 @@ drake::loadd(skew_analysis)
 pb_skew_summ = skew_analysis[["pb_skew_summ"]]
 
 m_skew_summ = skew_analysis[["M_skew_summ"]]
+
 ```
 
 The fluxes of OM were distributed differently across body sizes and turnover rates (*P:B*) among and within streams. Across streams, mean body size of taxa ranged from `r m_summ %>% slice_min(M_mg_ind_mean) %>% select(M_mg_ind_mean) %>% round(2)` to `r m_summ %>% slice_max(M_mg_ind_mean) %>% select(M_mg_ind_mean)%>% round(2)` mg ind^-1^ and mean annual P:B ranged from `r pb_summ %>% slice_min(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` to `r pb_summ %>% slice_max(pb_y_mean) %>% select(pb_y_mean)%>% round(2)` (Figure 2). Both, *M* and *P:B* showed associations with mean annual stream temperature that were negative and positive, respectively. Generally, mean *M* of the community decreased `r M_temp_coef_mean`% (95% PI, `r M_temp_coef_quant2.5`% -- `r M_temp_coef_quant97.5`%) for each increase in 1$^\circ$C. In contrast, mean population *P:B* of the community increased `r pb_temp_coef_mean`% (95% PI, `r pb_temp_coef_quant2.5`% -- `r pb_temp_coef_quant97.5`%) for each 1$^\circ$C in mean annual stream temperature. Energy fluxes within consumer communities were skewed towards larger body sizes (positive skew), towards smaller body sizes (negative skew), or neutrally in regards to body size  among streams, with skew estimates with body size (*M*) ranging from `r m_skew_summ %>% slice_min(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean)%>% round(2)` to `r m_skew_summ %>% slice_max(abs(M_mg_ind_skew_mean)) %>% select(M_mg_ind_skew_mean) %>% round(2)` (Figure 3, Table 2). Similarly, skew in fluxes towards high turnover taxa varied among streams ranging from `r pb_skew_summ %>% slice_min(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` to `r pb_skew_summ %>% slice_max(abs(pb_y_skew_mean)) %>% select(pb_y_skew_mean) %>% round(2)` (Figure 3, Table 2).
@@ -372,9 +376,10 @@ The fluxes of OM were distributed differently across body sizes and turnover rat
 ```{r trait hist, echo=FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450, fig.cap="Figure 2."}
 drake::loadd(spp_trait_histograms)
 grid.draw(spp_trait_histograms)
+
 ```
 
-The skew of energy fluxes towards populations with smaller/larger body sizes showed some systematic variation with stream temperature (Figure 4). The median effect size of increasing temperature was to shift the skewness coefficient, $Sk_{flux}$, `r M_skew_temp_coef_median` units (`r M_skew_temp_coef_quant2.5` -- `r M_skew_temp_coef_quant97.5` 95% PI) for every 1 $^\circ$C increase. While the 95% PI contained zero, the estimated effect of temperature on $Sk_{flux}$ towards lower body size populations exhibited a bimodal distribution around zero (Figure SXa), however, `r round((sum(M_skew_temp_coefs < 0)/n_boot)*100,1)`% of values fell below zero (Figure SXa). Similarly, energy fluxes through the community skewed increasingly toward higher turnover (*P:B*) organisms with increasing temperature. The median increase in $Sk_{flux}$ towards higher *P:B* populations was `r pb_skew_temp_coef_mean` (`r pb_skew_temp_coef_quant2.5` -- `r pb_skew_temp_coef_quant97.5` 95% PI; Figure 4), with `r round((sum(pb_skew_temp_coefs >= 0)/n_boot)*100,1)`% of estimates above zero.
+The skew of energy fluxes towards populations with smaller/larger body sizes showed a small, yet systematic association with stream temperature (Figure 4). The median effect size of increasing temperature was to shift the skewness coefficient, $Sk_{flux}$, `r M_skew_temp_coef_median` units (`r M_skew_temp_coef_quant2.5`--`r M_skew_temp_coef_quant97.5` 95% PI) for every 1$^\circ$C increase. Similarly, energy fluxes through the community skewed increasingly toward higher turnover (*P:B*) organisms with increasing temperature. The median increase in $Sk_{flux}$ towards higher *P:B* populations was `r pb_skew_temp_coef_mean` (`r pb_skew_temp_coef_quant2.5`--`r pb_skew_temp_coef_quant97.5` 95% PI; Figure 4).
 
 ```{r lorenz analysis, echo =FALSE, warning=FALSE, message=FALSE, fig.width=5, fig.height=5, dpi = 450, fig.cap="Figure 3."}
 drake::loadd(lorenz_trait_fig)
@@ -383,21 +388,30 @@ grid.arrange(lorenz_trait_fig[["M_lorenz_flux_plot"]], lorenz_trait_fig[["pb_lor
 
 ```
 
-We compared the empirical $Sk_{flux}$ measurement within streams to a random ordering to detect random vs. non-random structure in community energy fluxes. The probability of observing a similar or more extreme skew of within stream OM fluxes in relation to species body size ranged from `r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_mean")) %>% round(2)` (`r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_quant2.5")) %>% round(2)` -- `r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_quant97.5")) %>% round(2)`) to `r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_mean")) %>% round(2)` (`r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_quant2.5")) %>% round(2)` -- `r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_quant97.5")) %>% round(2)`). Similarly, the probability of a more extremely skewed distribution in relation to population *P:B* ranged from `r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_mean")) %>% round(2)` (`r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant2.5")) %>% round(2)` -- `r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant97.5")) %>% round(2)`) to `r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_mean")) %>% round(2)` (`r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant2.5")) %>% round(2)` -- `r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant97.5")) %>% round(2)`). The probability that energy fluxes were organized randomly or non-randomly in regards to body size showed no clear association with temperature (Figure S5), however, there was a trend towards community energy fluxes becoming more organized (less "randomly" structured) in relation to biomass turnover with increasing temperatures (Figure XX). This relationship exhibited a concave up relationship with temperature, showing a clear trend toward less-random organization from cool to mid-range temperatures and returning towards a more likely random organization at the warmest stream.
+```{r probs coefs, echo=FALSE, warning=FALSE, message=FALSE}
+m_prob_temp_coef = temperature_stats[["m_probs_temp_coefs"]]$b_tempC_stand
+m_prob_temp_median = median(m_prob_temp_coef, na.rm =TRUE)
+m_prob_temp_quant2.5 = quantile(m_prob_temp_coef, 0.025,na.rm = TRUE)
+m_prob_temp_quant97.5 = quantile(m_prob_temp_coef,0.975, na.rm =TRUE)
 
-```{r skew statistics, echo=FALSE, warning=FALSE, message=FALSE}
+pb_prob_temp_coef = temperature_stats[["pb_probs_temp_coefs"]]$b_tempC_stand
+pb_prob_temp_median = median(pb_prob_temp_coef, na.rm =TRUE)
+pb_prob_temp_quant2.5 = quantile(pb_prob_temp_coef, 0.025,na.rm = TRUE)
+pb_prob_temp_quant97.5 = quantile(pb_prob_temp_coef,0.975, na.rm =TRUE)
 
 ```
 
-```{r skew distribution, echo = FALSE, warning=FALSE, message=FALSE, fig.cap="Figure 4. "}
+We compared the empirical $Sk_{flux}$ measurement within streams to a random ordering to detect random vs. non-random structure in community energy fluxes. The probability of observing a similar or more extreme skew of within stream OM fluxes in relation to species body size ranged from `r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_mean")) %>% round(2)` (`r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_quant2.5")) %>% round(2)`--`r m_skew_summ %>% slice_min(M_skew_prob_mean) %>% select(matches("M.*prob_quant97.5")) %>% round(2)` 95% PI) to `r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_mean")) %>% round(2)` (`r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_quant2.5")) %>% round(2)`--`r m_skew_summ %>% slice_max(M_skew_prob_mean) %>% select(matches("M.*prob_quant97.5")) %>% round(2)` 95% PI). Similarly, the probability of a more extremely skewed distribution in relation to population *P:B* ranged from `r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_mean")) %>% round(2)` (`r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant2.5")) %>% round(2)` -- `r pb_skew_summ %>% slice_min(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant97.5")) %>% round(2)` 95% PI) to `r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_mean")) %>% round(2)` (`r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant2.5")) %>% round(2)` -- `r pb_skew_summ %>% slice_max(pb_skew_prob_mean) %>% select(matches("pb.*prob_quant97.5")) %>% round(2)` 95% PI). The probability that energy fluxes were organized randomly or non-randomly in regards to body size showed a `r round(m_prob_temp_median, 3)*100`% (`r round(m_prob_temp_quant2.5,3)*100`% -- `r round(m_prob_temp_quant97.5,3)*100`% 95% PI) change with 1$^\circ$C change in temperature (Figure 5 top). Further, there was a trend towards a more structured energy flux distribution with regard to population *P:B* at higher temperatures. The probability of observing such skewed energy fluxes randomly became less likely with temperatures, such that the probability of random ordering decreased `r round(pb_prob_temp_median, 3)*100`% (`r round(pb_prob_temp_quant2.5,3)*100`% -- `r round(pb_prob_temp_quant97.5,3)*100`% 95% PI) for every 1$^\circ$C increase.
+
+```{r skew distribution, echo = FALSE, warning=FALSE, message=FALSE, fig.cap="Figure 4. Probability distribution of empirical Sk~flux~ measurements compared to random species ordering."}
 drake::loadd(random_skew_fig)
 grid.arrange(random_skew_fig[["M_perc_plot"]], random_skew_fig[["pb_perc_plot"]], ncol = 1, left = text_grob(""))
 
 ```
 
-```{r skew prob temp, echo = FALSE, warning=FALSE, message=FALSE}
+```{r skew prob temp, echo = FALSE, warning=FALSE, message=FALSE, fig.width=6.5, fig.cap="Figure 5. Empirical flux measurements (left column), the probability of observing a more Sk~flux~ value more extreme  (middle), and the estimated effect of increasing temperature on the probability of random ordering (right column) for energy flux distributions in relation to body size (top) and population *P:B* (bottom)." }
 drake::loadd(temperature_skew_fig)
- temperature_skew_fig
+ grid.draw(temperature_skew_fig)
 ```
 
 # Discussion
@@ -416,3 +430,22 @@ We are grateful to Sigurður Guðjonsson, Guðni Guðbergsson, and the staff at 
 # References
 
 <div id="refs"></div>
+
+# Appendix
+
+```{r diet figure, echo = FALSE, warning=FALSE, message=FALSE,  dpi = 450, fig.cap="Figure S1. Modeled diet proportions of consumer communities across the temperature gradient."}
+
+drake::loadd(prelim_diet_figures)
+prelim_diet_figures
+
+```
+
+```{r raw lorenz, echo=FALSE, message=FALSE, warning = FALSE, dpi = 400, fig.cap="Figure S2. Lorenz plot of relative community flux by species in ascending order of annual population organic matter flux (mg AFDM m^-2^ y^-1^)"}
+lorenz_trait_fig[["lorenz_flux_plot"]]
+
+```
+
+```{r biomass lorenze, echo=FALSE, message=FALSE, warning=FALSE, dpi = 400, fig.cap="Figure S3. Cumulative plot of relative community flux by species in relation to mean annual population biomass (mg m^-2^)."}
+lorenz_trait_fig[["bio_lorenz_flux_plot"]]
+
+```

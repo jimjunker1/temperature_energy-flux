@@ -8,6 +8,7 @@
 ##' @param diet_similarity_mat
 ##' @param skew_analysis
 analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boots"]],
+                               ann_spp_boots = production_boots[["ann_spp_boots"]],
                                stream_gini_df = gini_analysis[["stream_gini_df"]],
                                diet_similarity_mat = diet_similarity[['among_modeled_overlap']],
                                skew_analysis = skew_analysis,
@@ -18,6 +19,34 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   stream_temps = stream_temp_labels %>% data.frame %>%
     rownames_to_column('site_id') %>% setNames(., c('site_id', 'tempC')) %>%
     dplyr::mutate(tempC = as.numeric(tempC))
+  
+  set.seed(123)
+  sppBootsDf = ann_spp_boots %>%
+    purrr::map(~.x %>% 
+                 junkR::named_group_split(taxon_id) %>%
+                 purrr::map(~.x %>% slice_sample(n = n_boot, replace = TRUE) %>%
+                              dplyr::select(taxon_id, pb_y, M_mg_ind) %>%
+                              dplyr::mutate(n_rep = 1:n())) %>% bind_rows) %>%
+    purrr::map(~.x %>% group_by(n_rep) %>%
+                 dplyr::summarise(across(c(pb_y,M_mg_ind), ~mean(.x, na.rm = TRUE)))) %>% 
+    bind_rows(.id = "site_id" ) %>%
+    left_join(stream_temps)
+    
+  pb_spp_temp_boots = sppBootsDf %>%
+    group_by(n_rep) %>%
+    do(model = lm(log(pb_y) ~ tempC, data = .))
+  
+  pb_spp_temp_coefs = pb_spp_temp_boots %>%
+    purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
+  
+  
+  m_spp_temp_boots = sppBootsDf %>%
+    group_by(n_rep) %>%
+    do(model = lm(log(M_mg_ind) ~ tempC, data = .))
+  
+  m_spp_temp_coefs = m_spp_temp_boots %>%
+    group_by(n_rep) %>%
+    purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('tempC'))
   
   set.seed(123)
   boots_df = ann_comm_boots %>%
@@ -321,7 +350,9 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   #             m_skew_df = M_skew_df, m_skew_temp_pred = m_skew_temp_pred,
   #             pb_skew_temp_pred = pb_skew_temp_pred, m_probs_temp_coefs = M_probs_temp_coefs,
   #             pb_probs_temp_coefs = pb_probs_temp_coefs))
-  return(list(pb_temp_coefs = pb_temp_coefs, M_temp_coefs = M_temp_coefs, n_boot = n_boot, 
+  return(list(sppBootsDf = sppBootsDf, pb_spp_temp_boots = pb_spp_temp_boots,pb_spp_temp_coefs = pb_spp_temp_coefs,
+              m_spp_temp_boots = m_spp_temp_boots, m_spp_temp_coefs = m_spp_temp_coefs,
+              pb_temp_coefs = pb_temp_coefs, M_temp_coefs = M_temp_coefs, n_boot = n_boot, 
               distance_similarity = distance_similarity, M_skew_temp_coefs = M_skew_temp_coefs,
               pb_skew_temp_coefs = pb_skew_temp_coefs, 
               pb_probs_df = pb_probs_df, 

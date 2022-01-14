@@ -43,7 +43,8 @@ the_plan <-
   #
   gini_analysis = analyze_gini(flux_summaries[["annual_spp_flux_boots"]]),
   #
-  lorenz_analysis = analyze_lorenz(flux_summaries[["annual_spp_flux_boots"]], spp_rankings_boots),
+  lorenz_analysis = analyze_lorenz(flux_summaries[["annual_spp_flux_boots"]],
+                                   spp_rankings_boots),
   #lorenz asymmetry analysis
   # lorenz_asym_analysis = analyze_lorenz_asymmetry(lorenz_analysis),
   #skew
@@ -57,12 +58,16 @@ the_plan <-
   #
   # NMDS_analysis = 
   #diet overlap
-  diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]], modeled_diets[["diet_predictions"]]),
+  diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]],
+                                            modeled_diets[["diet_predictions"]]),
   # trait interrelationships
   trait_stats = analyze_trait_stats(skew_analysis),
   # temperature trait relationships
-  temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']], gini_analysis[['stream_gini_df']],
-                                         diet_similarity[['among_modeled_overlap']], skew_analysis, n_boot = 1e3),
+  temperature_stats = analyze_temp_stats(production_boots[['ann_comm_boots']],
+                                         production_boots[['ann_spp_boots']],
+                                         gini_analysis[['stream_gini_df']],
+                                         diet_similarity[['among_modeled_overlap']],
+                                         skew_analysis, n_boot = 1e3),
   conflicted:::conflicts_register(),
   
 
@@ -78,6 +83,8 @@ the_plan <-
   # evenness_profile_fig = plot_evenness_profile(hill_diversity_analysis),
   #
   spp_trait_histograms = plot_trait_histogram(spp_rankings_summary),
+  #
+  spp_traitsVtemp = plot_traits_temp(production_boots, spp_rankings_summary, temperature_stats),
   #
   lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
   #

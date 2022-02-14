@@ -32,7 +32,9 @@ the_plan <-
   flux_estimates = estimate_flux(diet_matrices, seasonal_boot_split),
   #
   flux_summaries = summarise_fluxes(flux_estimates[["flux_full"]], production_boots[["int_spp_meta"]]),
-  
+  #
+  taxonomic_info = get_taxa_info(ann_spp_flux =
+                                   flux_summaries[["annual_spp_flux_summary"]]), 
    ### trait analyses
   #
   spp_rankings_boots = rank_spp_boots(production_boots[['ann_spp_boots']]),
@@ -85,6 +87,8 @@ the_plan <-
   spp_trait_histograms = plot_trait_histogram(spp_rankings_summary),
   #
   spp_traitsVtemp = plot_traits_temp(production_boots, spp_rankings_summary, temperature_stats),
+  #
+  spp_flux_dist = plot_spp_relFlux(flux_summaries[["annual_spp_flux_summary"]],taxonomic_info),
   #
   lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
   #

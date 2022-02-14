@@ -194,10 +194,10 @@ plot_skew_temperature <- function(temperature_stats, n_id = 2e2) {
     
     
   
- top_plot = grid.arrange(grobs = list(m_temp_skew_plot, m_probs_plot, m_temp_coef_plot), 
-                         layout = c(1,1,1,2,2,2,2,3,3), nrow = 1)
- bottom_plot = grid.arrange(grobs = list(pb_temp_skew_plot, pb_probs_plot, pb_temp_coef_plot),
-                         layout = c(1,1,2,2,2,2,2,3,3), nrow = 1)
+ top_plot = grid.arrange(grobs = list(m_temp_skew_plot, m_probs_plot), 
+                         layout = c(1,1,1,2,2,2,2), nrow = 1)
+ bottom_plot = grid.arrange(grobs = list(pb_temp_skew_plot, pb_probs_plot),
+                         layout = c(1,1,1,2,2,2,2), nrow = 1)
  
  full_plot = grid.arrange(top_plot, bottom_plot, nrow = 2)
  return(full_plot)

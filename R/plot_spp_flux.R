@@ -28,6 +28,7 @@ plot_spp_flux <- function(ann_spp_flux =
     scale_x_continuous(name = 'Species rank')+
     scale_colour_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
     scale_fill_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
+    annotate('text', label = "B", x = Inf, y = Inf, family = 'serif', vjust = 1, hjust = 1, size = 4)+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(sides = "lb")+
     theme(legend.position = c(0,0),

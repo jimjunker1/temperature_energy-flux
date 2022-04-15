@@ -77,7 +77,7 @@ plot_traits_temp <- function(production_boots,
                        breaks = log(c(5,1,0.5,0.1,0.05, 0.01)), labels = exp(log(c(5,1,0.5,0.1,0.05, 0.01)))) +
     scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
-    annotate('text', label = 'A', x = Inf, y = Inf, family = 'serif', vjust = 1,hjust = 1, size = 3)+
+    annotate('text', label = 'A', x = Inf, y = Inf, family = 'serif', vjust = 1,hjust = 1, size = 4)+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(aes(x = tempC, y = log(M_mg_ind_mean)), sides = "lb")+
     theme(legend.position = 'none', axis.title.x = element_blank())) -> comm_m_plot

@@ -10,8 +10,11 @@ plot_spp_relFlux <- function(ann_spp_flux =
   
   namesDf = taxaDf %>%
     ungroup %>%
-    dplyr::mutate(taxaGroup = recode(taxaGroup, Oligochaeta = 'Lumbricidae')) %>%
-     dplyr::select(taxon, cleanGroup, taxaGroup) %>% unique
+    dplyr::mutate(taxaGroup = recode(taxaGroup, !!!list(Oligochaeta = 'Lumbricidae',
+                                                     Ceratopegonid = 'Ceratopogonidae')),
+                  cleanGroup = recode(cleanGroup, Ceratopegonid = 'Ceratopogonidae')) %>%
+     dplyr::select(taxon, cleanGroup, taxaGroup) %>% unique %>%
+     dplyr::mutate(shortGroup = fuzzySim::spCodes(cleanGroup, nchar.gen = 4, nchar.sp = 2))
   
   taxaDf %>%
     dplyr::select(site, taxon, cleanGroup, taxaGroup, flux_mg_m_y_mean) %>%
@@ -27,7 +30,7 @@ plot_spp_relFlux <- function(ann_spp_flux =
      # browser()
      df = x
      lowFluxN = x %>% dplyr::filter(rel_flux_mean <= 0.0101) %>% nrow
-     other_label = paste0("Other taxa (n = ",lowFluxN,")")
+     other_label = paste0("Other taxa\n (n = ",lowFluxN,")")
      x %>%
        dplyr::mutate(taxon = case_when(rel_flux_mean > 0.0101 ~ taxon,
                                        TRUE ~ other_label)) %>%
@@ -61,6 +64,8 @@ plotTaxaColors = setNames(c(viridis(12, option = 'D', begin = 1, end = 0),"#D3D3
                                        TRUE ~ taxaGroup),
                  cleanGroup = case_when(is.na(cleanGroup)~ as.character(taxon),
                                         TRUE ~ cleanGroup),
+                 shortGroup = case_when(is.na(shortGroup) ~ as.character(taxon),
+                                        TRUE ~ shortGroup),
                  taxon = factor(taxon, levels = flux_list %>%
                                   ungroup %>% dplyr::filter(taxon != other_label) %>%
                                   dplyr::arrange(rel_flux_mean) %>%
@@ -72,7 +77,7 @@ plotTaxaColors = setNames(c(viridis(12, option = 'D', begin = 1, end = 0),"#D3D3
      scale_fill_manual(values = colors[names(colors) %in% unlist(flux_list$taxaGroup)])+
      # scale_color_manual(values = .y)+
      scale_x_continuous(limits = c(0,2), expand = c(0.001,0.001))+
-     scale_y_discrete(position = 'right', breaks = plotDf$taxon, labels = plotDf$cleanGroup)+
+     scale_y_discrete(position = 'left', breaks = plotDf$taxon, labels = plotDf$shortGroup)+
      theme_tufte()+
      theme(legend.position = 'none',
            axis.title.y = element_blank(),
@@ -80,7 +85,7 @@ plotTaxaColors = setNames(c(viridis(12, option = 'D', begin = 1, end = 0),"#D3D3
    
    if(plot_annotation){
      plot = plot + annotate('text', label = 'A', x = Inf, y = Inf, family = 'serif',
-                     vjust = 1, hjust = 0, size = 4)
+                     vjust = 1, hjust = 1, size = 4)
    }
    if(!plot_axes_text){
      plot = plot + theme(axis.text.x = element_blank())

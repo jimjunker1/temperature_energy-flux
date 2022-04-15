@@ -58,7 +58,6 @@ the_plan <-
   #partial dominance
   partial_dominance_analysis = analyze_dominance(flux_summaries[["annual_spp_flux_boots"]]),
   #
-  # NMDS_analysis = 
   #diet overlap
   diet_similarity = analyze_diet_similarity(gut_lists[["diet_list"]],
                                             modeled_diets[["diet_predictions"]]),
@@ -72,8 +71,7 @@ the_plan <-
                                          skew_analysis, n_boot = 1e3),
   conflicted:::conflicts_register(),
   
-
-   ### figures
+  ### figures
   #
   prelim_diet_figures = plot_stream_diets(modeled_diets[["diet_predictions"]]),#figure s1
   #

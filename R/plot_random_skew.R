@@ -88,7 +88,7 @@ random_rankings %>%
   geom_histogram(data = skew_boots, aes(x = pb_y_skew, y = ..density..,color = site, fill = site), linetype = 'dashed', inherit.aes = FALSE, bins = 50, alpha = 0.5)+
   scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
   scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
-  guides(linetype = FALSE)+
+  guides(linetype = "none")+
   theme_tufte(ticks = TRUE) +
   geom_rangeframe(sides = "lb")+
   theme(legend.position = 'none') +
@@ -102,11 +102,28 @@ random_rankings %>%
   geom_histogram(data = skew_boots, aes(x = M_mg_ind_skew, y = ..density..,color = site, fill = site), linetype = 'dashed', inherit.aes = FALSE, bins = 50, alpha = 0.5)+
   scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels)+
   scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels)+
-  guides(linetype = FALSE)+
+  guides(linetype = "none")+
   theme_tufte(ticks = TRUE) +
   geom_rangeframe(sides = "lb")+
   theme(legend.position = 'none') +
   facet_wrap(~site, ncol = , scales = 'free_y') -> M_skew_plot
+
+random_summ = random_rankings %>%
+  group_by(site) %>%
+  dplyr::summarise(across(everything(), list(mean = ~mean(.x, na.rm = TRUE),
+                                               median = ~median(.x, na.rm = TRUE),
+                                               quant2.5 = ~quantile(.x, 0.025, na.rm = TRUE),
+                                               quant97.5 = ~quantile(.x, 0.975, na.rm = TRUE),
+                                               HPDI_25up = ~rethinking::HPDI(.x, prob = 0.25)[2],
+                                               HPDI_25dn = ~rethinking::HPDI(.x, prob = 0.25)[1],
+                                               HPDI_50up = ~rethinking::HPDI(.x, prob = 0.5)[2],
+                                               HPDI_50dn = ~rethinking::HPDI(.x, prob = 0.5)[1]),
+                          .names = "random_{.fn}"))
+
+# random_rankings %>%
+# ggplot()+
+#   geom_density(aes(x = rand_rank_skew, y = ..scaled..), alpha = 0.5) +
+#   facet_wrap(~site)
 
  return(list(M_skew_plot = M_skew_plot, pb_skew_plot = pb_skew_plot, M_perc_plot = M_perc_plot, pb_perc_plot = pb_perc_plot))
   

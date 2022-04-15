@@ -258,7 +258,7 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   #   purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('mean') %>% pluck('tempC'))
   
   pb_probs_temp_pred = pb_probs_temp_boots %>%
-    add_epred_draws(newdata = new_data)
+    add_predicted_draws(newdata = new_data)
 
   # fit a concave polynomial model to probability data
   # pb_probs_concave_boots = pb_probs_df %>%
@@ -339,7 +339,7 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
   #   purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('mean') %>% pluck('tempC'))
   
   m_probs_temp_pred = m_probs_temp_boots %>%
-    add_epred_draws(newdata = new_data)
+    add_predicted_draws(newdata = new_data)
   
   # 
   # return(list(pb_temp_coefs = pb_temp_coefs, M_temp_coefs = M_temp_coefs, n_boot = n_boot, 

@@ -32,9 +32,9 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
     plot_legend$layout
     
     pb_label = grid::textGrob(expression("Increasing"~italic("P:B")), x = unit(0.5, 'npc'), just = "centre",
-                             gp = gpar(fontfamily = 'serif', fontsize = 10))
+                             gp = gpar(fontfamily = 'serif', fontsize = 8))
     pb_box = grid::roundrectGrob(x = unit(0.5, 'npc'), y = unit(0.5, 'npc'),
-                                width = unit(0.55, 'npc'), height = unit(0.8, 'npc'),
+                                width = unit(0.4, 'npc'), height = unit(0.8, 'npc'),
                                 just = "centre")
     pb_arrow = segmentsGrob(x0 = unit(0.1,'npc'), x1 = unit(0.9, 'npc'),
                            y0 = unit(0.5,'npc'), y1 = unit(0.5, 'npc'),
@@ -61,9 +61,9 @@ plot_trait_lorenz <- function(lorenz_analysis, spp_rankings_summary) {
         facet_wrap(~site, ncol = 1) -> pb_lorenz_flux_plot
     
     M_label = grid::textGrob(expression("Increasing"~italic("M")), x = unit(0.5, 'npc'), just = "centre",
-                             gp = gpar(fontfamily = 'serif', fontsize = 10))
+                             gp = gpar(fontfamily = 'serif', fontsize = 8))
     M_box = grid::roundrectGrob(x = unit(0.5, 'npc'), y = unit(0.5, 'npc'),
-                           width = unit(0.55, 'npc'), height = unit(0.8, 'npc'),
+                           width = unit(0.4, 'npc'), height = unit(0.8, 'npc'),
                            just = "centre")
     M_arrow = segmentsGrob(x0 = unit(0.1,'npc'), x1 = unit(0.9, 'npc'),
                  y0 = unit(0.5,'npc'), y1 = unit(0.5, 'npc'),

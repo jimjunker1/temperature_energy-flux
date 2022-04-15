@@ -20,6 +20,8 @@ plot_spp_flux <- function(ann_spp_flux =
     dplyr::filter(flux_mg_m_y_mean > 1e-5)
   
   evenness_plot= plotting_df %>%
+    na.omit %>%
+    dplyr::filter(log(flux_mg_m_y_mean) > -10) %>%
     ggplot(aes(x = rank, y = log(flux_mg_m_y_mean), group = site))+
     geom_line(aes(color = site), size = 2)+
     geom_point(aes(fill = site), shape = 21, size = 2.3, color = 'black') +

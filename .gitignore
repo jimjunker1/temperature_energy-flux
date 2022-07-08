@@ -53,6 +53,7 @@ vignettes/*.pdf
 /**/gut_data/**/*.csv
 !/**/gut_data/**/*full.csv
 
+ignore/
 *.tmp
 
 # Word temporary

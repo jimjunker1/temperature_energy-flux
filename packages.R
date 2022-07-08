@@ -8,10 +8,11 @@
                     "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown", "MuMIn","zoib",
                     "viridis", "broom","bbmle","ggthemes", "ggeffects", "ggpubr","betareg",
                     "fluxweb","igraph","ggraph","magick","cowplot","rriskDistributions",
-                    "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp", "rsample")
+                    "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp", "rsample",
+                    "emmeans")
   p_load(char = package.list, install = TRUE, character.only = TRUE)
   # p_load_gh("jimjunker1/junkR")
-  remotes::install_github("jimjunker1/junkR")
+  # remotes::install_github("jimjunker1/junkR")
   library(junkR)
   conflict_prefer('count', 'dplyr')
   conflict_prefer('mutate', 'dplyr')
@@ -76,6 +77,11 @@
 source("./R/fluxweb_mod_function.R")
 source("./R/Lorenz.R")
 source("./R/Evenness.R")
+quiet <- function(x) { 
+  sink(tempfile()) 
+  on.exit(sink()) 
+  invisible(force(x)) 
+} 
 nboot = 1e3
 theme_set(theme_mod())
 options(mc.cores = parallel::detectCores()-1)

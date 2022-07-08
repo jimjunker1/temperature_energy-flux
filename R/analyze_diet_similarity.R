@@ -70,7 +70,7 @@ analyze_diet_similarity <- function(gut_df = gut_lists[["diet_list"]], diet_pred
     named_group_split(boot_id) %>%
     future_map(~RInSp::import.RInSp(.x, col.header = TRUE, info.cols = c(1:2), data.type = 'double')) %>%
     future_map(function(x){
-      y = RInSp::overlap(x)
+      y = quiet(RInSp::overlap(x))
       diag(y[['overlapmatrix']]) <- NA
            y = append(y, list(min_overlap = min(y[['overlapmatrix']], na.rm = TRUE),
                               max_overlap = max(y[['overlapmatrix']], na.rm = TRUE)))

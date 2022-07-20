@@ -9,12 +9,20 @@ read_production <- function() {
   ####    full raw production, biomass, abundance import and clean    ####
   prod_full_list = readRDS(file = "./data/derived-data/prod_full_fin.rds") %>%
     #rename Tubificid update to Naidid to recognize taxon changes
-    purrr::map(~.x %>% purrr::map(~.x %>% dplyr::mutate(taxon_id = case_when(stringr::str_detect("Tubificid 1",taxon_id) ~ "Naidid 1",
+    furrr::future_map(~.x %>% furrr::future_map(~.x %>% 
+                                    # rename and consolidate a few taxa to maintain resolution among streams
+                                    dplyr::mutate(taxon_id = case_when(grepl("Ceratopogonidae.+", taxon_id) ~ "Ceratopegonid",
+                                                                       grepl("Eukiefferiella.+", taxon_id) ~ "Eukiefferiella sp.",
+                                                                       grepl("Oligochaeta.*",taxon_id) ~ "Lumbricidae",
+                                                                       TRUE ~ taxon_id)) %>%
+                                    dplyr::mutate(taxon_id = case_when(stringr::str_detect("Tubificid 1",taxon_id) ~ "Naidid 1",
                                                                              stringr::str_detect("Tub. 2", taxon_id) ~ "Naidid 2",
                                                                              stringr::str_detect(" Eukiefferiella|Eukiefferiella", taxon_id) ~ "Eukiefferiella sp.",
                                                                              stringr::str_detect("Lumb 3", taxon_id) ~ "Lumbricidae",
                                                                              stringr::str_detect("Orthocladius fridgidus", taxon_id) ~ "Orthocladius frigidus",
-                                                                             TRUE ~ taxon_id )))) %>%
+                                                                             TRUE ~ taxon_id )) %>% group_by(site_id, taxon_id, date_id, boot_id) %>%
+                                    dplyr::summarise(across(where(is.numeric), ~sum(.x))) %>%
+                                    ungroup)) %>%
     rlist::list.subset(names(stream_order_list))
   
   spp_removals = list(hver = c('Homoptera', 'Lepidoptera', 'Limnophora.pupa', 'Midge.pupa', 

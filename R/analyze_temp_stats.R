@@ -135,6 +135,7 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
                             coi ~ 1,
                             family = brms::zero_one_inflated_beta())
   
+  # get_prior(pb_skew_formula, data = pb_skew_df, family = brms::zero_one_inflated_beta())
   pb_skew_priors = c(set_prior("normal(0,1.2)", class = "b", coef = "tempC_stand"),
                     set_prior("normal(0.5,0.5)", class = "Intercept"))
   
@@ -147,18 +148,37 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
                                 control = list(adapt_delta = 0.99),
                                 sample_prior = "yes",
                                 file = "./data/derived-data/models/pb_skew_temp_model.rds",
-                                file_refit = 'on_change')
+                                file_refit = 'on_change',
+                                backend = "cmdstanr")
+  pb_skew_temp_boots = add_criterion(pb_skew_temp_boots, "loo", file = "./data/derived-data/models/pb_skew_temp_model.rds")
 
   pb_skew_temp_pred = pb_skew_temp_boots %>%
     add_epred_draws(newdata = new_data) %>%
     dplyr::mutate(new_epred = (.epred - 1)/2)
-  # purrr::pmap(~..2 %>% predict(newdata = new_data) %>% data.frame(.fitted = .) %>% dplyr::mutate(tempC = unlist(new_data, use.names = FALSE))) 
-  # 
-  # 
+
   pb_skew_temp_coefs = pb_skew_temp_boots %>%
     brms::posterior_samples("tempC_stand")
-  #   purrr::pmap_dbl(~..2 %>% pluck('coefficients') %>% pluck('mean') %>% pluck('tempC'))
-  # 
+
+  
+  pb_skew_temp_null = brms::brm(formula = brms::bf(pb_y_skew_mod ~ 1,
+                                                   phi ~ 1,
+                                                   zoi ~ 1,
+                                                   coi ~ 1,
+                                                   family = brms::zero_one_inflated_beta()),
+                                 data = pb_skew_df,
+                                 # prior = pb_skew_priors,
+                                 warmup = 10e3,
+                                 iter = 12e3,
+                                 chains = 3,
+                                 control = list(adapt_delta = 0.99),
+                                 sample_prior = "yes",
+                                 file = "./data/derived-data/models/pb_skew_temp_null.rds",
+                                 file_refit = 'on_change',
+                                backend = "cmdstanr")
+  pb_skew_temp_null = add_criterion(pb_skew_temp_null, 'loo', file = "./data/derived-data/models/pb_skew_temp_null.rds")
+  
+  loo::loo_compare(pb_skew_temp_boots, pb_skew_temp_null)
+ 
   set.seed(123)
   M_skew_df = skew_analysis[['M_skew_boots']] %>% named_group_split(site) %>%
     map(~.x %>% slice_sample(n = n_boot, replace = TRUE) %>%
@@ -191,14 +211,34 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
                                 control = list(adapt_delta = 0.99),
                                 sample_prior = "yes",
                                 file = "./data/derived-data/models/m_skew_temp_model.rds",
-                                file_refit = 'on_change')
-  
+                                file_refit = 'on_change',
+                                backend = "cmdstanr")
+  M_skew_temp_boots = add_criterion(M_skew_temp_boots, 'loo',file = "./data/derived-data/models/m_skew_temp_model.rds")
+
   m_skew_temp_pred = M_skew_temp_boots %>%
     add_epred_draws(newdata = new_data)
  
   M_skew_temp_coefs = M_skew_temp_boots %>%
     brms::posterior_samples("tempC_stand")
+  
+  M_skew_temp_null = brms::brm(formula = brms::bf(m_mg_ind_skew_mod ~ 1,
+                                                  phi ~ 1,
+                                                  zoi ~ 1,
+                                                  coi ~ 1),
+                               family = brms::zero_one_inflated_beta(),
+                              data = M_skew_df,
+                                # prior = m_skew_priors,
+                                warmup = 10e3,
+                                iter = 12e3,
+                                chains = 3,
+                                control = list(adapt_delta = 0.99),
+                                sample_prior = "yes",
+                                file = "./data/derived-data/models/m_skew_temp_null.rds",
+                                file_refit = 'on_change',
+                              backend = "cmdstanr")
+  M_skew_temp_null = add_criterion(M_skew_temp_null, 'loo', file = "./data/derived-data/models/m_skew_temp_null.rds")
 
+  loo::loo_compare(M_skew_temp_boots, M_skew_temp_null)
   # random vs non-random structure of energy fluxes with temperature. 
   
   set.seed(123)
@@ -232,28 +272,28 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
                          control = list(adapt_delta = 0.99),
                          sample_prior = "yes",
                          file = "./data/derived-data/models/pb_probs_temp_model.rds",
-                         file_refit = 'on_change')
+                         file_refit = 'on_change',
+                         backend = "cmdstanr")
     pb_probs_temp_boots = brms::add_criterion(pb_probs_temp_boots,
                                               c('loo'), file = "./data/derived-data/models/pb_probs_temp_model.rds")
-  
-    pb_probs_priors = c(set_prior("normal(-1,1.2)", class = "b", coef = "tempC_stand"),
-                        set_prior("normal(-0.002,0.5)", class = "Intercept"))
-    
+
     pb_probs_temp_null =brms::brm(brms::bf(pb_skew_prob ~ 1,
                                            phi ~ 1,
                                            zi ~  1,
                                            family = brms::zero_inflated_beta()),
                                    data = pb_probs_df,
-                                   prior = pb_probs_priors,
+                                   # prior = pb_probs_priors,
                                    warmup = 10e3,
                                    iter = 12e3,
                                    chains = 3,
                                    control = list(adapt_delta = 0.99),
                                    sample_prior = "yes",
                                    file = "./data/derived-data/models/pb_probs_temp_null.rds",
-                                   file_refit = 'on_change')
+                                   file_refit = 'on_change',
+                                  backend = "cmdstanr")
     pb_probs_temp_null = brms::add_criterion(pb_probs_temp_null,
                                               c('loo'), file = "./data/derived-data/models/pb_probs_temp_null.rds")
+    loo::loo_compare(pb_probs_temp_boots, pb_probs_temp_null)
     
     # pb_temp_fancy_zoi <- pb_probs_temp_boots %>% 
     #   emmeans(~ tempC_stand,
@@ -345,7 +385,9 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
                                  control = list(adapt_delta = 0.99),
                                  sample_prior = "yes",
                                  file = "./data/derived-data/models/m_probs_temp_model.rds",
-                                 file_refit = 'on_change')
+                                 file_refit = 'on_change',
+                                backend = "cmdstanr")
+  m_probs_temp_boots = add_criterion(m_probs_temp_boots, 'loo', file = "./data/derived-data/models/m_probs_temp_model.rds")
   
   m_probs_temp_null =brms::brm(brms::bf(M_skew_prob ~ 1,
                                         phi ~ 1,
@@ -354,14 +396,18 @@ analyze_temp_stats <- function(ann_comm_boots = production_boots[["ann_comm_boot
                                         family = brms::zero_one_inflated_beta()
   ),
                                 data = M_probs_df,
-                                prior = m_probs_priors,
+                                # prior = m_probs_priors,
                                 warmup = 10e3,
                                 iter = 12e3,
                                 chains = 3,
                                 control = list(adapt_delta = 0.99),
                                 sample_prior = "yes",
                                 file = "./data/derived-data/models/m_probs_null_model.rds",
-                                file_refit = 'on_change')
+                                file_refit = 'on_change',
+  backend = "cmdstanr")
+  m_probs_temp_null = add_criterion(m_probs_temp_null, 'loo', file = "./data/derived-data/models/m_probs_null_model.rds")
+  
+  loo::loo_compare(m_probs_temp_boots, m_probs_temp_null)
   
   m_probs_temp_coefs = m_probs_temp_boots %>%
     brms::posterior_samples("tempC_stand")

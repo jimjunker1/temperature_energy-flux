@@ -19,10 +19,10 @@ analyze_diversity <- function(production_boots) {
     bind_cols(int_spp_wide %>% select(site_id, date_id)) %>%
     select(site_id, date_id, everything()) %>%
     dplyr::mutate(site_id = factor(site_id, levels = names(stream_order_list))) %>%
-    group_by(site_id) %>% dplyr::arrange(date_id)
-  # 
-  # ggplot(NMDS.scrs, aes(x = NMDS1, y = NMDS2)) + 
-  #   geom_point(aes(color = site_id))+
-  #   geom_path(aes(group = site_id, color = site_id))
+    group_by(site_id) %>% dplyr::arrange(date_id) 
+ 
+    return(list(int_spp_wide = int_spp_wide,
+              NMDS = NMDS,
+              NMDS.scrs = NMDS.scrs))
   
   }

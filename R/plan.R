@@ -93,7 +93,9 @@ the_plan <-
   random_skew_fig = plot_random_skew(skew_analysis, random_rankings),
   # 
   temperature_skew_fig = plot_skew_temperature(temperature_stats, n_id = 2e3),
-  
+  #
+  # diversity_fig = plot_comm_diversity(diversity_analysis),
+  # pbM_fig = plot_spp_ann_trait(production_summaries[['ann_spp_summary']]),
   
   # target_name = target(
     # command = {
@@ -107,7 +109,7 @@ the_plan <-
   #     rmarkdown::render(knitr_in("doc/./ms/ms.Rmd"))
   #     file_out("doc/./ms/ms.docx")
   #   }
-  # ),
+  # )
   # 
   # figure_file = target(
   #   command = {

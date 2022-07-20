@@ -2,8 +2,8 @@
 ###load packages and functions
   if(!require("pacman")) install.packages("pacman")
   library(pacman)
-  package.list <- c("conflicted", "dotenv", "drake","data.table","gtools",
-                    "RCurl","plyr","tidyverse","furrr", "fnmate", "moments",
+  package.list <- c("conflicted", "dotenv", "drake","data.table","gtools","rlist",
+                    "RCurl","plyr","tidyverse","furrr", "fnmate", "moments","fuzzySim",
                     "dflow","rmarkdown","tictoc","chron","lubridate","httr","TTR", 
                     "grid","gridExtra", "ggridges", "fluxweb", "rmarkdown", "MuMIn","zoib",
                     "viridis", "broom","bbmle","ggthemes", "ggeffects", "ggpubr","betareg",
@@ -11,8 +11,9 @@
                     "rstan", "brms", "tidybayes", "parallel", "hillR", "RInSp", "rsample",
                     "emmeans")
   p_load(char = package.list, install = TRUE, character.only = TRUE)
-  # p_load_gh("jimjunker1/junkR")
+  # pacman::p_load_gh("jimjunker1/junkR")
   # remotes::install_github("jimjunker1/junkR")
+  devtools::install_github("rmcelreath/rethinking")
   library(junkR)
   conflict_prefer('count', 'dplyr')
   conflict_prefer('mutate', 'dplyr')

@@ -60,7 +60,7 @@ plot_skew_temperature <- function(temperature_stats, n_id = 2e2) {
   set.seed(123)
   m_probs_plot = ggplotGrob(m_probs_summ %>%
                                ggplot(aes(x = tempC, y = M_skew_prob_median)) +
-                                geom_line(data = m_probs_plot_df, aes( x = tempC, y = .prediction, group = .draw))+#, alpha = 0.1, color = 'lightgrey') +
+                                # geom_line(data = m_probs_plot_df, aes( x = tempC, y = .prediction, group = .draw))+#, alpha = 0.1, color = 'lightgrey') +
                                geom_errorbar(data = m_probs_summ, aes(x = tempC, ymin = M_skew_prob_HPDI_90dn, ymax = M_skew_prob_HPDI_90up, color = site), size = 1, width = 0, inherit.aes = FALSE)+
                                geom_errorbar(data = m_probs_summ, aes(x = tempC, ymin = M_skew_prob_HPDI_50dn, ymax = M_skew_prob_HPDI_50up, color = site), size = 1.5, width = 0, inherit.aes = FALSE)+
                                geom_point(data = m_probs_summ, aes(x = tempC, y = M_skew_prob_median, fill = site), size = 2, color = 'black', inherit.aes = FALSE) +

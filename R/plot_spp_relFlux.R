@@ -55,7 +55,9 @@ plotTaxa = ann_spp_fluxList %>%
 
 plotTaxaColors = setNames(c(viridis(12, option = 'D', begin = 1, end = 0),"#D3D3D3"), nm = c(plotTaxa, NA))
 
- plot_relFlux = function(flux_list = NULL, colors = plotTaxaColors, plot_annotation = FALSE, plot_axes_text = FALSE,...){
+# values = ocecolors[['temperature']][oce_temp_pos]
+
+ plot_relFlux = function(flux_list = NULL, colors = NULL, plot_annotation = FALSE, plot_axes_text = FALSE,...){
    other_label = flux_list$taxon[grepl("Other", unlist(flux_list$taxon))] %>% as.character %>% unique
    names(colors)[length(colors)] = other_label
    
@@ -73,8 +75,9 @@ plotTaxaColors = setNames(c(viridis(12, option = 'D', begin = 1, end = 0),"#D3D3
                                   as.character %>% c(other_label,.)))
    plot = plotDf %>%
      ggplot() +
-     geom_col(aes(x = log10(rel_flux_mean*100), y = taxon, fill = taxaGroup), color = 'black')+
-     scale_fill_manual(values = colors[names(colors) %in% unlist(flux_list$taxaGroup)])+
+     geom_col(aes(x = log10(rel_flux_mean*100), y = taxon), color = 'black', fill = ocecolors[['temperature']][colors])+
+     # scale_fill_manual(values = colors[names(colors) %in% unlist(flux_list$taxaGroup)])+
+     # scale_fill_manual(values = ocecolors[['temperature']][colors])+
      # scale_color_manual(values = .y)+
      scale_x_continuous(limits = c(0,2), expand = c(0.001,0.001))+
      scale_y_discrete(position = 'left', breaks = plotDf$taxon, labels = plotDf$shortGroup)+
@@ -96,11 +99,13 @@ plotTaxaColors = setNames(c(viridis(12, option = 'D', begin = 1, end = 0),"#D3D3
 
  annotateVec = c(T, F, F, F, F, F)
  axesVec = c(F, F, F, F, F, T)
+ fillCol = oce_temp_pos
  # debugonce(plot_relFlux)
- ann_spp_plotList = purrr::pmap(list(ann_spp_fluxList,annotateVec,axesVec), 
+ ann_spp_plotList = purrr::pmap(list(ann_spp_fluxList,annotateVec,axesVec,fillCol), 
                                 ~plot_relFlux(flux_list = ..1,
                                               plot_annotation = ..2,
-                                              plot_axes_text = ..3)) %>%
+                                              plot_axes_text = ..3,
+                                              colors = ..4)) %>%
    purrr::map(~ggplotGrob(.x))
  
  widths = max(ann_spp_plotList[[1]]$widths,
@@ -111,7 +116,7 @@ plotTaxaColors = setNames(c(viridis(12, option = 'D', begin = 1, end = 0),"#D3D3
                 ann_spp_plotList[[6]]$widths
               )
  
- ann_spp_plotList[[1]]$widths -> ann_spp_plotList[[2]]$widths -> ann_spp_plotList[[3]]$widths -> ann_spp_plotList[[4]]$widths -> ann_spp_plotList[[5]]$widths -> ann_spp_plotList[[6]]$widths -> widths
+ann_spp_plotList[[1]]$widths -> ann_spp_plotList[[2]]$widths -> ann_spp_plotList[[3]]$widths -> ann_spp_plotList[[4]]$widths -> ann_spp_plotList[[5]]$widths -> ann_spp_plotList[[6]]$widths -> widths
  
  full_plot = gridExtra::grid.arrange(ann_spp_plotList[[1]],
                                      ann_spp_plotList[[2]],

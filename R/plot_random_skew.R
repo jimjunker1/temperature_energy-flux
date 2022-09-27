@@ -44,22 +44,29 @@ plot_random_skew <- function(skew_analysis, random_rankings) {
 #   scale_color_manual(values = rev(ocecolors[["temperature"]][oce_temp_pos]), labels = rev(stream_temp_labels))+
 #   facet_grid(~measure)
   
+  pb_labs = data.frame(site = stream_order,
+                       labs = c("B",rep(NA_character_,5)))
+  
 skew_analysis[['pb_skew_percs']] %>% bind_rows(.id = 'site') %>%
     pivot_longer(-site, names_to = "boot_id", values_to = "skew_perc") %>%
     dplyr::select(-boot_id) %>%
     dplyr::mutate(site = factor(site, levels =names(stream_order_list))) %>%
-    ggplot(aes(x = skew_perc)) +
+    ggplot(aes(x = skew_perc )) +
     geom_vline(xintercept = c(0.1,0.9), color = 'red', size = 1, alpha = 0.7)+
-    geom_histogram(aes( fill = site, y = ..count..), color = NA, alpha = 0.8, bins = 50)+
+    geom_histogram(aes(fill = site, y = ..count..), color = NA, alpha = 0.8, bins = 50)+
     scale_x_continuous(name = "Percentile of permuted set", limits = c(-0.01,1.01), expand = c(0.01,0.01))+
     scale_y_continuous(name = "# of observations", expand = c(0.001,0.001))+
     scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
+  geom_text(data = pb_labs, aes(x = 0, y = Inf, vjust = 1, family = 'serif'), label = c("B","","","","",""))+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(sides = "lb")+
     theme(legend.position = 'none', axis.title = element_blank()) +
-    facet_wrap(~site, ncol = , scales = 'free_y') ->pb_perc_plot
+    facet_wrap(~site, ncol = , scales = 'free_y',labeller = as_labeller(stream_temp_labels)) ->pb_perc_plot
     
+m_labs = data.frame(site = stream_order,
+                    labs = c("A",rep(NA,5)))
+
   skew_analysis[['M_skew_percs']] %>% bind_rows(.id = 'site') %>%
     pivot_longer(-site, names_to = "boot_id", values_to = "skew_perc") %>%
     dplyr::select(-boot_id) %>%
@@ -71,10 +78,11 @@ skew_analysis[['pb_skew_percs']] %>% bind_rows(.id = 'site') %>%
     scale_y_continuous(name = "# of observations", expand = c(0.001,0.001))+
     scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
+    geom_text(data = pb_labs, aes(x = 0, y = Inf, vjust = 1, family = 'serif'), label = c("A","","","","",""))+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(sides = "lb")+
     theme(legend.position = 'none', axis.title = element_blank()) +
-    facet_wrap(~site, ncol = , scales = 'free_y') ->M_perc_plot
+    facet_wrap(~site, ncol = , scales = 'free_y',labeller = as_labeller(stream_temp_labels)) ->M_perc_plot
   
   
 skew_boots = skew_analysis %>% rlist::list.subset(grepl("boots",names(.), ignore.case = TRUE)) %>%

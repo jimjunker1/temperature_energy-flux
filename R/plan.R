@@ -84,15 +84,29 @@ the_plan <-
   #
   spp_trait_histograms = plot_trait_histogram(spp_rankings_summary),
   #
-  spp_traitsVtemp = plot_traits_temp(production_boots, spp_rankings_summary, temperature_stats),
+  spp_traitsVtemp = plot_traits_temp(flux_summaries,
+                                     production_boots,
+                                     spp_rankings_summary,
+                                     temperature_stats),
   #
   spp_flux_dist = plot_spp_relFlux(flux_summaries[["annual_spp_flux_summary"]],taxonomic_info),
   #
-  lorenz_trait_fig = plot_trait_lorenz(lorenz_analysis, spp_rankings_summary),
+  lorenz_skew_fig = plot_trait_lorenz(lorenz_analysis,
+                                       spp_rankings_summary),
+  
+  M_lorenz_skew_fig = plot_skew_temperatureM(lorenz_analysis,
+                                       spp_rankings_summary,
+                                       temperature_stats,
+                                       n_id = 2e3),
   #
+  PB_lorenz_skew_fig = plot_skew_temperaturePB(lorenz_analysis,
+                                               spp_rankings_summary,
+                                               temperature_stats, 
+                                               n_id = 2e3),
+    #
   random_skew_fig = plot_random_skew(skew_analysis, random_rankings),
   # 
-  temperature_skew_fig = plot_skew_temperature(temperature_stats, n_id = 2e3),
+  # temperature_skew_fig = plot_skew_temperature(temperature_stats, n_id = 2e3),
   #
   # diversity_fig = plot_comm_diversity(diversity_analysis),
   # pbM_fig = plot_spp_ann_trait(production_summaries[['ann_spp_summary']]),

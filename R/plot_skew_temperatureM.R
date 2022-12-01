@@ -28,7 +28,7 @@ plot_skew_temperatureM <- function(lorenz_analysis, spp_rankings_summary,
     geom_line(aes(group = boot_id), color = "grey", alpha = 0.5) +
     geom_line(data = spp_rankings_summary[["M_spp_rank"]], aes(x = rel_spp, y = rel_flux, color = site), size = 1.5) +
     scale_x_continuous(name = "Cumulative species", limits = c(0,1), expand = c(0,0.03))+
-    scale_y_continuous(name = "Cumulative flux", limits = c(0,1), expand = c(0,0.03))+
+    scale_y_continuous(name = "Cumulative flux", limits = c(0,1), expand = c(0,0.03),breaks = c(0,0.5,1))+
     scale_colour_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(sides = "lb")+
@@ -109,11 +109,12 @@ plot_skew_temperatureM <- function(lorenz_analysis, spp_rankings_summary,
                               geom_errorbar(data = m_probs_summ, aes(x = tempC, ymin = M_skew_prob_HPDI_50dn, ymax = M_skew_prob_HPDI_50up, color = site), size = 1.5, width = 0, inherit.aes = FALSE)+
                               geom_point(data = m_probs_summ, aes(x = tempC, y = M_skew_prob_median, fill = site), size = 2, color = 'black', inherit.aes = FALSE) +
                               scale_x_continuous(name = expression("Temperature ("~degree*C~")"), expand = c(0,0.004))+
-                              scale_y_continuous(name = expression("Pr("~italic(Sk[flux])~">="~italic(x)*")"), expand = c(0,0.004)) +
+                              scale_y_continuous(name = expression("Pr("~italic(Sk[flux])~">="~italic(x)*")"), expand = c(0,0.004), labels = c(0.5,0.25,0,0.25,0.5)) +
                               coord_cartesian(xlim = c(0,30), ylim = c(0,1), clip = 'off')+
                               scale_fill_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
                               scale_colour_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
                               annotate('text', label = "C", x = 0, y = 1, family = 'serif', hjust = 0, vjust = 1, size = 4)+
+                              geom_hline(aes(yintercept = 0.5), color = 'grey', linetype = 'dashed', linewidth = 1)+
                               theme_tufte(ticks = TRUE) +
                               geom_rangeframe(sides = "lb")+
                               theme(legend.title = element_blank(),
@@ -141,7 +142,7 @@ plot_skew_temperatureM <- function(lorenz_analysis, spp_rankings_summary,
                                      c(1,1,1,4,4),
                                      c(1,1,1,4,4),
                                      c(1,1,1,4,4),
-                                     c(2,2,2,4,4))),
-         left = grid::textGrob(label = "Cumulative organic matter flux", gp = gpar(fontfamily = 'serif')))
+                                     c(2,2,2,4,4)),
+         left = grid::textGrob(label = "Cumulative organic matter flux", gp = gpar(fontfamily = 'serif'), rot = 90)))
 
 }

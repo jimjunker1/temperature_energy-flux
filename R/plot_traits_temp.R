@@ -23,18 +23,18 @@ plot_traits_temp <- function(flux_summaries,
   
   ann_comm_sum %>%
     ggplot() +
-    geom_errorbar(aes(x = tempC, ymin = log(flux_mg_m_y_quant2.5), ymax = log(flux_mg_m_y_quant97.5), color = site_id), width = 0, size = 1) +
-    geom_errorbar(aes(x = tempC, ymin = log(flux_mg_m_y_quant25), ymax = log(flux_mg_m_y_quant75), color = site_id), width = 0, size = 2) +
+    geom_errorbar(aes(x = tempC, ymin = log(flux_mg_m_y_quant2.5), ymax = log(flux_mg_m_y_quant97.5), color = site_id), width = 0, linewidth = 1) +
+    geom_errorbar(aes(x = tempC, ymin = log(flux_mg_m_y_quant25), ymax = log(flux_mg_m_y_quant75), color = site_id), width = 0, linewidth = 2) +
     geom_point(aes(x = tempC, y = log(flux_mg_m_y_mean), fill = site_id), shape =21, size = 2)+
     scale_x_continuous(name = expression("Temperature ("~degree*C~")"),limits = c(0,30), expand = c(0.01,0.01))+
-    scale_y_continuous(name = expression("Organic matter flux ( g AFDM "~m^-2~y^-1~")"), expand = c(0.01,0.01),
+    scale_y_continuous(name = expression("Organic matter flux ( g AFDM "~m^-2~y^-1*")"), expand = c(0.01,0.01),
                        breaks = log(c(1,5,10,50,100, 500)), labels = exp(log(c(1,5,10,50,100,500)))) +
     scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     annotate('text', label = 'A', x = 0.5, y = Inf, family = 'serif', vjust = 1,hjust = 0, size = 4)+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(aes(x = tempC,y = log(flux_mg_m_y_mean)),sides = "lb")+
-    theme(legend.position = c(1,0),
+    theme(legend.position = "none",
           legend.title = element_blank(),
           legend.justification = c(1,0), axis.title.x = element_blank()) -> ann_comm_flux_plot
     
@@ -68,19 +68,19 @@ plot_traits_temp <- function(flux_summaries,
     geom_line(data = pb_spp_temp_pred, aes(x = tempC, y = pb_y, group = n_rep),
               color = 'lightgray', alpha = 0.5, inherit.aes = FALSE)+
     geom_errorbar(aes(x = tempC, ymin = log(pb_y_quant25), ymax = log(pb_y_quant75), color = site_id),
-                  width = 0, size = 2)+
+                  width = 0, linewidth = 2)+
     geom_errorbar(aes(x = tempC, ymin = log(pb_y_quant2.5), ymax = log(pb_y_quant97.5), color = site_id),
-                  width = 0, size = 1)+
+                  width = 0, linewidth = 1)+
     geom_point(aes(x = tempC, y = log(pb_y_mean), fill = site_id),shape = 21, color = 'black', size = 2)+
     scale_x_continuous(name = expression("Temperature ("~degree*C~")"),limits = c(0,30), expand = c(0.01,0.01))+
-    scale_y_continuous(name = expression("Population turnover ( "*italic(P:B)*", "*y^-1*")"), expand = c(0.01,0.01),
+    scale_y_continuous(name = expression("Popn. "~bar(italic(P:B))~"("*y^-1*")"), expand = c(0.01,0.01),
                        breaks = log(c(1,5,10,50,100)), labels = exp(log(c(1,5,10,50,100)))) +
     scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     annotate('text', label = 'C', x = Inf, y = Inf, family = 'serif', vjust = 1,hjust = 1, size = 4)+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(aes(x = tempC,y = log(pb_y_mean)),sides = "lb")+
-    theme(legend.position = 'none',axis.title.x = element_blank())) -> comm_pb_plot
+    theme(legend.position = 'none',axis.title.x = element_blank())) -> comm_pb_plot;dev.off()
     
   m_spp_temp_boots = temperature_stats[["m_spp_temp_boots"]]
   
@@ -96,19 +96,19 @@ plot_traits_temp <- function(flux_summaries,
     geom_line(data = m_spp_temp_pred, aes(x = tempC, y = M_mg_ind, group = n_rep),
               color = 'lightgray', alpha = 0.5, inherit.aes = FALSE)+
     geom_errorbar(aes(x = tempC, ymin = log(M_mg_ind_quant25), ymax = log(M_mg_ind_quant75), color = site_id),
-                  width = 0, size = 2)+
+                  width = 0, linewidth = 2)+
     geom_errorbar(aes(x = tempC, ymin = log(M_mg_ind_quant2.5), ymax = log(M_mg_ind_quant97.5), color = site_id),
-                  width = 0, size = 1)+
+                  width = 0, linewidth = 1)+
     geom_point(aes(x = tempC, y = log(M_mg_ind_mean), fill = site_id),shape = 21, color = 'black', size = 2)+
     scale_x_continuous(name = expression("Temperature ("~degree*C~")"), limits = c(0,30), expand = c(0.01,0.01))+
-    scale_y_continuous(name = expression("Population body size ( "*italic(M)*", "*mg~AFDM^-ind*")"), expand = c(0.01,0.01),
+    scale_y_continuous(name = expression("Popn. "~bar(italic(M))~"(mg AFDM "~ind^-1*")"), expand = c(0.01,0.01),
                        breaks = log(c(5,1,0.5,0.1,0.05, 0.01)), labels = exp(log(c(5,1,0.5,0.1,0.05, 0.01)))) +
     scale_color_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     scale_fill_manual(values = ocecolors[["temperature"]][oce_temp_pos], labels = stream_temp_labels) +
     annotate('text', label = 'B', x = Inf, y = Inf, family = 'serif', vjust = 1,hjust = 1, size = 4)+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(aes(x = tempC, y = log(M_mg_ind_mean)), sides = "lb")+
-    theme(legend.position = 'none', axis.title.x = element_blank())) -> comm_m_plot
+    theme(legend.position = 'none', axis.title.x = element_blank())) -> comm_m_plot;dev.off()
     
   
  heights = max(comm_m_plot$heights, comm_pb_plot$heights)

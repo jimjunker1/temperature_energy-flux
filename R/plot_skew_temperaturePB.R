@@ -27,7 +27,7 @@ plot_skew_temperaturePB <- function(lorenz_analysis, spp_rankings_summary,
     geom_line(aes(group = boot_id), color = "grey", alpha = 0.5) +
     geom_line(data = spp_rankings_summary[["PB_spp_rank"]], aes(x = rel_spp, y = rel_flux, color = site), size = 1.5) +
     scale_x_continuous(name = "Cumulative species", limits = c(0,1), expand = c(0,0.03))+
-    scale_y_continuous(name = "Cumulative flux", limits = c(0,1), expand = c(0,0.03))+
+    scale_y_continuous(name = "Cumulative flux", limits = c(0,1), expand = c(0,0.03), breaks = c(0,0.5,1))+
     scale_colour_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
     theme_tufte(ticks = TRUE) +
     geom_rangeframe(sides = "lb")+
@@ -86,7 +86,7 @@ plot_skew_temperaturePB <- function(lorenz_analysis, spp_rankings_summary,
                                    scale_y_continuous(name = expression(""*italic(Sk[flux])), limits = c(-1,1), expand = c(0,0.004) ) +
                                    scale_x_continuous(expand = c(0,0.004))+
                                    coord_cartesian(xlim = c(0,30), ylim = c(-1,1), clip = 'off')+
-                                   annotate('text', label = "B", x = -Inf, y = 1, family = 'serif', hjust = 0, vjust = 0, size = 4)+
+                                   annotate('text', label = "B", x = -Inf, y = 1, family = 'serif', hjust = 0, vjust = 1, size = 4)+
                                    theme_tufte(ticks = TRUE) +
                                    geom_rangeframe(aes( x = tempC, y = pb_y_skew_median), sides = "lb", inherit.aes = FALSE)+
                                    scale_color_manual(values = rev(ocecolors[['temperature']][oce_temp_pos]), labels = names(stream_temp_labels))+
@@ -120,9 +120,10 @@ plot_skew_temperaturePB <- function(lorenz_analysis, spp_rankings_summary,
                                geom_errorbar(data = pb_probs_summ, aes(x = tempC, ymin = pb_skew_prob_HPDI_50dn, ymax = pb_skew_prob_HPDI_50up, color = site), size = 1.5, width = 0, inherit.aes = FALSE)+
                                geom_point(data = pb_probs_summ, aes(x = tempC, y = pb_skew_prob_median, fill = site), size = 2, color = 'black', inherit.aes = FALSE) +
                                scale_x_continuous(name = expression("Temperature ("~degree*C~")"), expand = c(0,0.004))+
-                               scale_y_continuous(name = expression("Pr("~italic(Sk[flux])~">="~italic(x)*")"), expand = c(0,0.004)) +
+                               scale_y_continuous(name = expression("Pr("~italic(Sk[flux])~">="~italic(x)*")"), expand = c(0,0.004), labels = c(0.5,0.25,0,0.25,0.5)) +
                                coord_cartesian(xlim = c(0,30), ylim = c(0,1), clip = 'off')+
-                               annotate('text', label = "C", x = 0, y = 0, family = 'serif', hjust = 0, vjust = 0, size = 4)+
+                               annotate('text', label = "C", x = 0, y = 1, family = 'serif', hjust = 0, vjust = 1, size = 4)+
+                               geom_hline(aes(yintercept = 0.5), color = 'grey', linetype = 'dashed', linewidth = 1)+
                                scale_fill_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
                                scale_colour_manual(values = ocecolors[['temperature']][oce_temp_pos], labels = stream_temp_labels)+
                                theme_tufte(ticks = TRUE) +
@@ -139,18 +140,19 @@ plot_skew_temperaturePB <- function(lorenz_analysis, spp_rankings_summary,
   #                                                     expand = c(0.001,0.001), limits = c(-0.04, 0))+
   #                                  scale_y_continuous(expand = c(0.001,0.001), limits = c(0,NA))+
   #                                  theme_tufte(ticks = TRUE));#grid.draw(pb_temp_coef_plot)
+  
   # 
   return(grid.arrange(pb_lorenz_flux_plot,pb_header, pb_temp_skew_plot, pb_probs_plot,
-               layout_matrix = rbind(c(1,1,1,3,3),
-                                     c(1,1,1,3,3),
-                                     c(1,1,1,3,3),
-                                     c(1,1,1,3,3),
-                                     c(1,1,1,3,3),
-                                     c(1,1,1,4,4),
-                                     c(1,1,1,4,4),
-                                     c(1,1,1,4,4),
-                                     c(1,1,1,4,4),
-                                     c(2,2,2,4,4))),
-         left = grid::textGrob(label = "Cumulative organic matter flux", gp = gpar(fontfamily = 'serif')))
+                      layout_matrix = rbind(c(1,1,1,3,3),
+                                            c(1,1,1,3,3),
+                                            c(1,1,1,3,3),
+                                            c(1,1,1,3,3),
+                                            c(1,1,1,3,3),
+                                            c(1,1,1,4,4),
+                                            c(1,1,1,4,4),
+                                            c(1,1,1,4,4),
+                                            c(1,1,1,4,4),
+                                            c(2,2,2,4,4)),
+                      left = grid::textGrob(label = "Cumulative organic matter flux", gp = gpar(fontfamily = 'serif'), rot = 90)))
   
 }
